@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\KaryawanController;
+use App\Http\Controllers\Api\Admin\KaryawanProfileController;
 use App\Http\Controllers\Api\Admin\LayananController;
 use App\Http\Controllers\Api\Admin\LayananResponController;
 use App\Http\Controllers\Api\Admin\ResponController;
+use App\Http\Controllers\Api\Admin\UnitController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,4 +36,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('layanan', LayananController::class);
     Route::resource('respon', ResponController::class);
     Route::resource('layanan-respon', LayananResponController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('karyawan', KaryawanController::class);
+    Route::resource('unit', UnitController::class);
+    Route::resource('karyawan-profile', KaryawanProfileController::class);
+
+    // Route::get('clear/token', function () {
+    //     if(Auth::check() && Auth::user()->role === 1) {
+    //         Auth::user()->tokens()->delete();
+    //     }
+    //     return 'Token Cleared';
+    // })->middleware('auth');
 });
