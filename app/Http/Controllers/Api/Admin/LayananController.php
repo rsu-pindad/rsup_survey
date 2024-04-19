@@ -16,7 +16,7 @@ class LayananController extends BaseController
      */
     public function index(): JsonResponse
     {
-        $layanan = Layanan::all();
+        $layanan = Layanan::paginate(100);
         return $this->sendResponse(LayananResource::collection($layanan), 'list layanan didapat.');
     }
 
