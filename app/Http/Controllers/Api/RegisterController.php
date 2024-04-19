@@ -40,7 +40,7 @@ class RegisterController extends BaseController
             $success['name'] = $user->name;
             return $this->sendResponse($success, 'Selamat datang ' . $user->name . '.');
         } else {
-            return $this->sendError('Unauthotrised.', ['error' => 'Unauthorised']);
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
     }
 }
