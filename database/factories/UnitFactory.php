@@ -17,7 +17,7 @@ class UnitFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama_unit' => fake()->word(),
+            'nama_unit' => fake()->unique()->word(),
         ];
     }
 }
