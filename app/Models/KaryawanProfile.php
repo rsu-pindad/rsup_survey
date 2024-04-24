@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,6 +17,7 @@ class KaryawanProfile extends Model
         'user_id',
         'karyawan_id',
         'unit_id',
+        'layanan_id',
         'nama_karyawanprofile',
     ];
 
@@ -31,19 +33,23 @@ class KaryawanProfile extends Model
         'nama_karyawan_profile' => 'string',
     ];
 
-    public function parent_user() : BelongsTo
+    public function parentUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    
-    public function parent_karyawan() : BelongsTo
+
+    public function parentKaryawan(): BelongsTo
     {
         return $this->belongsTo(Karyawan::class, 'karyawan_id', 'id');
     }
 
-    public function parent_unit() : BelongsTo
+    public function parentUnit(): BelongsTo
     {
         return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
 
+    public function parentLayanan(): BelongsTo
+    {
+        return $this->belongsTo(Layanan::class, 'layanan_id', 'id');
+    }
 }
