@@ -18,7 +18,7 @@ class ResponFactory extends Factory
     {
         return [
             'nama_respon' => fake()->word(),
-            'skor_respon' => fake()->randomDigit()
+            'skor_respon' => fake()->randomDigit(1, 9)
         ];
     }
 }
