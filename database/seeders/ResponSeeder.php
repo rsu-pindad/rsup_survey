@@ -14,7 +14,7 @@ class ResponSeeder extends Seeder
     public function run(): void
     {
         Respon::factory()
-            ->count(5)
+            ->count(4)
             ->create();
     }
 }
