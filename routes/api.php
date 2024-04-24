@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\Admin\LayananController;
 use App\Http\Controllers\Api\Admin\LayananResponController;
 use App\Http\Controllers\Api\Admin\ResponController;
 use App\Http\Controllers\Api\Admin\UnitController;
+use App\Http\Controllers\Api\Admin\PenjaminController;
+use App\Http\Controllers\Api\Admin\PenjaminLayananController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
@@ -41,6 +43,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('karyawan', KaryawanController::class);
     Route::resource('unit', UnitController::class);
     Route::resource('karyawan-profile', KaryawanProfileController::class);
+    Route::resource('penjamin', PenjaminController::class);
+    Route::resource('penjamin-layanan', PenjaminLayananController::class);
 
     // Route::get('clear/token', function () {
     //     if(Auth::check() && Auth::user()->role === 1) {
