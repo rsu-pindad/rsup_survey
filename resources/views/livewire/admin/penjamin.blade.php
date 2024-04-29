@@ -20,7 +20,6 @@
                             <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Unit</th>
                                 <th scope="col">Penjamin</th>
                                 <th scope="col">Aksi</th>
                             </tr>
@@ -29,7 +28,6 @@
                                 @foreach ($penjamins as $penjamin)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $penjamin->parentUnit->nama_unit }}</td>
                                         <td>{{ $penjamin->nama_penjamin }}</td>
                                         <td>{{ $penjamin->id }}</td>
                                     </tr>

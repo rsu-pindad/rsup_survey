@@ -20,8 +20,6 @@
                             <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">ID Unit</th>
-                                <th scope="col">Nama Unit</th>
                                 <th scope="col">ID Penjamin</th>
                                 <th scope="col">Penjamin</th>
                                 <th scope="col">ID Layanan</th>
@@ -33,8 +31,6 @@
                                 @foreach ($penjaminLayanans as $pl)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $pl->parentPenjaminUnit->id }}</td>
-                                        <td>{{ $pl->parentPenjaminUnit->nama_unit }}</td>
                                         <td>{{ $pl->parentPenjamin->id }}</td>
                                         <td>{{ $pl->parentPenjamin->nama_penjamin }}</td>
                                         <td>{{ $pl->parentLayanan->id }}</td>
