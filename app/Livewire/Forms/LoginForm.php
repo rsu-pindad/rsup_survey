@@ -12,4 +12,10 @@ class LoginForm extends Form
 
     #[Validate('required|min:5')]
     public $password;
+
+    public function checkAuth()
+    {
+        return $this->validate();
+    }
+
 }
