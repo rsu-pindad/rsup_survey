@@ -21,6 +21,8 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama Respon</th>
+                                <th scope="col">Icon Respon</th>
+                                <th scope="col">Tag Warna Respon</th>
                                 <th scope="col">Skor Respon</th>
                                 <th scope="col">Aksi</th>
                             </tr>
@@ -30,6 +32,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $respon->nama_respon }}</td>
+                                        <td>{{ $respon->icon_respon }}</td>
+                                        <td>{{ $respon->tag_warna_respon }}</td>
                                         <td>{{ $respon->skor_respon }}</td>
                                         <td>{{ $respon->id }}</td>
                                     </tr>

@@ -19,7 +19,6 @@
                                 <th scope="col">Nama Pelanggan</th>
                                 <th scope="col">Waktu Shift</th>
                                 <th scope="col">Waktu Survey</th>
-                                <th scope="col">Aksi</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -29,7 +28,6 @@
                                         <td>{{ $survey->nama_pelanggan }}</td>
                                         <td>{{ $survey->shift }}</td>
                                         <td>{{ $survey->created_at }}</td>
-                                        <td>{{ $survey->id }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

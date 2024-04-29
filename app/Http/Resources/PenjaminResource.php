@@ -16,7 +16,6 @@ class PenjaminResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'nama_unit' => $this->parent_unit->nama_unit,
             'nama_penjamin' => $this->nama_penjamin,
         ];
     }

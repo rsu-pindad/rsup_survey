@@ -1,52 +1,59 @@
 <div>
     <div class="container">
         <header class="border-bottom lh-1 py-3">
-            <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-4 pt-1">
-                    <a class="link-secondary" href="#">Logo</a>
+            <div class="row justify-content-center px-2">
+                <div class="col-lg-4 col-md-2 col-xs-2 d-none d-sm-none d-md-block">
+                <img class="m-2 px-2" src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="150" height="auto">
                 </div>
-                <div class="col-4 text-center">
-                    <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">
+                <div class="col-lg-4 col-md-8 col-xs-8 d-none d-sm-none d-md-block">
+                    <h6 class="text-center text-body-emphasis text-decoration-none">
                     RUMAH SAKIT UMUM PINDAD BANDUNG</br>
                     Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
                     Kota Bandung, Jawa Barat 40285 </br>
-                    </a>
+                    </h6>
                 </div>
-                <div class="col-4 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-sm btn-outline-secondary mx-4" href="{{ route('sdm') }}">{{ $petugas }}</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('logout') }}">Keluar</a>
+                <div class="col-lg-4 col-md-2 col-xs-2 d-none d-sm-none d-md-block">
+                <div class="d-flex flex-row-reverse m-2 px-2">
+                    <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('logout') }}">Keluar</a>
+                    <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('sdm') }}">{{ $petugas }}</a>
+                </div>
                 </div>
             </div>
         </header>
     </div>
-    <div class="container-fluid">
-        <div class="d-flex flex-column align-items-center p-4">
-            <p class="h1">
-                Penilaian Layanan {{ $layanan }}
-            </p>
-            <p class="h1">
-                Selamat datang, {{ session()->get('nama_pelanggan') }}
-            </p>
+
+    <main class="container">
+        <div class="container-fluid">
+            <div class="d-flex flex-column align-items-center p-4">
+                <p class="h1">
+                    Survey Layanan {{ $layanan }}
+                </p>
+                <p class="h1">
+                    Selamat datang, {{ session()->get('nama_pelanggan') }}
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="d-flex flex-row justify-content-around text-center p-4">
-            @forelse ($respons as $item)
-            <div wire:key="{{ $item->id }}">
+        <div class="container-fluid">
+            <div class="d-flex flex-row flex-wrap justify-content-around text-center p-4">
+                @forelse ($respons as $item)
+                <div wire:key="{{ $item->id }}" 
+                    wire:transition.scale.origin.top 
+                    class="p-2 hover-zoom">
                     <button 
                         type="button"
-                        wire:click="save({{ $item->parentRespon->skor_respon }})"
-                        wire:confirm="Anda Yakin Akan menilai {{ $layanan }} {{ $item->parentRespon->nama_respon }}"
-                        class="btn border border-2">
-                        <i class="fa-solid fa-thumbs-up fa-6x p-2"></i>
+                        wire:click="preSave({{ $item->parentRespon->id }})"
+                        class="btn btn-custom border border-2"
+                        style="color:{{ $item->parentRespon->tag_warna_respon }};">
+                        <i class="{{ $item->parentRespon->icon_respon }} fa-6x p-2"></i>
                         <p class="h2">{{ $item->parentRespon->nama_respon }}</p>
                     </button>
-            </div>
+                </div>
                 @empty
-                <p>tidak ada respon nilai</p>
-            @endforelse
+                    <p>tidak ada respon nilai</p>
+                @endforelse
+            </div>
         </div>
-    </div>
+    </main>
     @persist('times')
     <footer class="py-5 text-center text-body-secondary">
         <p class="mb-0">
@@ -55,11 +62,23 @@
         <div 
             x-data 
             x-timeout:1000="$el.innerText=$moment().format('LTS')"
-            id="waktuSurvey"></div>
+            id="waktuSurvey">
+        </div>
     </footer>
     @endpersist
 
 </div>
+
+@push('styles')
+<style>
+    .btn-custom {
+        transition: transform 250ms;
+    }
+    .btn-custom:hover {
+        transform: translateY(-10px);
+    }
+</style>
+@endpush
 
 @push('scripts')
 <script src="https://unpkg.com/@victoryoalli/alpinejs-timeout@1.0.0/dist/timeout.min.js" defer></script>

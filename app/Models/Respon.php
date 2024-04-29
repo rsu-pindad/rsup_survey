@@ -15,7 +15,9 @@ class Respon extends Model
 
     protected $fillable = [
         'nama_respon',
-        'skor_respon'
+        'icon_respon',
+        'tag_warna_respon',
+        'skor_respon',
     ];
 
     protected $guarded = 'id';

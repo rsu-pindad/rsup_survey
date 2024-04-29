@@ -36,6 +36,8 @@ class ResponController extends BaseController
         $input = $request->all();
         $validator = Validator::make($input, [
             'nama_respon' => 'required|max:20|min:3',
+            'icon_respon' => 'required|max:9|min:1',
+            'tag_warna_respon' => 'required|max:9|min:1',
             'skor_respon' => 'required|numeric|max:9|min:1'
         ]);
         if($validator->fails()){

@@ -24,14 +24,6 @@ class SurveyForm extends Form
         $this->validate();
         $profileKaryawan = KaryawanProfile::where('user_id', Auth::user()->id)->first();
         try {
-            // $store = new SurveyPelanggan;
-            // $store->karyawan_id = $profileKaryawan->id;
-            // $store->penjamin_layanan_id = $this->penjamin;
-            // $store->nama_pelanggan = $this->name;
-            // $store->handphone_pelanggan = $this->phone;
-            // $store->shift = 1;
-            // $store->nilai_skor = 0;
-            // $store->save();
             session()->put('karyawan_id', $profileKaryawan->id);
             session()->put('penjamin_layanan_id', $this->penjamin);
             session()->put('nama_pelanggan', $this->name);

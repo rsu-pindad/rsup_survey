@@ -14,7 +14,6 @@ class Penjamin extends Model
     protected $table = 'penjamin';
 
     protected $fillable = [
-        'unit_id',
         'nama_penjamin',
     ];
 

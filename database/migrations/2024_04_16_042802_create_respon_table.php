@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('respon', function (Blueprint $table) {
             $table->id();
             $table->string('nama_respon');
+            $table->string('icon_respon');
+            $table->string('tag_warna_respon');
             $table->tinyInteger('skor_respon');
             $table->softDeletes();
             $table->timestamps();

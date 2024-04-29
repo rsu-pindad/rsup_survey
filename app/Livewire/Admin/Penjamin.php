@@ -13,7 +13,7 @@ class Penjamin extends Component
 
     public function render()
     {
-        $penjamins = PenjaminModel::latest()->orderBy('unit_id')->get();
+        $penjamins = PenjaminModel::latest()->get();
         return view('livewire.admin.penjamin')->with([
             'penjamins' => PenjaminResource::collection($penjamins),
         ]);

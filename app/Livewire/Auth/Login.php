@@ -4,33 +4,47 @@ namespace App\Livewire\Auth;
 
 use App\Livewire\Forms\LoginForm;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Http;
-use App\Models\User;
-use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Login extends Component
 {
-    public LoginForm $form;
+    use LivewireAlert;
 
-    public $title = 'Masuk';
+    public LoginForm $form;
 
     public function login()
     {
+        $this->form->checkAuth();
         if (Auth::attempt($this->form->all())) {
             session()->regenerate();
-            // $user = User::where('email', $this->form->only('email'))->first();
-            // $user->update(['last_login' => Carbon::now()]);
+            session()->put('userName', Auth::user()->name);
+            session()->put('userId', Auth::user()->id);
             return redirect()->intended('/');
         } else {
-            session()->flash('error', 'email and password are wrong.');
-            // throw ValidationException::withMessages([
-            //     // 'email' => 'email ata password salah'
-            //     'error' => 'email atau password salah'
-            // ]);
+            $this->form->reset('password');
+            $this->alert('warning', 'Gagal', [
+                'position' => 'center',
+                'timer' => 2000,
+                'toast' => true,
+                'text' => 'email atau password salah !',
+                'timerProgressBar' => true,
+            ]);
         }
     }
 
+    public function placeholder()
+    {
+        return <<<'HTML'
+            <div>
+                <!-- Loading spinner... -->
+                <svg>...</svg>
+            </div>
+            HTML;
+    }
+
+    #[Title('Masuk')]
     public function render()
     {
         return view('livewire.auth.login');
