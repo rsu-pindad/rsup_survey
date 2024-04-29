@@ -13,12 +13,7 @@ return new class extends Migration
     {
         Schema::create('penjamin', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('unit_id');
             $table->string('nama_penjamin');
-            $table->foreign('unit_id')->references('id')->on('unit')
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
