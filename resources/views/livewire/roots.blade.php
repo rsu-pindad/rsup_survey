@@ -2,17 +2,22 @@
   <div class="container">
     <header class="border-bottom lh-1 py-3">
       <div class="row justify-content-center px-2">
-        <div class="col-lg-4 col-md-2 col-xs-2 d-none d-sm-none d-md-block">
-          <img class="m-2 px-2" src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="150" height="auto">
+        <div class="col-lg-4 col-md-3 col-xs-2 d-none d-xs-none d-md-block">
+          <img 
+            class="m-2 px-2" 
+            src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" 
+            alt="logo" 
+            width="150" 
+            height="auto">
         </div>
-        <div class="col-lg-4 col-md-8 col-xs-8 d-none d-sm-none d-md-block">
+        <div class="col-lg-4 col-md-6 col-xs-8 d-none d-xs-none d-md-block">
             <h6 class="text-center text-body-emphasis text-decoration-none">
             RUMAH SAKIT UMUM PINDAD BANDUNG</br>
             Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
             Kota Bandung, Jawa Barat 40285 </br>
             </h6>
         </div>
-        <div class="col-lg-4 col-md-2 col-xs-2 d-sm-block d-md-block">
+        <div class="col-lg-4 col-md-3 col-xs-2 d-xs-block d-md-block">
           <div class="d-flex flex-row-reverse m-2 px-2">
             <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('logout') }}">Keluar</a>
             <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('sdm') }}">{{ $petugas }}</a>
@@ -40,23 +45,29 @@
                   </p>
               </div>
               <div class="col-lg-6 px-0 text-center">
-                  <img class="mb-4" src="http://psurvey.pindadmedika.com/_next/image?url=%2Fbandung.jpeg&w=828&q=75" alt="logo" width="100%" height="100%">
+                  <img 
+                  class="mb-4" 
+                  src="http://psurvey.pindadmedika.com/_next/image?url=%2Fbandung.jpeg&w=828&q=75" 
+                  alt="logo" width="100%" height="100%"
+                  style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
               </div>
           </div>
       </div>
   </main>
   
-  @persist('times')
-  <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
+  <div class="container">
+    @persist('times')
+      <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
       <p class="mb-0">
-          <a href="#" class="text-decoration-none text-muted">waktu survey</a>
+        <a href="#" class="text-decoration-none text-muted">waktu survey</a>
       </p>
       <div 
         x-data 
         x-timeout:1000="$el.innerText=$moment().format('LTS')"
         id="waktuSurvey"></div>
-  </footer>
-  @endpersist
+      </footer>
+    @endpersist
+  </div>
 
   <!-- Modal -->
   <div wire:transition.scale.origin.top
@@ -142,6 +153,7 @@
       </div>
     </div>
   </div>
+  
 </div>
 
 @push('styles')
