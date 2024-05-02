@@ -38,13 +38,22 @@ class Roots extends Component
     {
         $profile = KaryawanProfile::where('user_id', session()->get('userId'))->first();
         $layanan = Layanan::where('id', $profile->layanan_id)->first();
-        $penjaminLayanan = PenjaminLayanan::distinct()->where('layanan_id', $layanan->id)->get('penjamin_id');
-
+        
         if ($profile) {
-            return view('livewire.roots')->with([
-                'petugas' => session()->get('userName'),
-                'penjamin' => $penjaminLayanan,
-            ]);
+            if($layanan != null){
+            $penjaminLayanan = PenjaminLayanan::distinct()->where('layanan_id', $layanan->id)->get('penjamin_id');
+                return view('livewire.roots')->with([
+                    'petugas' => session()->get('userName'),
+                    'penjamin' => $penjaminLayanan,
+                ]);
+            }else{
+                return <<<HTML
+                <div>
+                    <p>Layanan tidak ditemukan... hubungi sdm</p>
+                    <a href="/logout">Keluar</a>
+                </div>
+                HTML;
+            }
         } else {
             return <<<HTML
                 <div>

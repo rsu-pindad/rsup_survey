@@ -34,15 +34,18 @@
             </div>
         </div>
         <div class="container-fluid">
-            <div class="d-flex flex-row flex-wrap justify-content-around text-center p-4">
+            <div 
+                class="d-flex flex-row flex-wrap justify-content-around text-center p-2 m-4">
                 @forelse ($respons as $item)
                 <div wire:key="{{ $item->id }}" 
-                    wire:transition.scale.origin.top 
-                    class="p-2 hover-zoom">
+                    wire:transition.out.opacity.duration.200ms 
+                    wire:loading.attr="disabled" 
+                    class="p-3 m-2 border border-2"
+                    style="max-width: min-content;">
                     <button 
                         type="button"
                         wire:click="preSave({{ $item->parentRespon->id }})"
-                        class="btn btn-custom border border-2"
+                        class="btn btn-custom m-2"
                         style="color:{{ $item->parentRespon->tag_warna_respon }};">
                         <i class="{{ $item->parentRespon->icon_respon }} fa-6x p-2"></i>
                         <p class="h2">{{ $item->parentRespon->nama_respon }}</p>
@@ -54,18 +57,21 @@
             </div>
         </div>
     </main>
-    @persist('times')
-    <footer class="py-5 text-center text-body-secondary">
-        <p class="mb-0">
-            <a href="#" class="text-decoration-none text-muted">waktu survey</a>
-        </p>
-        <div 
-            x-data 
-            x-timeout:1000="$el.innerText=$moment().format('LTS')"
-            id="waktuSurvey">
-        </div>
-    </footer>
-    @endpersist
+
+    <div class="container">
+        @persist('times')
+            <footer class="py-5 text-center text-body-secondary">
+                <p class="mb-0">
+                    <a href="#" class="text-decoration-none text-muted">waktu survey</a>
+                </p>
+                <div 
+                    x-data 
+                    x-timeout:1000="$el.innerText=$moment().format('LTS')"
+                    id="waktuSurvey">
+                </div>
+            </footer>
+        @endpersist
+    </div>
 
 </div>
 
