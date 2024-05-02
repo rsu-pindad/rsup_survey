@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Revolution\Google\Sheets\Facades\Sheets;
 
 class SurveyPetugasPelayanan extends Component
 {
@@ -50,7 +51,7 @@ class SurveyPetugasPelayanan extends Component
             return $this->flash('warning', 'Gagal Menilai Layanan', [
                 'position' => 'center',
                 'toast' => true,
-                'text' => $th->getMessages(),
+                'text' => $th->getMessage(),
             ]);
         }
     }
@@ -73,6 +74,8 @@ class SurveyPetugasPelayanan extends Component
     public function save($responSkor)
     {
         try {
+            \Carbon\Carbon::setLocale('id');
+            // $time = \Carbon\Carbon::now()->shiftTimezone('Asia/Jakarta');
             $time = \Carbon\Carbon::now()->setTimezone('Asia/Jakarta');
             $store = new SurveyPelanggan;
             $store->karyawan_id = session()->get('karyawan_id');
@@ -85,10 +88,42 @@ class SurveyPetugasPelayanan extends Component
             $store->updated_at = $time;
             $store->save();
             if ($store) {
+                $this->saveSheet($responSkor, $time);
+                $request->session()->forget([
+                    'penjamin_layanan_id', 'nama_pelanggan','handphone_pelanggan'
+                ]);
                 return true;
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
+        }
+    }
+
+    private function saveSheet($responSkor, $time)
+    {
+        try {
+            \Carbon\Carbon::setLocale('id');
+            $karyawan = \App\Models\KaryawanProfile::with(['parentUnit', 'parentLayanan'])
+            ->where('id', session()->get('karyawan_id'))->first();
+            $penjamin = \App\Models\PenjaminLayanan::with(['parentPenjamin'])
+            ->where('penjamin_id',session()->get('penjamin_layanan_id'))->first();
+            $timeformat = \Carbon\Carbon::parse($time)->translatedFormat('d F Y H:i');
+            $sheets = Sheets::spreadsheet('1FEz14MGqe8n5UQ4voiy21nmWxYSub_eiCjuh3LLH5r0')
+            ->sheet('Sheet1')
+            ->append(
+                [
+                    [
+                        'TGL_SURVEY' => $timeformat, 
+                        'PEGAWAI' => $karyawan->nama_karyawanprofile, 
+                        'UNIT' => $karyawan->parentUnit->nama_unit, 
+                        'PELAYANAN' => $karyawan->parentLayanan->nama_layanan,
+                        'NAMA_PASIEN' => session()->get('nama_pelanggan'),
+                        'PENJAMIN' => $penjamin->parentPenjamin->nama_penjamin,
+                        'NILAI_SURVEY_KEPUASAN' => $responSkor,
+                    ]
+                ]);
+        } catch (\Throwable $th) {
+            return $th->getMessage;
         }
     }
 
