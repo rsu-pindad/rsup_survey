@@ -41,9 +41,6 @@
                         <li><a class="dropdown-item" href="{{ route('root-karyawan-profile') }}"  wire:navigate="false">Karyawan Profile</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page-laporan" href="{{ route('root-laporan-custom') }}" wire:navigate="false">Laporan</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Users
