@@ -8,10 +8,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0 mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page-beranda" href="#">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page-survey" href="{{ route('root-survey-petugas', ['id' => Auth()->user()->id]) }}">Survey</a>
+                        <a class="nav-link" aria-current="page-survey" href="{{ route('root-survey-petugas', ['id' => Auth()->user()->id]) }}" wire:navigate="false">Survey</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page-unit" href="{{ route('root-unit') }}" wire:navigate="false">Unit</a>
@@ -43,6 +40,9 @@
                         <li><a class="dropdown-item" href="{{ route('root-karyawan') }}"  wire:navigate="false">Karyawan</a></li>
                         <li><a class="dropdown-item" href="{{ route('root-karyawan-profile') }}"  wire:navigate="false">Karyawan Profile</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page-laporan" href="{{ route('root-laporan-custom') }}" wire:navigate="false">Laporan</a>
                     </li>
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -158,12 +158,12 @@
 </style>
 @endpush
 
-@push('styles')
+@push('')
 {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"> --}}
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css">
 @endpush
 
-@push('scripts')
+@push('')
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> --}}
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
