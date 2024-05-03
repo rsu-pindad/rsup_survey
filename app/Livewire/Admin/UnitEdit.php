@@ -5,8 +5,8 @@ namespace App\Livewire\Admin;
 use App\Livewire\Forms\UnitEditForm as Form;
 use App\Models\Unit;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Component;
 use Livewire\Attributes\Locked;
+use Livewire\Component;
 
 class UnitEdit extends Component
 {
@@ -14,7 +14,7 @@ class UnitEdit extends Component
 
     public Form $form;
 
-    #[Locked] 
+    #[Locked]
     public $id;
 
     public function mount($id)
@@ -35,7 +35,7 @@ class UnitEdit extends Component
             return $this->flash('success', 'berhasil', [
                 'position' => 'center',
                 'toast' => true,
-                'text' => 'data unit berhasil disimpan',
+                'text' => 'data unit berhasil diperbarui',
             ], route('root-unit'));
         } else {
             return $this->alert('warning', 'gagal', [
