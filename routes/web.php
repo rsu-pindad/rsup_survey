@@ -10,6 +10,8 @@ use App\Livewire\Admin\Respon;
 use App\Livewire\Admin\RootsAdmin;
 use App\Livewire\Admin\SurveyPetugas;
 use App\Livewire\Admin\Unit;
+use App\Livewire\Admin\UnitEdit;
+use App\Livewire\Admin\Laporan\LaporanCustom;
 use App\Livewire\Auth\Login;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
@@ -34,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/karyawan', Karyawan::class)->name('root-karyawan');
     Route::get('/karyawan-profile', KaryawanProfile::class)->name('root-karyawan-profile');
     Route::get('/unit', Unit::class)->name('root-unit');
+    Route::get('/unit/edit/{id}', UnitEdit::class)->name('root-unit-edit');
     Route::get('/penjamin', Penjamin::class)->name('root-penjamin');
     Route::get('/layanan', Layanan::class)->name('root-layanan');
     Route::get('/respon', Respon::class)->name('root-respon');
@@ -42,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
     Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
+    Route::get('/laporan-custom', LaporanCustom::class)->name('root-laporan-custom');
+
     // Route::get('survey', function(){
     //     return 'halaman isi survey pelayanan';
     // })->name('isi-survey-pelayanan');
