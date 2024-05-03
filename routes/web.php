@@ -3,15 +3,17 @@
 use App\Livewire\Admin\Karyawan;
 use App\Livewire\Admin\KaryawanProfile;
 use App\Livewire\Admin\Layanan;
+use App\Livewire\Admin\LayananEdit;
 use App\Livewire\Admin\LayananRespon;
 use App\Livewire\Admin\Penjamin;
+use App\Livewire\Admin\PenjaminEdit;
 use App\Livewire\Admin\PenjaminLayanan;
 use App\Livewire\Admin\Respon;
+use App\Livewire\Admin\ResponEdit;
 use App\Livewire\Admin\RootsAdmin;
 use App\Livewire\Admin\SurveyPetugas;
 use App\Livewire\Admin\Unit;
 use App\Livewire\Admin\UnitEdit;
-use App\Livewire\Admin\Laporan\LaporanCustom;
 use App\Livewire\Auth\Login;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
@@ -38,14 +40,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/unit', Unit::class)->name('root-unit');
     Route::get('/unit/edit/{id}', UnitEdit::class)->name('root-unit-edit');
     Route::get('/penjamin', Penjamin::class)->name('root-penjamin');
+    Route::get('/penjamin/edit/{id}', PenjaminEdit::class)->name('root-penjamin-edit');
     Route::get('/layanan', Layanan::class)->name('root-layanan');
+    Route::get('/layanan/edit/{id}', LayananEdit::class)->name('root-layanan-edit');
     Route::get('/respon', Respon::class)->name('root-respon');
+    Route::get('/respon/edit/{id}', ResponEdit::class)->name('root-respon-edit');
     Route::get('/penjamin-layanan', PenjaminLayanan::class)->name('root-penjamin-layanan');
     Route::get('/layanan-respon', LayananRespon::class)->name('root-layanan-respon');
 
     Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
     Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
-    Route::get('/laporan-custom', LaporanCustom::class)->name('root-laporan-custom');
 
     // Route::get('survey', function(){
     //     return 'halaman isi survey pelayanan';
