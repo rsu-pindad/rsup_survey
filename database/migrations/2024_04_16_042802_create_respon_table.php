@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('icon_respon');
             $table->string('tag_warna_respon');
             $table->tinyInteger('skor_respon');
+            $table->tinyInteger('urutan_respon');
             $table->softDeletes();
             $table->timestamps();
         });
