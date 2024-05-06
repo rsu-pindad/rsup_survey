@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
+use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
@@ -33,7 +34,8 @@ final class LayananTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        $this->showCheckBox();
+        // $this->showCheckBox();
+        $this->showRadioButton();
 
         return [
             Exportable::make('export')
@@ -46,6 +48,7 @@ final class LayananTable extends PowerGridComponent
         ];
     }
 
+    #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
         return Layanan::query();
@@ -74,26 +77,10 @@ final class LayananTable extends PowerGridComponent
         ];
     }
 
-    public function header(): array
-    {
-        return [
-            Button::add('new-modal')
-                ->slot('Layanan')
-                ->class('btn btn-primary')
-                ->openModal('', []),
-        ];
-    }
-
     public function filters(): array
     {
         return [];
     }
-
-    // #[\Livewire\Attributes\On('edit')]
-    // public function edit($rowId)
-    // {
-    //     // $this->js('alert('.$rowId.')');
-    // }
 
     #[\Livewire\Attributes\On('delete')]
     public function delete($rowId): void
@@ -144,15 +131,22 @@ final class LayananTable extends PowerGridComponent
         ];
     }
 
-    /*
-     * public function actionRules($row): array
-     * {
-     *    return [
-     *         // Hide button edit for ID 1
-     *         Rule::button('edit')
-     *             ->when(fn($row) => $row->id === 1)
-     *             ->hide(),
-     *     ];
-     * }
-     */
+    public function actionRules($row): array
+    {
+        // return [
+        //     // Hide button edit for ID 1
+        //     Rule::button('edit')
+        //         ->when(fn($row) => $row->id === 1)
+        //         ->hide(),
+        // ];
+        return [
+            Rule::radio()
+                ->when(fn($row) => $row->id == $this->selectedRow)
+                ->setAttribute('class', ''),
+            // Rule::rows()
+            //     ->setAttribute('wire:click', "\$set('selectedRow', " . $row->id . ')'),
+            Rule::rows()
+                ->setAttribute('class', ''),
+        ];
+    }
 }
