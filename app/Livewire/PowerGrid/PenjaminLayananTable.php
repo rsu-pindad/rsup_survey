@@ -72,8 +72,9 @@ final class PenjaminLayananTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Nama penjamin', 'penjamin_id')->sortable()
-            ->searchable(),
+            Column::make('Nama penjamin', 'penjamin_id')
+                ->sortable()
+                ->searchable(),
             Column::make('Nama layanan', 'layanan_id'),
             Column::action('Action')
         ];

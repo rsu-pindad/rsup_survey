@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Guest;
 
-use Livewire\Component;
-use App\Models\Unit;
-use App\Models\Layanan;
 use App\Livewire\Forms\RegisterForm as Form;
+use App\Models\Layanan;
+use App\Models\Unit;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class RegisterAdd extends Component
 {
@@ -49,19 +49,19 @@ class RegisterAdd extends Component
         // dd($this->getNpp,$this->namaKaryawan,$this->idUnit,$this->idLayanan,$this->email,$this->password);
         try {
             $store = $this->form->store(
-                $this->getNpp, 
-                $this->namaKaryawan, 
-                $this->idUnit, 
+                $this->getNpp,
+                $this->namaKaryawan,
+                $this->idUnit,
                 $this->idLayanan,
                 $this->email,
                 $this->password
             );
             // dd($store);
-            if($store){
+            if ($store) {
                 return $this->flash('success', 'registrasi berhasil silahkan masuk', [
                     'position' => 'center',
                 ], route('login'));
-            }else{
+            } else {
                 $this->alert('warning', 'Gagal', [
                     'position' => 'center',
                     'timer' => 2000,
@@ -88,11 +88,11 @@ class RegisterAdd extends Component
         $this->validateOnly('namaKaryawan');
         try {
             $store = $this->form->store($this->getNpp, $this->namaKaryawan, $this->idUnit, $this->idLayanan);
-            if($store){
+            if ($store) {
                 return $this->flash('success', 'registrasi berhasil silahkan masuk', [
                     'position' => 'center',
                 ], route('login'));
-            }else{
+            } else {
                 $this->alert('warning', 'Gagal', [
                     'position' => 'center',
                     'timer' => 2000,
