@@ -2,21 +2,21 @@
 
 namespace App\Livewire\PowerGrid;
 
+use App\Livewire\Attributes\Locked;
 use App\Models\Respon;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use PowerComponents\LivewirePowerGrid\Facades\Filter;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
-use App\Livewire\Attributes\Locked;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use PowerComponents\LivewirePowerGrid\PowerGridFields;
 
 final class ResponTable extends PowerGridComponent
 {
@@ -68,23 +68,17 @@ final class ResponTable extends PowerGridComponent
             Column::make('Nama respon', 'nama_respon')
                 ->sortable()
                 ->searchable(),
-
             Column::make('Icon respon', 'icon_respon'),
-
             Column::make('Tag warna respon', 'tag_warna_respon'),
-
             Column::make('Skor respon', 'skor_respon'),
-
             Column::make('Urutan respon', 'urutan_respon'),
-
             Column::action('Action')
         ];
     }
 
     public function filters(): array
     {
-        return [
-        ];
+        return [];
     }
 
     #[\Livewire\Attributes\On('delete')]
@@ -136,15 +130,14 @@ final class ResponTable extends PowerGridComponent
         ];
     }
 
-    /*
     public function actionRules($row): array
     {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
+        return [
+            Rule::radio()
+                ->when(fn($row) => $row->id == $this->selectedRow)
+                ->setAttribute('class', ''),
+            Rule::rows()
+                ->setAttribute('class', ''),
         ];
     }
-    */
 }
