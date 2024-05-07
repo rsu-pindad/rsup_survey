@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Respon;
 
 use Livewire\Component;
 use App\Models\Respon as ResponModel;
@@ -11,7 +11,7 @@ class Respon extends Component
     public function render()
     {
         $respons = ResponModel::latest()->get();
-        return view('livewire.admin.respon')->with([
+        return view('livewire.admin.respon.respon')->with([
             'respons' => ResponResource::collection($respons)
         ]);
     }
