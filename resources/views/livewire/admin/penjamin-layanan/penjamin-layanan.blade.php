@@ -12,7 +12,7 @@
                             <h4>Tabel Penjamin Layanan</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:powergrid.penjamin-layanan-table/>
+                            <livewire:PowerGrid.PenjaminLayananTable/>
                         </div>
                     </div>
                 </div>

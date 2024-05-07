@@ -12,7 +12,7 @@
                             <h4>Tabel Unit</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:powergrid.unit-table/>
+                            <livewire:PowerGrid.UnitTable/>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
                             <h4>Tabel Karyawan - Profile</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:powergrid.karyawan-profile-table/>
+                            <livewire:PowerGrid.KaryawanProfileTable/>
                         </div>
                     </div>
                 </div>
