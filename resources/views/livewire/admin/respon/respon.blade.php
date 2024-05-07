@@ -12,7 +12,7 @@
                             <h4>Tabel Respon</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:powergrid.respon-table/>
+                            <livewire:PowerGrid.ResponTable/>
                         </div>
                     </div>
                 </div>

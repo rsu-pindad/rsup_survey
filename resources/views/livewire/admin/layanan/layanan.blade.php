@@ -12,7 +12,7 @@
                             <h4>Tabel Layanan</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:powergrid.layanan-table/>
+                            <livewire:PowerGrid.LayananTable/>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
                             <h4>Tabel User</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:powergrid.superadmin.user-table/>
+                            <livewire:PowerGrid.SuperAdmin.UserTable/>
                         </div>
                     </div>
                 </div>

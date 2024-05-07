@@ -12,7 +12,7 @@
                             <h4>Tabel Penjamin</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:powergrid.penjamin-table/>
+                            <livewire:PowerGrid.PenjaminTable/>
                         </div>
                     </div>
                 </div>
