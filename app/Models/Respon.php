@@ -18,6 +18,7 @@ class Respon extends Model
         'icon_respon',
         'tag_warna_respon',
         'skor_respon',
+        'urutan_respon'
     ];
 
     protected $guarded = 'id';

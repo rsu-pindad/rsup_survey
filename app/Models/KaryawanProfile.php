@@ -19,6 +19,7 @@ class KaryawanProfile extends Model
         'unit_id',
         'layanan_id',
         'nama_karyawanprofile',
+        'updated_at',
     ];
 
     protected $hiden = [

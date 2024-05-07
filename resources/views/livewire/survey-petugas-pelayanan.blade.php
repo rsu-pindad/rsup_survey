@@ -37,13 +37,15 @@
             <div 
                 class="d-flex flex-row flex-wrap justify-content-around text-center p-2 m-4">
                 @forelse ($respons as $item)
-                <div wire:key="{{ $item->id }}" 
+                <div 
+                    wire:key="{{ $item->id }}" 
+                    wire:loading.remove
                     wire:transition.out.opacity.duration.200ms 
-                    wire:loading.attr="disabled" 
                     class="p-3 m-2 border border-2"
                     style="max-width: min-content;">
                     <button 
                         type="button"
+                        wire:loading.attr="disabled" 
                         wire:click="preSave({{ $item->parentRespon->id }})"
                         class="btn btn-custom m-2"
                         style="color:{{ $item->parentRespon->tag_warna_respon }};">

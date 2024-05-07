@@ -20,16 +20,9 @@ class SurveyPelangganSeeder extends Seeder
         // dd($time);
         try {
             // SurveyPelanggan::truncate();
-            for ($x = 0; $x <= 1000; $x++) {
-                $randomUser = DB::table('users')
-                    // ->inRandomOrder()
-                    ->where('id', 1)
-                    ->first();
-                // dd($randomUser->id);
-                // Log::debug($randomUser);
-                DB::beginTransaction();
+            for ($x = 0; $x <= 100; $x++) {
                 $selectKaryawanProfile = DB::table('karyawanprofile')
-                    ->where('user_id', $randomUser->id)
+                    ->inRandomOrder()
                     ->first();
                 // dd($selectKaryawanProfile);
                 $selectUnit = DB::table('unit')
@@ -42,13 +35,14 @@ class SurveyPelangganSeeder extends Seeder
                     ->first();
                 // dd($selectPenjamin);
                 $selectPenjaminLayanan = DB::table('penjamin_layanan')
-                    ->where('penjamin_id', $selectPenjamin->id)
-                    ->inRandomOrder()
-                    ->first();
+                ->where('penjamin_id', $selectPenjamin->id)
+                ->inRandomOrder()
+                ->first();
                 // dd($selectPenjaminLayanan);
+                DB::beginTransaction();
                 $surveyPelanggan = DB::table('survey_pelanggan')
                     ->insert([
-                        'karyawan_id' => $selectKaryawan->id,
+                        'karyawan_id' => $selectKaryawanProfile->id,
                         'penjamin_layanan_id' => $selectPenjaminLayanan->id,
                         'nama_pelanggan' => fake()->word(),
                         'handphone_pelanggan' => fake()->unique()->phoneNumber(),
@@ -57,12 +51,10 @@ class SurveyPelangganSeeder extends Seeder
                         'created_at' => $time,
                         'updated_at' => $time,
                     ]);
-                // dd($surveyPelanggan);
                 DB::commit();
-                Log::debug($surveyPelanggan);
             }
         } catch (\Throwable $th) {
-            Log::debug($th->getMessage());
+            // Log::debug($th->getMessage());
             DB::rollback();
         }
     }
