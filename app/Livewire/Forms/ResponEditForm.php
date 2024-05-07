@@ -38,6 +38,28 @@ class ResponEditForm extends Form
         $this->urutanRespon = $respon->urutan_respon;
     }
 
+    public function store()
+    {
+        $this->validate();
+        try {
+            $respon = new Respon;
+            $respon->nama_respon = $this->namaRespon;
+            $respon->icon_respon = $this->iconRespon;
+            $respon->tag_warna_respon = $this->tagWarnaRespon;
+            $respon->skor_respon = $this->skorRespon;
+            $respon->urutan_respon = $this->urutanRespon;
+            $respon->save();
+            if($respon){
+                $this->reset();
+                return true;
+            }else{
+                return false;
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
     public function update()
     {
         $this->validate();
