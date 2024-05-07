@@ -22,6 +22,24 @@ class LayananEditForm extends Form
         $this->namaLayanan = $layanan->nama_layanan;
     }
 
+    public function store()
+    {
+        $this->validate();
+        try {
+            $layanan = new Layanan;
+            $layanan->nama_layanan = $this->namaLayanan;
+            $layanan->save();
+            if($layanan){
+                $this->reset();
+                return true;
+            }else{
+                return false;
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
     public function update()
     {
         $this->validate();
