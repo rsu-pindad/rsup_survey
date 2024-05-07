@@ -22,6 +22,24 @@ class UnitEditForm extends Form
         $this->namaUnit = $unit->nama_unit;
     }
 
+    public function store()
+    {
+        $this->validate();
+        try {
+            $unit = new Unit;
+            $unit->nama_unit = $this->namaUnit;
+            $unit->save();
+            if ($unit) {
+                $this->reset();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
     public function update()
     {
         $this->validate();
