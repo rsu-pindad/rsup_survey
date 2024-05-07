@@ -40,6 +40,7 @@ final class ResponTable extends PowerGridComponent
         ];
     }
 
+    #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
         return Respon::query();
