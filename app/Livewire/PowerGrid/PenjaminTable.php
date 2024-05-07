@@ -27,7 +27,7 @@ final class PenjaminTable extends PowerGridComponent
 
     public function setUp(): array
     {
-        $this->showCheckBox();
+        $this->showRadioButton();
 
         return [
             Exportable::make('export')
@@ -40,6 +40,7 @@ final class PenjaminTable extends PowerGridComponent
         ];
     }
 
+    #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
         return Penjamin::query();
@@ -65,16 +66,6 @@ final class PenjaminTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
             Column::action('Action')
-        ];
-    }
-
-    public function header(): array
-    {
-        return [
-            Button::add('new-modal')
-                ->slot('Penjamin')
-                ->class('btn btn-primary')
-                ->openModal('', []),
         ];
     }
 
