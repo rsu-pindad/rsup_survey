@@ -37,9 +37,9 @@ class Roots extends Component
     public function render()
     {
         $profile = KaryawanProfile::where('user_id', session()->get('userId'))->first();
-        $layanan = Layanan::where('id', $profile->layanan_id)->first();
-
+        
         if ($profile) {
+            $layanan = Layanan::where('id', $profile->layanan_id)->first();
             if ($layanan != null) {
                 $penjaminLayanan = PenjaminLayanan::distinct()->where('layanan_id', $layanan->id)->get('penjamin_id');
                 return view('livewire.roots')->with([
