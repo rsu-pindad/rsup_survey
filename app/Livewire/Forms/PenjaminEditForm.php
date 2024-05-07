@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Attributes\Validate;
-use Livewire\Attributes\Locked;
-use Livewire\Form;
 use App\Models\Penjamin;
+use Livewire\Attributes\Locked;
+use Livewire\Attributes\Validate;
+use Livewire\Form;
 
 class PenjaminEditForm extends Form
 {
@@ -22,6 +22,24 @@ class PenjaminEditForm extends Form
         $this->namaPenjamin = $penjamin->nama_penjamin;
     }
 
+    public function store()
+    {
+        $this->validate();
+        try {
+            $penjamin = new Penjamin;
+            $penjamin->nama_penjamin = $this->namaPenjamin;
+            $penjamin->save();
+            if ($penjamin) {
+                $this->reset();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
     public function update()
     {
         try {
@@ -34,5 +52,4 @@ class PenjaminEditForm extends Form
             return $th->getMessage();
         }
     }
-
 }
