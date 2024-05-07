@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Penjamin;
 
 use App\Livewire\Forms\PenjaminEditForm as Form;
 use App\Models\Penjamin;
@@ -25,7 +25,7 @@ class PenjaminEdit extends Component
 
     public function render()
     {
-        return view('livewire.admin.penjamin-edit');
+        return view('livewire.admin.penjamin.penjamin-edit');
     }
 
     public function edit()
