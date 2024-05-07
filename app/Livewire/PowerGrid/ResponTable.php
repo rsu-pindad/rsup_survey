@@ -123,11 +123,6 @@ final class ResponTable extends PowerGridComponent
                 ->slot('edit')
                 ->class('btn btn-info')
                 ->route('root-respon-edit', [$row->id]),
-            Button::add('delete')
-                ->slot('hapus')
-                ->id()
-                ->class('btn btn-warning')
-                ->dispatch('delete', ['rowId' => $row->id])
         ];
     }
 
