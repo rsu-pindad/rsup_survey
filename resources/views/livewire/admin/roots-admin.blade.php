@@ -37,8 +37,8 @@
                             Karyawan
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="{{ route('root-karyawan') }}"  wire:navigate="false">Karyawan</a></li>
-                        <li><a class="dropdown-item" href="{{ route('root-karyawan-profile') }}"  wire:navigate="false">Karyawan Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-karyawan') }}" wire:navigate="false">Karyawan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-karyawan-profile') }}" wire:navigate="false">Karyawan Profile</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -46,7 +46,7 @@
                             Users
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">User</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-super-admin-user') }}" wire:navigate="false">User</a></li>
                         <li><a class="dropdown-item" href="#">Role</a></li>
                         <li><a class="dropdown-item" href="#">Permission</a></li>
                         </ul>
