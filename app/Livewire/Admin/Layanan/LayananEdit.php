@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Layanan;
 
 use App\Livewire\Forms\LayananEditForm as Form;
 use App\Models\Layanan;
@@ -25,7 +25,7 @@ class LayananEdit extends Component
 
     public function render()
     {
-        return view('livewire.admin.layanan-edit');
+        return view('livewire.admin.layanan.layanan-edit');
     }
 
     public function edit()
@@ -35,7 +35,7 @@ class LayananEdit extends Component
             return $this->flash('success', 'berhasil', [
                 'position' => 'center',
                 'toast' => true,
-                'text' => 'data layana berhasil diperbarui'
+                'text' => 'data layanan berhasil diperbarui'
             ], route('root-layanan'));
         } else {
             return $this->alert('warning', 'gagal', [
