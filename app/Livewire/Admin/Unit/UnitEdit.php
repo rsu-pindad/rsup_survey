@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Unit;
 
 use App\Livewire\Forms\UnitEditForm as Form;
 use App\Models\Unit;
@@ -25,7 +25,7 @@ class UnitEdit extends Component
 
     public function render()
     {
-        return view('livewire.admin.unit-edit');
+        return view('livewire.admin.unit.unit-edit');
     }
 
     public function edit()
