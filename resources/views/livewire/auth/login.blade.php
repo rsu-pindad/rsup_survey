@@ -42,7 +42,7 @@
                         class="fa-solid fa-spinner"></i>
                 </div>
                 <div class="align-self-center p-2">
-                    <p class="mt-5 mb-3 text-body-secondary text-uppercase">©2024 Rsup Pindad</p>
+                    <p class="mt-5 mb-3 text-body-secondary text-uppercase">©2024 Rsu Pindad</p>
                 </div>
             </div>
         </div>
