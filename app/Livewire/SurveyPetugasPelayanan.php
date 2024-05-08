@@ -89,7 +89,7 @@ class SurveyPetugasPelayanan extends Component
             $store->save();
             if ($store) {
                 $this->saveSheet($responSkor, $time);
-                $this->sendWhatsapp();
+                // $this->sendWhatsapp();
                 $request->session()->forget([
                     'penjamin_layanan_id', 'nama_pelanggan', 'handphone_pelanggan'
                 ]);
@@ -177,10 +177,24 @@ class SurveyPetugasPelayanan extends Component
     public function render()
     {
         $layananKaryawan = KaryawanProfile::where('user_id', Auth::user()->id)->first();
-        $repons = LayananRespon::distinct()->where('layanan_id', $layananKaryawan->layanan_id)->get('respon_id');
+
+        $respon =
+            LayananRespon::distinct()
+                ->where('layanan_id', $layananKaryawan->layanan_id)
+                ->with([
+                    'parentLayanan' => function ($query) use ($layananKaryawan) {
+                        $query->find($layananKaryawan->layanan_id);
+                    },
+                    'parentRespon' => function ($query) {
+                        $query->orderBy('urutan_respon', 'ASC');
+                    },
+                ])
+                ->orderBy('layanan_id', 'DESC')
+        ->get();
+        // dd($respon->get()->toArray());
         return view('livewire.survey-petugas-pelayanan')->with([
             'petugas' => Auth::user()->name,
-            'respons' => $repons,
+            'respons' => $respon,
             'layanan' => $layananKaryawan->parentLayanan->nama_layanan,
         ]);
     }
