@@ -58,7 +58,7 @@
                             {{ Auth()->user()->name }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="#">Pengaturan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-self') }}">Pengaturan</a></li>
                         <li><a class="dropdown-item" href="#">Notifikasi</a></li>
                         <li><a class="dropdown-item" href="{{ route('logout') }}">Keluar</a></li>
                         </ul>

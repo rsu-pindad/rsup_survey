@@ -20,6 +20,7 @@ use App\Livewire\Admin\RootsAdmin;
 use App\Livewire\Admin\SurveyPetugas;
 use App\Livewire\Admin\Unit\Unit;
 use App\Livewire\Admin\Unit\UnitEdit;
+use App\Livewire\Self\UserSetting;
 use App\Livewire\Auth\Login;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
@@ -70,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
     
     Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
+    
+    Route::get('/self', UserSetting::class)->name('root-self');
 
     // Route::get('survey', function(){
     //     return 'halaman isi survey pelayanan';
