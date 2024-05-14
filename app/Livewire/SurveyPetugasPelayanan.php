@@ -41,7 +41,7 @@ class SurveyPetugasPelayanan extends Component
     {
         try {
             $this->validate();
-            $store = $this->save($this->skor_respon,$this->nama_respon);
+            $store = $this->save($this->skor_respon, $this->nama_respon);
             if ($store == true) {
                 return $this->flash('success', 'Berhasil Menilai Layanan', [
                     'position' => 'center',
@@ -194,11 +194,9 @@ class SurveyPetugasPelayanan extends Component
                 ])
                 ->orderBy('layanan_id', 'DESC')
                 ->get();
-        // dd($respon);
-        // $response = $respon->pluck('parentRespon')->toArray();
-        $response = (object)$respon->pluck('parentRespon');
+        $response = (object) $respon->pluck('parentRespon');
 
-        $collectionRespon = collect((object)$response);
+        $collectionRespon = collect((object) $response);
         $sorted = $collectionRespon->sortBy('urutan_respon');
         $sorted->values()->all();
         // dd($sorted);
