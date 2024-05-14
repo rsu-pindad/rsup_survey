@@ -9,6 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Unit extends Model
@@ -35,5 +36,10 @@ class Unit extends Model
     public function penjamin() : HasMany
     {
         return $this->hasMany(Penjamin::class);
+    }
+
+    public function unitProfil() : HasOne
+    {
+        return $this->hasOne(UnitProfil::class ,'unit_id');
     }
 }
