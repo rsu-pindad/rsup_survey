@@ -1,6 +1,6 @@
 <div>
   <div class="container">
-    <header class="border-bottom lh-1 py-3">
+    <header class="border-bottom lh-2 py-4">
       <div class="row justify-content-center px-2">
         <div class="col-lg-4 col-md-3 col-xs-2 d-none d-xs-none d-md-block">
           <img 
@@ -11,16 +11,14 @@
             height="auto">
         </div>
         <div class="col-lg-4 col-md-6 col-xs-8 d-none d-xs-none d-md-block">
-            <h6 class="text-center text-body-emphasis text-decoration-none">
-            RUMAH SAKIT UMUM PINDAD BANDUNG</br>
-            Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
-            Kota Bandung, Jawa Barat 40285 </br>
-            </h6>
+          <div class="text-center text-body-emphasis text-decoration-none text-wrap fs-6">
+            {!! $unitAlamat !!}
+          </div>
         </div>
         <div class="col-lg-4 col-md-3 col-xs-2 d-xs-block d-md-block">
-          <div class="d-flex flex-row-reverse m-2 px-2">
-            <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('logout') }}">Keluar</a>
-            <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('sdm') }}">{{ $petugas }}</a>
+          <div class="d-flex flex-row-reverse m-2 px-2 justify-content-center">
+            <a class="btn btn-sm btn-outline-secondary mx-2 align-self-center" href="{{ route('logout') }}">Keluar</a>
+            <a class="btn btn-sm btn-outline-secondary mx-2 align-self-center" href="#"> ({{ $layanan }}) {{ $petugas }}</a>
           </div>
         </div>
       </div>
@@ -31,15 +29,15 @@
       <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
           <div class="row">
               <div class="col-lg-6 px-0">
-                  <h1 class="display-4">RSU Pindad</h1>
-                  <p class="lead my-3">
+                  <h1 class="display-4">{{ $unitNama }}</h1>
+                  <p class="lead my-3 d-none d-xs-none d-md-block">
                       Memberikan Layanan Kesehatan Untuk Anda dan Keluarga.</br>
                       Kami menerima pasien umum dan BPJS Kesehatan, </br>
                       siap memberikan perawatan terbaik dengan pelayanan </br>
                       profesional dan fasilitas modern.
                   </p>
                   <p class="lead">
-                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalSurvey">
+                      <button type="button" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#modalSurvey">
                         Mulai survey
                       </button>
                   </p>
@@ -91,8 +89,8 @@
               <form wire:submit="save"
                 class="mt-3">
                 <div class="row mb-3">
-                  <label for="nama_user" class="col-3 col-form-label col-form-label">Nama Pasien</label>
-                  <div class="col-9">
+                  <label for="nama_user" class="col-md-4 col-lg-3 col-form-label col-form-label">Nama Pasien</label>
+                  <div class="col-md-8 col-lg-9">
                     @error('form.name') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror 
                     <input wire:model.defer="form.name"
                       type="text" 
@@ -103,8 +101,8 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="ponsel_user" class="col-3 col-form-label col-form-label">No Handphone</label>
-                  <div class="col-9">
+                  <label for="ponsel_user" class="col-md-4 col-lg-3 col-form-label col-form-label">No Handphone</label>
+                  <div class="col-md-8 col-lg-9">
                     @error('form.phone') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror 
                     <input wire:model.defer="form.phone"
                       type="phone" 
@@ -115,8 +113,8 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="penjamin_user" class="col-3 col-form-label col-form-label">Penjamin</label>
-                  <div class="col-9">
+                  <label for="penjamin_user" class="col-md-4 col-lg-3 col-form-label col-form-label">Penjamin</label>
+                  <div class="col-md-8 col-lg-9">
                     @error('form.penjamin') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror 
                       <select wire:model.defer="form.penjamin" 
                         id="penjamin_user"
