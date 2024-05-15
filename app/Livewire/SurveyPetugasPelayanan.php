@@ -4,11 +4,11 @@ namespace App\Livewire;
 
 use App\Models\KaryawanProfile;
 use App\Models\LayananRespon;
+use App\Models\Penjamin;
 use App\Models\Respon;
 use App\Models\SurveyPelanggan;
 use App\Models\Unit;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
+use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -23,6 +23,16 @@ class SurveyPetugasPelayanan extends Component
 
     #[Validate('required')]
     public $nama_respon;
+
+    public $time;
+
+    public function mount()
+    {
+        Carbon::setLocale('id');
+        // $time = \Carbon\Carbon::now()->shiftTimezone('Asia/Jakarta');
+        $time = Carbon::now()->setTimezone('Asia/Jakarta');
+        $this->$time = $time;
+    }
 
     public function getListeners()
     {
@@ -43,7 +53,7 @@ class SurveyPetugasPelayanan extends Component
         try {
             $this->validate();
             $store = $this->save($this->skor_respon, $this->nama_respon);
-            if ($store == true) {
+            if ($store) {
                 return $this->flash('success', 'Berhasil Menilai Layanan', [
                     'position' => 'center',
                     'toast' => true,
@@ -60,7 +70,7 @@ class SurveyPetugasPelayanan extends Component
 
     public function preSave($skor)
     {
-        $skor = Respon::where('id', $skor)->first();
+        $skor = Respon::findOrfail($skor);
         $this->nama_respon = $skor->nama_respon;
         $this->skor_respon = $skor->skor_respon;
         $this->confirm('Beri nilai ' . $this->nama_respon . ' ?', [
@@ -76,9 +86,6 @@ class SurveyPetugasPelayanan extends Component
     public function save($responSkor, $responNama)
     {
         try {
-            \Carbon\Carbon::setLocale('id');
-            // $time = \Carbon\Carbon::now()->shiftTimezone('Asia/Jakarta');
-            $time = \Carbon\Carbon::now()->setTimezone('Asia/Jakarta');
             $store = new SurveyPelanggan;
             $store->karyawan_id = session()->get('karyawan_id');
             $store->penjamin_layanan_id = session()->get('penjamin_layanan_id');
@@ -87,18 +94,17 @@ class SurveyPetugasPelayanan extends Component
             $store->shift = 1;
             $store->nilai_skor = $responSkor;
             // $store->nilai_skor = 1;
-            $store->created_at = $time;
-            $store->updated_at = $time;
+            $store->created_at = $this->$time;
+            $store->updated_at = $this->$time;
             $store->save();
             if ($store) {
-                $this->saveSheet($responSkor, $responNama, $time);
+                $writeSheet = $this->saveSheet($responSkor, $responNama, $time);
                 // $this->sendWhatsapp();
                 $request->session()->forget([
                     'penjamin_layanan_id', 'nama_pelanggan', 'handphone_pelanggan'
                 ]);
-                return true;
+                return $writeSheet;
             }
-            return false;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -107,14 +113,10 @@ class SurveyPetugasPelayanan extends Component
     private function saveSheet($responSkor, $responNama, $time)
     {
         try {
-            \Carbon\Carbon::setLocale('id');
-            $karyawan = \App\Models\KaryawanProfile::with(['parentUnit', 'parentLayanan'])
-                ->where('id', session()->get('karyawan_id'))
-                ->first();
-            $penjamin = \App\Models\PenjaminLayanan::with(['parentPenjamin'])
-                ->where('penjamin_id', session()->get('penjamin_layanan_id'))
-                ->first();
-            $timeformat = \Carbon\Carbon::parse($time)->translatedFormat('d F Y H:i');
+            $karyawan = KaryawanProfile::with(['parentUnit', 'parentLayanan'])
+                ->find(session()->get('karyawan_id'));
+            $penjamin = Penjamin::findOrFail(session()->get('penjamin_layanan_id'));
+            $timeformat = Carbon::parse($time)->translatedFormat('d F Y H:i');
             $sheets = Sheets::spreadsheet('1FEz14MGqe8n5UQ4voiy21nmWxYSub_eiCjuh3LLH5r0')
                 ->sheet('Sheet1')
                 ->append(
@@ -125,11 +127,12 @@ class SurveyPetugasPelayanan extends Component
                             'UNIT' => $karyawan->parentUnit->nama_unit,
                             'PELAYANAN' => $karyawan->parentLayanan->nama_layanan,
                             'NAMA_PASIEN' => session()->get('nama_pelanggan'),
-                            'PENJAMIN' => $penjamin->parentPenjamin->nama_penjamin,
+                            'PENJAMIN' => $penjamin->nama_penjamin,
                             'NILAI_SURVEY_KEPUASAN' => $responNama,
                         ]
                     ]
                 );
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -161,8 +164,6 @@ class SurveyPetugasPelayanan extends Component
                 ),
             ));
 
-            sleep(3);
-
             $response = curl_exec($curl);
             if (curl_errno($curl)) {
                 $error_msg = curl_error($curl);
@@ -186,18 +187,19 @@ class SurveyPetugasPelayanan extends Component
             LayananRespon::distinct()
                 ->where('layanan_id', $layananKaryawan->layanan_id)
                 ->with([
-                    'parentLayanan' => function ($query) use ($layananKaryawan) {
-                        $query->find($layananKaryawan->layanan_id);
-                    },
+                    // 'parentLayanan' => function ($query) use ($layananKaryawan) {
+                    //     $query->find($layananKaryawan->layanan_id);
+                    // },
                     'parentRespon' => function ($query) {
                         $query->orderBy('urutan_respon', 'ASC');
                     },
                 ])
                 ->orderBy('layanan_id', 'DESC')
                 ->get();
-        $response = (object) $respon->pluck('parentRespon');
+        // $response = (object) $respon->pluck('parentRespon');
 
-        $collectionRespon = collect((object) $response);
+        // $collectionRespon = collect((object) $response);
+        $collectionRespon = collect((object) $respon->pluck('parentRespon'));
         $sorted = $collectionRespon->sortBy('urutan_respon');
         $sorted->values()->all();
         // dd($sorted);
@@ -206,7 +208,7 @@ class SurveyPetugasPelayanan extends Component
                 Kota Bandung, Jawa Barat 40285 </br>';
         $unit = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
         return view('livewire.survey-petugas-pelayanan')->with([
-            'petugas' => Auth::user()->name,
+            'petugas' => session()->get('userName'),
             'respons' => $sorted,
             'unitNama' => $layananKaryawan->parentUnit->nama_unit,
             'unitAlamat' => $unit->unitProfil->unit_alamat ?? $default,
