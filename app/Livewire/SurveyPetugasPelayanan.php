@@ -6,6 +6,7 @@ use App\Models\KaryawanProfile;
 use App\Models\LayananRespon;
 use App\Models\Respon;
 use App\Models\SurveyPelanggan;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -179,7 +180,7 @@ class SurveyPetugasPelayanan extends Component
 
     public function render()
     {
-        $layananKaryawan = KaryawanProfile::where('user_id', Auth::user()->id)->first();
+        $layananKaryawan = KaryawanProfile::with('parentLayanan')->where('user_id', session()->get('userId'))->first();
 
         $respon =
             LayananRespon::distinct()
@@ -200,9 +201,15 @@ class SurveyPetugasPelayanan extends Component
         $sorted = $collectionRespon->sortBy('urutan_respon');
         $sorted->values()->all();
         // dd($sorted);
+        $default = 'RUMAH SAKIT UMUM PINDAD BANDUNG</br>
+                Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
+                Kota Bandung, Jawa Barat 40285 </br>';
+        $unit = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
         return view('livewire.survey-petugas-pelayanan')->with([
             'petugas' => Auth::user()->name,
             'respons' => $sorted,
+            'unitNama' => $layananKaryawan->parentUnit->nama_unit,
+            'unitAlamat' => $unit->unitProfil->unit_alamat ?? $default,
             'layanan' => $layananKaryawan->parentLayanan->nama_layanan,
         ]);
     }

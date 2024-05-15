@@ -3,7 +3,7 @@
         <header class="border-bottom lh-2 py-4">
             <div class="row d-flex justify-content-center px-2">
                 <div class="col-lg-4 col-md-3 col-xs-2 d-none d-sm-none d-md-block">
-                <img class="m-2 px-2" src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="150" height="auto">
+                <img class="m-2 px-2" src="https://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="150" height="auto">
                 </div>
                 <div class="col-lg-4 col-md-6 col-xs-8 d-none d-sm-none d-md-block">
                     <div class="text-center text-body-emphasis text-decoration-none text-wrap fs-6">

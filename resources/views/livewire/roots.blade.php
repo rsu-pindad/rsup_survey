@@ -5,7 +5,7 @@
         <div class="col-lg-4 col-md-3 col-xs-2 d-none d-xs-none d-md-block">
           <img 
             class="m-2 px-2" 
-            src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" 
+            src="https://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" 
             alt="logo" 
             width="150" 
             height="auto">
