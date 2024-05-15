@@ -117,6 +117,10 @@ final class UnitTable extends PowerGridComponent
     public function actions(Unit $row): array
     {
         return [
+            Button::add('manage')
+                ->slot('manage')
+                ->class('btn btn-secondary')
+                ->route('root-unit-profil', [$row->id]),
             Button::add('edit')
                 ->slot('edit')
                 ->class('btn btn-info')

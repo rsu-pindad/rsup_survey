@@ -25,7 +25,7 @@ class UnitEditForm extends Form
     public function store()
     {
         $this->validate();
-        try {
+        try {   
             $unit = new Unit;
             $unit->nama_unit = $this->namaUnit;
             $unit->save();
