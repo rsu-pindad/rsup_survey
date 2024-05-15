@@ -1,7 +1,7 @@
 <main class="form-signin w-100 m-auto">
     <form wire:submit="login">
         <img class="mb-4" src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="300" height="auto">
-        <h1 class="h3 mb-3 fw-normal text-center">Masuk</h1>
+        <div class="h4 mb-3 mt-3 fw-light text-center">Masuk</div>
         <div class="form-floating">
             <div>
                 @error('form.email') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
@@ -55,27 +55,6 @@
     html,
         body {
         height: 100%;
-    }
-
-    .form-signin {
-        max-width: 330px;
-        padding: 1rem;
-    }
-
-    .form-signin .form-floating:focus-within {
-        z-index: 2;
-    }
-
-    .form-signin input[type="email"] {
-        margin-bottom: -1px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-
-    .form-signin input[type="password"] {
-        margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
     }
 
     .form-signin {
