@@ -54,7 +54,7 @@
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                             <li><a class="dropdown-item" href="{{ route('root-super-admin-user') }}" wire:navigate="false">User</a></li>
                             <li><a class="dropdown-item" href="{{ route('root-super-admin-permission') }}" wire:navigate="false">Permission</a></li>
-                            <li><a class="dropdown-item" href="#">Role</a></li>
+                            <li><a class="dropdown-item" href="{{ route('root-super-admin-role') }}" wire:navigate="false">Role</a></li>
                             </ul>
                         </li>
                     @endhasrole
