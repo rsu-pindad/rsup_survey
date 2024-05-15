@@ -23,12 +23,12 @@ class PermissionSeeder extends Seeder
         );
 
         $permissionRandom = Permission::find($permission->id);
-        $idRole = fake()->randomDigit(1, 100);
-        $role = Role::find($idRole);
+        $idRole = fake()->randomDigit(1);
+        $role = Role::find(1);
         $role->givePermissionTo($permissionRandom);
 
-        $idUser = fake()->randomDigit(1, 10);
-        $user = User::find($idUser);
+        $idUser = fake()->randomDigit(1);
+        $user = User::find(1);
         $user->assignRole($role->id);
     }
 }
