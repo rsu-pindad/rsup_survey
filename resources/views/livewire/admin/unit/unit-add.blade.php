@@ -9,7 +9,7 @@
                 aria-describedby="namaUnitHelp"
                 placeholder="masukan nama unit">
             <div id="namaUnitHelp" class="form-text">
-                @error('content') <span class="error">{{ $message }}</span> @enderror 
+                @error('namaUnit') <span class="error">{{ $message }}</span> @enderror 
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Tambah</button>        

@@ -7,6 +7,7 @@ use App\Models\LayananRespon;
 use App\Models\Respon;
 use App\Models\SurveyPelanggan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -17,10 +18,10 @@ class SurveyPetugasPelayanan extends Component
     use LivewireAlert;
 
     #[Validate('required')]
-    public $skor;
+    public $skor_respon;
 
     #[Validate('required')]
-    public $nama_skor;
+    public $nama_respon;
 
     public function getListeners()
     {
@@ -32,15 +33,15 @@ class SurveyPetugasPelayanan extends Component
 
     public function cancelled()
     {
-        $this->skor = '';
-        $this->nama_skor = '';
+        $this->skor_respon = '';
+        $this->nama_respon = '';
     }
 
     public function confirmed()
     {
         try {
             $this->validate();
-            $store = $this->save($this->skor);
+            $store = $this->save($this->skor_respon, $this->nama_respon);
             if ($store == true) {
                 return $this->flash('success', 'Berhasil Menilai Layanan', [
                     'position' => 'center',
@@ -59,9 +60,9 @@ class SurveyPetugasPelayanan extends Component
     public function preSave($skor)
     {
         $skor = Respon::where('id', $skor)->first();
-        $this->nama_skor = $skor->nama_respon;
-        $this->skor = $skor->skor_respon;
-        $this->confirm('Beri nilai ' . $this->nama_skor . ' ?', [
+        $this->nama_respon = $skor->nama_respon;
+        $this->skor_respon = $skor->skor_respon;
+        $this->confirm('Beri nilai ' . $this->nama_respon . ' ?', [
             'icon' => 'question',
             'onConfirmed' => 'confirmed',
             'allowOutsideClick' => false,
@@ -71,7 +72,7 @@ class SurveyPetugasPelayanan extends Component
         ]);
     }
 
-    public function save($responSkor)
+    public function save($responSkor, $responNama)
     {
         try {
             \Carbon\Carbon::setLocale('id');
@@ -84,23 +85,25 @@ class SurveyPetugasPelayanan extends Component
             $store->handphone_pelanggan = session()->get('handphone_pelanggan');
             $store->shift = 1;
             $store->nilai_skor = $responSkor;
+            // $store->nilai_skor = 1;
             $store->created_at = $time;
             $store->updated_at = $time;
             $store->save();
             if ($store) {
-                $this->saveSheet($responSkor, $time);
+                $this->saveSheet($responSkor, $responNama, $time);
                 // $this->sendWhatsapp();
                 $request->session()->forget([
                     'penjamin_layanan_id', 'nama_pelanggan', 'handphone_pelanggan'
                 ]);
                 return true;
             }
+            return false;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
     }
 
-    private function saveSheet($responSkor, $time)
+    private function saveSheet($responSkor, $responNama, $time)
     {
         try {
             \Carbon\Carbon::setLocale('id');
@@ -122,7 +125,7 @@ class SurveyPetugasPelayanan extends Component
                             'PELAYANAN' => $karyawan->parentLayanan->nama_layanan,
                             'NAMA_PASIEN' => session()->get('nama_pelanggan'),
                             'PENJAMIN' => $penjamin->parentPenjamin->nama_penjamin,
-                            'NILAI_SURVEY_KEPUASAN' => $responSkor,
+                            'NILAI_SURVEY_KEPUASAN' => $responNama,
                         ]
                     ]
                 );
@@ -190,11 +193,16 @@ class SurveyPetugasPelayanan extends Component
                     },
                 ])
                 ->orderBy('layanan_id', 'DESC')
-        ->get();
-        // dd($respon->get()->toArray());
+                ->get();
+        $response = (object) $respon->pluck('parentRespon');
+
+        $collectionRespon = collect((object) $response);
+        $sorted = $collectionRespon->sortBy('urutan_respon');
+        $sorted->values()->all();
+        // dd($sorted);
         return view('livewire.survey-petugas-pelayanan')->with([
             'petugas' => Auth::user()->name,
-            'respons' => $respon,
+            'respons' => $sorted,
             'layanan' => $layananKaryawan->parentLayanan->nama_layanan,
         ]);
     }

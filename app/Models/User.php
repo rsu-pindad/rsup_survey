@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Traits\HasPermissions; 
 
 class User extends Authenticatable
 {
@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'roles',
+        // 'roles',
         'last_login'
     ];
 
@@ -35,7 +35,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'roles',
+        // 'roles',
     ];
 
     /**
@@ -48,5 +48,6 @@ class User extends Authenticatable
     ];
 
     protected array $guard_name = ['api', 'web'];
+
     // protected $guard_name = 'api';
 }

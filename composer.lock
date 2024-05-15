@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fb17fb2e1200bf439862099ad706e8e",
+    "content-hash": "0059f94cbc552f87cadd6a61870d5387",
     "packages": [
         {
             "name": "backpack/basset",
@@ -1356,6 +1356,47 @@
             "time": "2023-12-03T19:50:20+00:00"
         },
         {
+            "name": "helvetitec/lagoon-charts",
+            "version": "v2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Helvetitec/lagoon-charts.git",
+                "reference": "9fe9c4af1b6dca355d6f14b0dcf15186830ac4be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Helvetitec/lagoon-charts/zipball/9fe9c4af1b6dca355d6f14b0dcf15186830ac4be",
+                "reference": "9fe9c4af1b6dca355d6f14b0dcf15186830ac4be",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Helvetitec\\LagoonCharts\\LagoonServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Helvetitec\\LagoonCharts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "Google Charts for Laravel Livewire 3",
+            "support": {
+                "issues": "https://github.com/Helvetitec/lagoon-charts/issues",
+                "source": "https://github.com/Helvetitec/lagoon-charts/tree/v2.2.3"
+            },
+            "time": "2023-08-17T16:24:00+00:00"
+        },
+        {
             "name": "jantinnerezo/livewire-alert",
             "version": "v3.0.2",
             "source": {
@@ -1416,6 +1457,72 @@
                 "source": "https://github.com/jantinnerezo/livewire-alert/tree/v3.0.2"
             },
             "time": "2024-03-10T10:47:39+00:00"
+        },
+        {
+            "name": "joelwmale/livewire-quill",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joelwmale/livewire-quill.git",
+                "reference": "5f48542dcf894320d47969f414a254064b6291b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joelwmale/livewire-quill/zipball/5f48542dcf894320d47969f414a254064b6291b3",
+                "reference": "5f48542dcf894320d47969f414a254064b6291b3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "livewire/livewire": "^3.2",
+                "php": "^8.1|8.2"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.10",
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
+                "pestphp/pest": "^2.6",
+                "pestphp/pest-plugin-livewire": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Joelwmale\\LivewireQuill\\LivewireQuillServiceProvider"
+                    ],
+                    "aliases": {
+                        "LivewireQuill": "Joelmale\\LivewireQuill\\Facades\\LivewireQuill"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Joelwmale\\LivewireQuill\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joel Male",
+                    "email": "joel@joelmale.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily add QuillJS with image support to any Laravel Livewire component.",
+            "homepage": "https://github.com/joelwmale/livewire-quill",
+            "keywords": [
+                "joelwmale",
+                "laravel",
+                "livewire-quill"
+            ],
+            "support": {
+                "issues": "https://github.com/joelwmale/livewire-quill/issues",
+                "source": "https://github.com/joelwmale/livewire-quill/tree/2.0.0"
+            },
+            "time": "2023-11-23T02:18:23+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2442,6 +2549,50 @@
                 }
             ],
             "time": "2024-04-12T21:02:21+00:00"
+        },
+        {
+            "name": "mvnrsa/livewire-live-google-charts",
+            "version": "v0.9.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mvnrsa/livewire-live-google-charts.git",
+                "reference": "4e3785133f8faeb15724726929d682aaad411053"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mvnrsa/livewire-live-google-charts/zipball/4e3785133f8faeb15724726929d682aaad411053",
+                "reference": "4e3785133f8faeb15724726929d682aaad411053",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "mvnrsa\\LiveCharts\\LiveChartsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mvnrsa\\LiveCharts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marnus van Niekerk",
+                    "email": "laravel@mjvn.net"
+                }
+            ],
+            "description": "Live Google Charts for Laravel Livewire 3 (Auto refresh/poll)",
+            "support": {
+                "issues": "https://github.com/mvnrsa/livewire-live-google-charts/issues",
+                "source": "https://github.com/mvnrsa/livewire-live-google-charts/tree/v0.9.9"
+            },
+            "time": "2024-04-15T08:29:43+00:00"
         },
         {
             "name": "nesbot/carbon",

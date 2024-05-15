@@ -55,6 +55,7 @@ final class UserTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('email')
+            ->add('role', fn($user) => e($user->getRoleNames()))
             ->add('last_login')
             ->add('created_at');
     }
@@ -67,6 +68,9 @@ final class UserTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
             Column::make('Email', 'email')
+                ->sortable()
+                ->searchable(),
+            Column::make('Role', 'role')
                 ->sortable()
                 ->searchable(),
             Column::make('Last login', 'last_login')

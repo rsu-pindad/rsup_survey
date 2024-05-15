@@ -65,7 +65,7 @@
                         </div>
                         <div class="d-flex flex-row justify-content-center">
                             <div class="align-self-center p-2">
-                                <a href="{{ route('root-unit') }}"
+                                <a href="{{ route('root-respon') }}"
                                     class="btn btn-outline-secondary">Batal</a>
                             </div>
                             <div class="align-self-center p-2">

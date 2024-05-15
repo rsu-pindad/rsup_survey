@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Livewire\PowerGrid;
+namespace App\Livewire\PowerGrid\SuperAdmin;
 
 use App\Livewire\Attributes\Locked;
-use App\Models\Unit;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -18,8 +17,9 @@ use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use Spatie\Permission\Models\Permission;
 
-final class UnitTable extends PowerGridComponent
+final class PermissionTable extends PowerGridComponent
 {
     use WithExport, LivewireAlert;
 
@@ -36,9 +36,9 @@ final class UnitTable extends PowerGridComponent
         $this->showRadioButton();
 
         return [
-            Exportable::make('export')
-                ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+            // Exportable::make('export')
+            //     ->striped()
+            //     ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -49,7 +49,7 @@ final class UnitTable extends PowerGridComponent
     #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
-        return Unit::query();
+        return Permission::query();
     }
 
     public function relationSearch(): array
@@ -61,16 +61,18 @@ final class UnitTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('nama_unit');
+            ->add('name')
+            ->add('created_at');
     }
 
     public function columns(): array
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Nama unit', 'nama_unit')
-                ->sortable()
-                ->searchable(),
+            Column::make('Name', 'name')
+                ->sortable(),
+            Column::make('Created at', 'created_at')
+                ->sortable(),
             Column::action('Action')
         ];
     }
@@ -83,8 +85,8 @@ final class UnitTable extends PowerGridComponent
     #[\Livewire\Attributes\On('delete')]
     public function delete($rowId): void
     {
-        $unit = Unit::find($rowId);
-        $this->id = $unit->id;
+        $permission = Permission::find($rowId);
+        $this->id = $permission->id;
         $this->confirm('Anda yakin akan menghapus data ini ?', [
             'icon' => 'question',
             'onConfirmed' => 'confirmed',
@@ -98,12 +100,12 @@ final class UnitTable extends PowerGridComponent
     public function confirmed()
     {
         try {
-            $unit = Unit::find($this->id);
-            $unit->delete();
+            $permission = Permission::find($this->id);
+            $permission->delete();
             return $this->alert('success', 'berhasil', [
                 'position' => 'center',
                 'toast' => true,
-                'text' => 'data unit berhasil dihapus',
+                'text' => 'data permisi berhasil dihapus',
             ]);
         } catch (\Throwable $th) {
             return $this->alert('warning', 'gagal', [
@@ -114,17 +116,13 @@ final class UnitTable extends PowerGridComponent
         }
     }
 
-    public function actions(Unit $row): array
+    public function actions(Permission $row): array
     {
         return [
-            Button::add('manage')
-                ->slot('manage')
-                ->class('btn btn-secondary')
-                ->route('root-unit-profil', [$row->id]),
             Button::add('edit')
                 ->slot('edit')
                 ->class('btn btn-info')
-                ->route('root-unit-edit', [$row->id]),
+                ->route('root-super-admin-permission-edit', [$row->id]),
             Button::add('delete')
                 ->slot('hapus')
                 ->id()
