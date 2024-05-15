@@ -22,10 +22,12 @@
         <title>{{ $title ?? 'RSUP SURVEY' }}</title>
     </head>
 
-    @if(Route::currentRouteName() != 'login')
-    <body>
-    @else
+    @if(Route::currentRouteName() == 'login')
     <body class="d-flex align-items-center py-4 bg-body-tertiary">
+    @elseif(Route::currentRouteName() == 'root-guest')
+    <body class="d-flex align-items-center py-4 bg-body-tertiary">
+    @else
+    <body>
     @endif
         
         {{ $slot }} 
