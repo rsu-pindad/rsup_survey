@@ -6,6 +6,11 @@
         @basset('vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css')
         
         @stack('styles')
+        @once
+            @push('styles')
+                @lagoonStyles
+            @endpush
+        @endonce
 
         @basset('vendor/popper-2.11.8-dist/umd/popper.min.js')
         @basset('vendor/bootstrap-5.3.3-dist/js/bootstrap.min.js')
@@ -13,7 +18,7 @@
         @basset('vendor/sweetalert2-11.10.8-dist/js/sweetalert2.all.js')
 
         @stack('scripts')
-        
+
         <title>{{ $title ?? 'RSUP SURVEY' }}</title>
     </head>
 
@@ -23,15 +28,18 @@
     <body class="d-flex align-items-center py-4 bg-body-tertiary">
     @endif
         
-        {{ $slot }}
+        {{ $slot }} 
 
         @yield('contents')
 
         @yield('modals')
 
-        @auth
-            @stack('dt-scripts')
-        @endauth
+        @stack('custom-script')
+        @once
+            @push('custom-script')
+                @lagoonScripts({{ app()->getLocale() }})
+            @endpush
+        @endonce
 
         <x-livewire-alert::scripts />
         
