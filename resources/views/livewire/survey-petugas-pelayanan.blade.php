@@ -1,22 +1,20 @@
 <div>
     <div class="container">
-        <header class="border-bottom lh-1 py-3">
-            <div class="row justify-content-center px-2">
-                <div class="col-lg-4 col-md-2 col-xs-2 d-none d-sm-none d-md-block">
+        <header class="border-bottom lh-2 py-4">
+            <div class="row d-flex justify-content-center px-2">
+                <div class="col-lg-4 col-md-3 col-xs-2 d-none d-sm-none d-md-block">
                 <img class="m-2 px-2" src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="150" height="auto">
                 </div>
-                <div class="col-lg-4 col-md-8 col-xs-8 d-none d-sm-none d-md-block">
-                    <h6 class="text-center text-body-emphasis text-decoration-none">
-                    RUMAH SAKIT UMUM PINDAD BANDUNG</br>
-                    Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
-                    Kota Bandung, Jawa Barat 40285 </br>
-                    </h6>
+                <div class="col-lg-4 col-md-6 col-xs-8 d-none d-sm-none d-md-block">
+                    <div class="text-center text-body-emphasis text-decoration-none text-wrap fs-6">
+                        {!! $unitAlamat !!}
+                    </div>
                 </div>
-                <div class="col-lg-4 col-md-2 col-xs-2 d-none d-sm-none d-md-block">
-                <div class="d-flex flex-row-reverse m-2 px-2">
-                    <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('logout') }}">Keluar</a>
-                    <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ route('sdm') }}">{{ $petugas }}</a>
-                </div>
+                <div class="col-lg-4 col-md-3 col-xs-2 d-none d-sm-none d-md-block">
+                    <div class="d-flex flex-row-reverse m-2 px-2 justify-content-center">
+                        <a class="btn btn-sm btn-outline-secondary mx-2 align-self-center" href="{{ route('logout') }}">Keluar</a>
+                        <a class="btn btn-sm btn-outline-secondary mx-2 align-self-center" href="{{ route('sdm') }}">{{ $petugas }}</a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -33,29 +31,33 @@
                 </p>
             </div>
         </div>
-        <div class="container-fluid">
+        <div 
+            wire:loading.remove
+            class="container-fluid">
             <div 
-                class="d-flex flex-row flex-wrap justify-content-around text-center p-2 m-4">
+                class="d-flex flex-row flex-wrap justify-content-around text-center p-0 m-4">
                 @forelse ($respons as $item)
                 <div 
-                    wire:key="{{ $item->id }}" 
-                    wire:loading.remove
+                    wire:key="{{ $item->id }}"
                     wire:transition.out.opacity.duration.200ms 
-                    class="p-3 m-2 border border-2"
+                    class="p-0 m-4 border border-2"
                     style="max-width: min-content;">
                     <button 
                         type="button"
                         wire:loading.attr="disabled" 
-                        wire:click="preSave({{ $item->parentRespon->id }})"
+                        wire:click="preSave({{ $item->id }})"
                         class="btn btn-custom m-2"
-                        style="color:{{ $item->parentRespon->tag_warna_respon }};">
-                        <i class="{{ $item->parentRespon->icon_respon }} fa-6x p-2"></i>
-                        <p class="h2">{{ $item->parentRespon->nama_respon }}</p>
+                        style="color:{{ $item->tag_warna_respon }};">
+                        <i class="{{ $item->icon_respon }} fa-6x p-2"></i>
+                        <p class="h2">{{ $item->nama_respon }}</p>
                     </button>
                 </div>
                 @empty
                     <p>tidak ada respon nilai</p>
                 @endforelse
+            </div>
+            <div wire:loading wire:target="preSave">  
+                Menilai.....
             </div>
         </div>
     </main>
