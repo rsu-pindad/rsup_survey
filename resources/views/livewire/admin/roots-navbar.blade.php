@@ -17,7 +17,7 @@
         <div class="col-lg-4 col-md-3 col-xs-2 d-xs-block d-md-block">
             <div class="d-flex flex-row-reverse m-2 px-2 justify-content-center">
                 <a class="btn btn-sm btn-outline-secondary mx-2 align-self-center" href="{{ route('logout') }}">Keluar</a>
-                <a class="btn btn-sm btn-outline-secondary mx-2 align-self-center" href="#"> ({{ $layanan }}) {{ $petugas }}</a>
+                <a class="btn btn-sm btn-outline-secondary mx-2 align-self-center text-truncate" href="#"> ({{ $layanan }}) {{ $petugas }}</a>
             </div>
         </div>
         </div>
