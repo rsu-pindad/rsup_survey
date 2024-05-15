@@ -25,6 +25,8 @@ use App\Livewire\Sdm\Laporan;
 use App\Livewire\Self\UserSetting;
 use App\Livewire\SuperAdmin\RolePermission\Permission;
 use App\Livewire\SuperAdmin\RolePermission\PermissionEdit;
+use App\Livewire\SuperAdmin\RolePermission\Role;
+use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
 use App\Livewire\SuperAdmin\User\User;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
@@ -46,49 +48,66 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [Roots::class, 'logout'])->name('logout');
     Route::get('/sdm', RootsAdmin::class)->name('sdm');
 
-    Route::group(['prefix' => 'user', 'middleware' => ['role:super-admin']], function () {
-        Route::get('/', User::class)->name('root-super-admin-user');
+    Route::middleware('role:super-admin')->group(function () {
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/', User::class)->name('root-super-admin-user');
+        });
+        Route::group(['prefix' => 'permission'], function () {
+            Route::get('/', Permission::class)->name('root-super-admin-permission');
+            Route::get('/edit/{id}', PermissionEdit::class)->name('root-super-admin-permission-edit');
+        });
+        Route::group(['prefix' => 'role'], function () {
+            Route::get('/', Role::class)->name('root-super-admin-role');
+            Route::get('/edit/{id}', RoleEdit::class)->name('root-super-admin-role-edit');
+        });
     });
 
-    Route::group(['prefix' => 'permission', 'middleware' => ['role:super-admin']], function () {
-        Route::get('/', Permission::class)->name('root-super-admin-permission');
-        Route::get('/edit/{id}', PermissionEdit::class)->name('root-super-admin-permission-edit');
+    Route::middleware('role:sdm|super-admin')->group(function () {
+        Route::group(['prefix' => 'karyawan'], function () {
+            Route::get('/', Karyawan::class)->name('root-karyawan');
+            Route::get('/edit/{id}', KaryawanEdit::class)->name('root-karyawan-edit');
+        });
+        Route::group(['prefix' => 'karyawan-profile'], function () {
+            Route::get('/', KaryawanProfile::class)->name('root-karyawan-profile');
+            Route::get('/edit/{id}', KaryawanProfileEdit::class)->name('root-karyawan-profile-edit');
+        });
     });
 
-    Route::get('/karyawan', Karyawan::class)->name('root-karyawan');
-    Route::get('/karyawan/edit/{id}', KaryawanEdit::class)->name('root-karyawan-edit');
-    Route::get('/karyawan-profile', KaryawanProfile::class)->name('root-karyawan-profile');
-    Route::get('/karyawan-profile/edit/{id}', KaryawanProfileEdit::class)->name('root-karyawan-profile-edit');
-
-    Route::group(['prefix' => 'unit', 'middleware' => ['role:super-admin']], function () {
-        Route::get('/', Unit::class)->name('root-unit')->middleware('permission:view_unit');
-        Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
-        Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
+    Route::middleware('role:admin|super-admin')->group(function () {
+        Route::group(['prefix' => 'unit'], function () {
+            Route::get('/', Unit::class)->name('root-unit')->middleware('permission:view_unit');
+            Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
+            Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
+        });
+        Route::group(['prefix' => 'penjamin'], function () {
+            Route::get('/', Penjamin::class)->name('root-penjamin');
+            Route::get('/edit/{id}', PenjaminEdit::class)->name('root-penjamin-edit');
+        });
+        Route::group(['prefix' => 'layanan'], function () {
+            Route::get('/', Layanan::class)->name('root-layanan');
+            Route::get('/edit/{id}', LayananEdit::class)->name('root-layanan-edit');
+        });
+        Route::group(['prefix' => 'respon'], function () {
+            Route::get('/', Respon::class)->name('root-respon');
+            Route::get('/edit/{id}', ResponEdit::class)->name('root-respon-edit');
+        });
+        Route::group(['prefix' => 'penjamin-layanan'], function () {
+            Route::get('/', PenjaminLayanan::class)->name('root-penjamin-layanan');
+            Route::get('/edit/{id}', PenjaminLayananEdit::class)->name('root-penjamin-layanan-edit');
+        });
+        Route::group(['prefix' => 'layanan-respon'], function () {
+            Route::get('/', LayananRespon::class)->name('root-layanan-respon');
+            Route::get('/edit/{id}', LayananResponEdit::class)->name('root-layanan-respon-edit');
+        });
+    });
+    Route::middleware('role:employee|super-admin')->group(function () {
+        Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
+        Route::get('/laporan', Laporan::class)->name('root-laporan');
+        Route::get('/self', UserSetting::class)->name('root-self');
+        Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
     });
 
     // Route::get('/unit/profil/edit/{id}', UnitProfil::class)->name('root-unit-profil');
-
-    Route::get('/penjamin', Penjamin::class)->name('root-penjamin');
-    Route::get('/penjamin/edit/{id}', PenjaminEdit::class)->name('root-penjamin-edit');
-
-    Route::get('/layanan', Layanan::class)->name('root-layanan');
-    Route::get('/layanan/edit/{id}', LayananEdit::class)->name('root-layanan-edit');
-
-    Route::get('/respon', Respon::class)->name('root-respon');
-    Route::get('/respon/edit/{id}', ResponEdit::class)->name('root-respon-edit');
-
-    Route::get('/penjamin-layanan', PenjaminLayanan::class)->name('root-penjamin-layanan');
-    Route::get('/penjamin-layanan/edit/{id}', PenjaminLayananEdit::class)->name('root-penjamin-layanan-edit');
-
-    Route::get('/layanan-respon', LayananRespon::class)->name('root-layanan-respon');
-    Route::get('/layanan-respon/edit/{id}', LayananResponEdit::class)->name('root-layanan-respon-edit');
-
-    Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
-
-    Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
-
-    Route::get('/laporan', Laporan::class)->name('root-laporan');
-    Route::get('/self', UserSetting::class)->name('root-self');
 
     // Route::get('survey', function(){
     //     return 'halaman isi survey pelayanan';

@@ -17,14 +17,14 @@ use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-final class PermissionTable extends PowerGridComponent
+final class RoleTable extends PowerGridComponent
 {
     use WithExport, LivewireAlert;
 
     #[Locked]
-    public $id;
+    public $idRole;
 
     protected $listeners = [
         'confirmed',
@@ -46,7 +46,7 @@ final class PermissionTable extends PowerGridComponent
     #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
-        return Permission::query();
+        return Role::query()->whereNot('name','super-admin');
     }
 
     public function relationSearch(): array
@@ -67,9 +67,9 @@ final class PermissionTable extends PowerGridComponent
         return [
             Column::make('Id', 'id'),
             Column::make('Name', 'name')
-                ->sortable(),
-            Column::make('Created at', 'created_at')
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
+            Column::make('Created at', 'created_at'),
             Column::action('Action')
         ];
     }
@@ -82,8 +82,8 @@ final class PermissionTable extends PowerGridComponent
     #[\Livewire\Attributes\On('delete')]
     public function delete($rowId): void
     {
-        $permission = Permission::find($rowId);
-        $this->id = $permission->id;
+        $role = Role::find($rowId);
+        $this->idRole = $role->id;
         $this->confirm('Anda yakin akan menghapus data ini ?', [
             'icon' => 'question',
             'onConfirmed' => 'confirmed',
@@ -97,12 +97,12 @@ final class PermissionTable extends PowerGridComponent
     public function confirmed()
     {
         try {
-            $permission = Permission::find($this->id);
-            $permission->delete();
+            $role = Role::find($this->id);
+            $role->delete();
             return $this->alert('success', 'berhasil', [
                 'position' => 'center',
                 'toast' => true,
-                'text' => 'data permisi berhasil dihapus',
+                'text' => 'data role berhasil dihapus',
             ]);
         } catch (\Throwable $th) {
             return $this->alert('warning', 'gagal', [
@@ -113,13 +113,13 @@ final class PermissionTable extends PowerGridComponent
         }
     }
 
-    public function actions(Permission $row): array
+    public function actions(Role $row): array
     {
         return [
             Button::add('edit')
                 ->slot('edit')
                 ->class('btn btn-info')
-                ->route('root-super-admin-permission-edit', [$row->id]),
+                ->route('root-super-admin-role-edit', [$row->id]),
             Button::add('delete')
                 ->slot('hapus')
                 ->id()
