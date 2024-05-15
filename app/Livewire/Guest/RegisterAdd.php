@@ -6,7 +6,6 @@ use App\Livewire\Forms\RegisterForm as Form;
 use App\Models\Layanan;
 use App\Models\Unit;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class RegisterAdd extends Component
@@ -20,87 +19,59 @@ class RegisterAdd extends Component
         'cancalled'
     ];
 
-    #[Validate('required')]
-    public $getNpp;
-
-    #[Validate('required')]
-    public $idUnit;
-
-    #[Validate('required')]
-    public $idLayanan;
-
-    #[Validate('required')]
-    public $namaKaryawan;
-
-    #[Validate('required|email')]
-    public $email;
-
-    #[Validate('required|min:5')]
-    public $password;
-
     public function mount($getNpp)
     {
-        $this->getNpp = $getNpp;
+        $this->form->getNpp = $getNpp;
     }
 
     public function preStore()
     {
         // $this->validateOnly('namaKaryawan');
-        // dd($this->getNpp,$this->namaKaryawan,$this->idUnit,$this->idLayanan,$this->email,$this->password);
-        try {
-            $store = $this->form->store(
-                $this->getNpp,
-                $this->namaKaryawan,
-                $this->idUnit,
-                $this->idLayanan,
-                $this->email,
-                $this->password
-            );
-            // dd($store);
-            if ($store) {
-                return $this->flash('success', 'registrasi berhasil silahkan masuk', [
-                    'position' => 'center',
-                ], route('login'));
-            } else {
-                $this->alert('warning', 'Gagal', [
-                    'position' => 'center',
-                    'timer' => 2000,
-                    'toast' => true,
-                    'text' => 'terjadi kesalahan',
-                    'timerProgressBar' => true,
-                ]);
-            }
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
-        // $this->confirm('Anda yakin telah mengisi data yang benar ?', [
-        //     'icon' => 'question',
-        //     'onConfirmed' => 'confirmed',
-        //     'allowOutsideClick' => false,
-        //     'confirmButtonText' => 'Iya',
-        //     'cancelButtonText' => 'Batal',
-        //     'onDismissed' => 'cancelled'
-        // ]);
+        // try {
+        //     $store = $this->form->store();
+        //     if ($store) {
+        //         return $this->flash('success', 'registrasi berhasil silahkan masuk', [
+        //             'position' => 'center',
+        //         ], route('login'));
+        //     } else {
+        //         return $this->alert('warning', 'Gagal', [
+        //             'position' => 'center',
+        //             'timer' => 2000,
+        //             'toast' => true,
+        //             'text' => $store,
+        //             'timerProgressBar' => true,
+        //         ]);
+        //     }
+        // } catch (\Throwable $th) {
+        //     return $th->getMessage();
+        // }
+        $this->confirm('Anda yakin telah mengisi data dengan benar ?', [
+            'icon' => 'question',
+            'onConfirmed' => 'confirmed',
+            'allowOutsideClick' => false,
+            'confirmButtonText' => 'Iya',
+            'cancelButtonText' => 'Batal',
+            'onDismissed' => 'cancelled'
+        ]);
     }
 
     public function confirmed()
     {
-        $this->validateOnly('namaKaryawan');
+        // $this->validate(['email','password','namaKaryawan']);
         try {
-            $store = $this->form->store($this->getNpp, $this->namaKaryawan, $this->idUnit, $this->idLayanan);
-            if ($store) {
-                return $this->flash('success', 'registrasi berhasil silahkan masuk', [
+            $store = $this->form->store();
+            if ($store['status'] == true) {
+                return $this->flash('success', $store['message'], [
                     'position' => 'center',
                 ], route('login'));
-            } else {
-                $this->alert('warning', 'Gagal', [
-                    'position' => 'center',
-                    'timer' => 2000,
-                    'toast' => true,
-                    'text' => 'terjadi kesalahan',
-                    'timerProgressBar' => true,
-                ]);
             }
+            return $this->alert('warning', 'Gagal', [
+                'position' => 'center',
+                'timer' => 2000,
+                'toast' => true,
+                'text' => $store['message'],
+                'timerProgressBar' => true,
+            ]);
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
