@@ -3,10 +3,10 @@
         wire:submit="preStore">
             <div class="form-floating">
                 <div>
-                    @error('email') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
+                    @error('form.email') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
                 </div>
                 <input 
-                wire:model.defer="email"
+                wire:model.defer="form.email"
                 wire:ignore.self
                 type="email" 
                 class="form-control" 
@@ -15,20 +15,20 @@
             </div>
             <div class="form-floating mb-3">
                 <div>
-                    @error('password') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
+                    @error('form.password') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
                 </div>
                 <input 
-                wire:model.defer="password"
+                wire:model.defer="form.password"
                 wire:ignore.self
                 type="password" class="form-control" id="floatingPassword" placeholder="masukan password">
                 <label for="floatingPassword">Password</label>
             </div>
             <div class="form-floating mb-3">
                 <div>
-                    @error('idUnit') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
+                    @error('form.idUnit') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
                 </div>
                 <select
-                    wire:model.defer="idUnit"
+                    wire:model.defer="form.idUnit"
                     wire:ignore.self
                     id="idUnit" 
                     class="form-select" 
@@ -43,10 +43,10 @@
             </div>
             <div class="form-floating mb-3">
                 <div>
-                    @error('idLayanan') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
+                    @error('form.idLayanan') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
                 </div>
                 <select 
-                    wire:model.defer="idLayanan"
+                    wire:model.defer="form.idLayanan"
                     wire:ignore.self
                     id="idLayanan"
                     class="form-select" 
@@ -61,10 +61,10 @@
             </div>
             <div class="form-floating mb-3">
                 <div>
-                    @error('namaKaryawan') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
+                    @error('form.namaKaryawan') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
                 </div>
                 <input 
-                wire:model.defer="namaKaryawan"
+                wire:model.defer="form.namaKaryawan"
                 wire:ignore.self
                 type="text" 
                 class="form-control" 
