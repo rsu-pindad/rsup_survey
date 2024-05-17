@@ -10,6 +10,7 @@
             type="email" 
             class="form-control" 
             placeholder="masukan email"
+            autocomplete="on"
             value="{{ old('form.email', '') }}">
             <label for="floatingInput">Email</label>
         </div>
@@ -17,8 +18,13 @@
             <div>
                 @error('form.password') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
             </div>
-            <input wire:model="form.password"
-            type="password" class="form-control" id="floatingPassword" placeholder="masukan password">
+            <input 
+            wire:model="form.password"
+            type="password" 
+            class="form-control" 
+            id="floatingPassword" 
+            placeholder="masukan password"
+            autocomplete="on">
             <label for="floatingPassword">Password</label>
         </div>
     
