@@ -59,6 +59,7 @@ final class RoleTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
+            ->add('permission', fn($role) => e($role->permissions()->pluck('name')))
             ->add('created_at');
     }
 
@@ -66,10 +67,10 @@ final class RoleTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Name', 'name')
+            Column::make('Nama Role', 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Created at', 'created_at'),
+            Column::make('Permisi', 'permission'),
             Column::action('Action')
         ];
     }
@@ -116,6 +117,10 @@ final class RoleTable extends PowerGridComponent
     public function actions(Role $row): array
     {
         return [
+            Button::add('manage')
+                ->slot('manage')
+                ->class('btn btn-primary')
+                ->route('root-super-admin-role-manage', [$row->id]),
             Button::add('edit')
                 ->slot('edit')
                 ->class('btn btn-info')
