@@ -41,7 +41,7 @@ final class UserTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return User::query();
+        return User::query()->withoutRole('super-admin');
     }
 
     public function relationSearch(): array
@@ -77,7 +77,7 @@ final class UserTable extends PowerGridComponent
                 ->sortable(),
             Column::make('Created at', 'created_at')
                 ->sortable(),
-            // Column::action('Action')
+            Column::action('Action')
         ];
     }
 
@@ -92,16 +92,19 @@ final class UserTable extends PowerGridComponent
         $this->js('alert(' . $rowId . ')');
     }
 
-    // public function actions(User $row): array
-    // {
-    //     return [
-    //         Button::add('edit')
-    //             ->slot('Edit: '.$row->id)
-    //             ->id()
-    //             ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-    //             ->dispatch('edit', ['rowId' => $row->id])
-    //     ];
-    // }
+    public function actions(User $row): array
+    {
+        return [
+            Button::add('manage')
+                ->slot('manage')
+                ->class('btn btn-primary')
+                ->route('root-super-admin-user-manage', [$row->id]),
+            // Button::add('edit')
+            //     ->slot('edit')
+            //     ->class('btn btn-info')
+            //     ->route('root-super-admin-user-edit', [$row->id]),
+        ];
+    }
 
     /*
      * public function actionRules($row): array
