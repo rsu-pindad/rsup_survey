@@ -12,7 +12,7 @@
                             <h4>Profile Unit</h4>
                         </div>
                         <div class="card-body m-2">
-                            <form wire:submit="save">
+                            <form wire:submit="save" enctype="multipart/form-data">
                                 <div class="mb-2">
                                     <label for="unitNama" class="form-label">Nama Unit</label>
                                     <input 
@@ -26,57 +26,31 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="unitMainLogo" class="form-label">Main Logo</label>
-                                    <input 
-                                        value="{{ $this->form->unitMainLogo }}"
-                                        wire:model="form.unitMainLogo"
-                                        type="text" 
-                                        class="form-control" 
-                                        id="unitMainLogo" 
-                                        aria-describedby="unitMainLogoHelp">
+                                    <livewire:dropzone
+                                            wire:model.defer="mainLogo"
+                                            :rules="['image','mimes:png,jpeg,webp','max:10420']"
+                                            :multiple="false"
+                                            :key="'logo-one'" />
                                 </div>
                                 <div class="mb-2">
                                     <label for="unitSubLogo" class="form-label">Sub Logo</label>
-                                    <input 
-                                        value="{{ $this->form->unitSubLogo }}"
-                                        wire:model="form.unitSubLogo"
-                                        type="text" 
-                                        class="form-control" 
-                                        id="unitSubLogo" 
-                                        aria-describedby="unitSubLogoHelp">
+                                        <livewire:dropzone
+                                            wire:model.defer="subLogo"
+                                            :rules="['image','mimes:png,jpeg,webp','max:10420']"
+                                            :multiple="false"
+                                            :key="'logo-two'" />
                                 </div>
-                                <div class="mb-2" wire:ignore.self>
+                                <div class="mb-2">
                                     <label for="unitAlamat" class="form-label">Alamat</label>
-                                    @livewire('livewire-quill', [
-                                        'quillId' => 'quillAlamat',
-                                        'data' => $this->form->unitAlamat,
-                                        'classes' => 'bg-white',
-                                        'toolbar' => [
-                                            [
-                                                [
-                                                    'header' => [6],
-                                                ],
-                                            ],
-                                            ['bold', 'italic', 'underline'],
-                                            [
-                                                [
-                                                    'list' => 'ordered',
-                                                ],
-                                                [
-                                                    'list' => 'bullet',
-                                                ],
-                                            ],
-                                        ],
-                                    ])
+                                    <livewire:jodit-text-editor 
+                                        wire:model="form.unitAlamat"
+                                        value="{{ $this->form->unitAlamat }}" />
                                 </div>
                                 <div class="mb-2">
                                     <label for="unitMotto" class="form-label">Motto</label>
-                                    <input 
-                                        value="{{ $this->form->unitMotto }}"
+                                    <livewire:jodit-text-editor 
                                         wire:model="form.unitMotto"
-                                        type="text" 
-                                        class="form-control" 
-                                        id="unitMotto" 
-                                        aria-describedby="unitMottoHelp">
+                                        value="{{ $this->form->unitMotto }}" />
                                 </div>
                                 <button class="btn btn-primary" type="submit">Simpan</button>
                             </form>

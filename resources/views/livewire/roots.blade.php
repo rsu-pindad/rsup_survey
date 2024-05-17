@@ -5,6 +5,7 @@
   :unitAlamat="$unitAlamat"
   :layanan="$layanan"
   :petugas="$petugas"
+  :subLogo="$subLogo"
   />
   @endpersist
 
@@ -14,10 +15,11 @@
               <div class="col-lg-6 p-2">
                   <h1 class="display-4">{{ $unitNama }}</h1>
                   <p class="lead my-3 d-none d-xs-none d-md-block">
-                      Memberikan Layanan Kesehatan Untuk Anda dan Keluarga.</br>
+                      {{-- Memberikan Layanan Kesehatan Untuk Anda dan Keluarga.</br>
                       Kami menerima pasien umum dan BPJS Kesehatan, </br>
                       siap memberikan perawatan terbaik dengan pelayanan </br>
-                      profesional dan fasilitas modern.
+                      profesional dan fasilitas modern. --}}
+                      {!! $unitMoto !!}
                   </p>
                   <p class="lead">
                       <button type="button" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#modalSurvey">
@@ -26,11 +28,18 @@
                   </p>
               </div>
               <div class="col-lg-6 px-0 text-center">
-                  <img 
+                  {{-- <img 
                   class="mb-4" 
                   src="https://psurvey.pindadmedika.com/_next/image?url=%2Fbandung.jpeg&w=828&q=75" 
                   alt="logo" width="100%" height="100%"
-                  style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
+                  style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;"> --}}
+                  <div class="cards">
+                    <img 
+                    class="mb-4" 
+                    src="{{ asset('/storage/basset/photos/'.$mainLogo) }}" 
+                    alt="logo" width="100%" height="100%"
+                    style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
+                  </div>
               </div>
           </div>
       </div>
@@ -39,13 +48,14 @@
   <div class="container">
     @persist('times')
       <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
-      <p class="mb-0">
-        <a href="#" class="text-decoration-none text-muted">waktu survey</a>
-      </p>
-      <div 
-        x-data 
-        x-timeout:1000="$el.innerText=$moment().format('LTS')"
-        id="waktuSurvey"></div>
+        <p class="mb-0 fs-5">
+          <a href="#" class="text-decoration-none text-muted">waktu survey</a>
+        </p>
+        <p class="fs-4" 
+          x-data 
+          x-timeout:1000="$el.innerText=$moment().format('LTS')"
+          id="waktuSurvey">
+        </p>
       </footer>
     @endpersist
   </div>

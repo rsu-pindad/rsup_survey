@@ -50,6 +50,8 @@ class Roots extends Component
                 $default = "RUMAH SAKIT UMUM PINDAD BANDUNG</br>
                 Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
                 Kota Bandung, Jawa Barat 40285 </br>";
+                $defaultMain = 'main.webp';
+                $defaultSub = 'pmu.jpeg';
                 // dd($unit->unitProfil->unit_alamat);
                 return view('livewire.roots')->with([
                     'petugas' => session()->get('userName'),
@@ -57,6 +59,9 @@ class Roots extends Component
                     'unitNama' => $profile->parentUnit->nama_unit,
                     'unitAlamat' => $unit->unitProfil->unit_alamat ?? $default,
                     'penjamin' => $penjaminLayanan,
+                    'mainLogo' => $unit->unitProfil->unit_main_logo ?? $defaultMain,
+                    'subLogo' => $unit->unitProfil->unit_sub_logo ?? $defaultSub,
+                    'unitMoto' => $unit->unitProfil->unit_motto ?? 'belum ada moto',
                 ]);
             } else {
                 return <<<HTML

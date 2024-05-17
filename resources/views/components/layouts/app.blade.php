@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         @basset('vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css')
+        @basset('vendor/jodit-4.0.1-dist/css/jodit.min.css')
         
         @stack('styles')
         @once
@@ -16,6 +17,7 @@
         @basset('vendor/bootstrap-5.3.3-dist/js/bootstrap.min.js')
         <script src="https://kit.fontawesome.com/286e1d7d30.js" crossorigin="anonymous"></script>
         @basset('vendor/sweetalert2-11.10.8-dist/js/sweetalert2.all.js')
+        @basset('vendor/jodit-4.0.1-dist/js/jodit.min.js')
 
         @stack('scripts')
 
