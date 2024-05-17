@@ -27,7 +27,9 @@ use App\Livewire\SuperAdmin\RolePermission\Permission;
 use App\Livewire\SuperAdmin\RolePermission\PermissionEdit;
 use App\Livewire\SuperAdmin\RolePermission\Role;
 use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
+use App\Livewire\SuperAdmin\RolePermission\RoleManage;
 use App\Livewire\SuperAdmin\User\User;
+use App\Livewire\SuperAdmin\User\UserManage;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:super-admin')->group(function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', User::class)->name('root-super-admin-user');
+            Route::get('/user/{id}', UserManage::class)->name('root-super-admin-user-manage');
         });
         Route::group(['prefix' => 'permission'], function () {
             Route::get('/', Permission::class)->name('root-super-admin-permission');
@@ -59,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'role'], function () {
             Route::get('/', Role::class)->name('root-super-admin-role');
             Route::get('/edit/{id}', RoleEdit::class)->name('root-super-admin-role-edit');
+            Route::get('/manage/{id}', RoleManage::class)->name('root-super-admin-role-manage');
         });
     });
 
