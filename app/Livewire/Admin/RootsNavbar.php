@@ -8,6 +8,8 @@ class RootsNavbar extends Component
 {
     public $unitAlamat;
 
+    public $subLogo;
+
     public $layanan;
 
     public $petugas;
