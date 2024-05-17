@@ -39,13 +39,14 @@
   <div class="container">
     @persist('times')
       <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
-      <p class="mb-0">
-        <a href="#" class="text-decoration-none text-muted">waktu survey</a>
-      </p>
-      <div 
-        x-data 
-        x-timeout:1000="$el.innerText=$moment().format('LTS')"
-        id="waktuSurvey"></div>
+        <p class="mb-0 fs-5">
+          <a href="#" class="text-decoration-none text-muted">waktu survey</a>
+        </p>
+        <p class="fs-4" 
+          x-data 
+          x-timeout:1000="$el.innerText=$moment().format('LTS')"
+          id="waktuSurvey">
+        </p>
       </footer>
     @endpersist
   </div>
