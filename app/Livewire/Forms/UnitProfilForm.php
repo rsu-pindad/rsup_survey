@@ -47,26 +47,34 @@ class UnitProfilForm extends Form
     {
         // dd($this->all());
         try {
-            
-            $mainName = $this->unitMainLogo[0]['name'];
-            $subName = $this->unitSubLogo[0]['name'];
-            
-            $main = Storage::putFileAs('/public/basset/photos', new File($this->unitMainLogo[0]['path']), $mainName);
-            $sub = Storage::putFileAs('/public/basset/photos', new File($this->unitSubLogo[0]['path']), $subName);
+            $mainName = bcrypt($this->unitMainLogo[0]['name']).".".$this->unitMainLogo[0]['extension'];
+            $subName = bcrypt($this->unitSubLogo[0]['name']).".".$this->unitSubLogo[0]['extension'];
+            // dd($mainName);
+
+            $main = Storage::disk('public_upload')->putFileAs('/', new File($this->unitMainLogo[0]['path']), $mainName);
+            $sub = Storage::disk('public_upload')->putFileAs('/', new File($this->unitSubLogo[0]['path']), $subName);
+            // $main = Storage::move($this->unitSubLogo[0]['path'], public_path().'/photos/'.$mainName);
+            // File:deleteDirectory('tmp/');
             // dd($main);
+            if($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null){
+                Storage::disk('public_upload')->delete('/',$this->unitMainLogoOld);
+            }
+            if($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null){
+                Storage::disk('public_upload')->delete('/',$this->unitSubLogoOld);
+            }
             $unitProfil = UnitProfil::updateOrCreate(
                 [
                     'unit_id' => $this->unitId,
                 ],
                 [
                     'unit_main_logo' => $mainName ?? $this->unitMainLogoOld,
-                    'unit_sub_logo' => $subName ?? $this->unitMainLogoOld,
+                    'unit_sub_logo' => $subName ?? $this->unitSubLogoOld,
                     'unit_alamat' => $this->unitAlamat,
                     'unit_motto' => $this->unitMotto,
                 ]
             );
-            // Storage::delete('/tmp');
-            return $unitProfil;
+            // Storage::deleteDirectory('tmp');
+            // return $unitProfil;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
