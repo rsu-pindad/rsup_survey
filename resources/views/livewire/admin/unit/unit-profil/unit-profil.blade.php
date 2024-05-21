@@ -34,7 +34,7 @@
                                     <div class="card" style="width: 12rem;">
                                         <img 
                                         class="img-thumbnail rounded"
-                                        src="{{ basset('photos/'.$this->form->unitMainLogoOld ?? 'default.png') }}" 
+                                        src="{{ asset('storage/basset/photos/'.$this->form->unitMainLogoOld ?? 'default.png') }}" 
                                         alt="current_logo_main">
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                     <div class="card" style="width: 12rem;">
                                         <img 
                                         class="img-thumbnail rounded"
-                                        src="{{ basset('photos/'.$this->form->unitSubLogoOld ?? 'default.png') }}" 
+                                        src="{{ asset('storage/basset/photos/'.$this->form->unitSubLogoOld ?? 'default.png') }}" 
                                         alt="current_logo_sub">
                                     </div>
                                 </div>
