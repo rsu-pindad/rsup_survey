@@ -9,7 +9,11 @@
                     <div class="card" style="width: 6rem;">
                         <img 
                         class="img-thumbnail rounded"
-                        src="{{ basset('photos/'.$this->unitSubLogo ?? 'defaultsub.png') }}" 
+                        @if(env('APP_ENV') == 'local')
+                        src="{{ asset('storage/basset/photos/'.$this->unitSubLogo ?? 'defaultsub.png') }}" 
+                        @else
+                        src="{{ asset('public/photos/'.$this->unitSubLogo ?? 'defaultsub.png') }}"
+                        @endif
                         alt="current_logo_sub">
                     </div>
                 </div>
@@ -26,7 +30,11 @@
                     <div class="card text-center" style="width: 18rem;">
                         <img 
                         class="img-thumbnail rounded"
-                        src="{{ basset('photos/'.$this->unitMainLogo ?? 'defaultmain.png') }}" 
+                        @if(env('APP_ENV') == 'local')
+                        src="{{ asset('storage/basset/photos/'.$this->unitMainLogo ?? 'defaultmain.png') }}" 
+                        @else
+                        src="{{ asset('public/photos/'.$this->unitMainLogo ?? 'defaultmain.png') }}"
+                        @endif
                         alt="current_logo_main">
                     </div>
                 </div>

@@ -5,7 +5,11 @@
             <div class="container">
                 <img 
                 class="m-2 px-2 img-fluid" 
-                src="{{ basset('photos/'.$subLogo ?? 'default.png') }}" 
+                @if(env('APP_ENV') == 'local')
+                src="{{ asset('storage/basset/photos/'.$subLogo ?? 'defaultmain.png') }}" 
+                @else
+                src="{{ asset('public/photos/'.$subLogo ?? 'defaultsub.png') }}"
+                @endif
                 alt="logo" 
                 {{-- width="100%"  --}}
                 {{-- height="100%" --}}

@@ -36,10 +36,15 @@
                   <div class="container">
                     <img 
                     class="mb-4 img-fluid" 
-                    src="{{ basset('photos/'.$mainLogo ?? 'default.png') }}" 
+                    @if(env('APP_ENV') == 'local')
+                    src="{{ asset('storage/basset/photos/'.$mainLogo ?? 'defaultmain.png') }}" 
+                    @else
+                    src="{{ asset('public/photos/'.$mainLogo ?? 'defaultmain.png') }}"
+                    @endif
                     alt="logo" 
                     {{-- width="100%" height="100%" --}}
                     style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
+                    {{-- src="{{ asset('public/photos/'.$mainLogo ?? 'default.png') }}"  --}}
                   </div>
               </div>
           </div>
