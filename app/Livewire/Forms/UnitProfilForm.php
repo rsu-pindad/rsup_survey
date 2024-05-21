@@ -67,8 +67,11 @@ class UnitProfilForm extends Form
             // dd($mainName, $subName);
 
             // Simpan photo pada folder public photos
-            Storage::disk('public_upload')->putFileAs('photos', new File($this->unitMainLogo[0]['path']), $mainName);
-            Storage::disk('public_upload')->putFileAs('photos', new File($this->unitSubLogo[0]['path']), $subName);
+            // Storage::disk('public_upload')->putFileAs('photos', new File($this->unitMainLogo[0]['path']), $mainName);
+            // Storage::disk('public_upload')->putFileAs('photos', new File($this->unitSubLogo[0]['path']), $subName);
+
+            Storage::putFileAs('public/basset/photos', new File($this->unitMainLogo[0]['path']), $mainName);
+            Storage::putFileAs('public/basset/photos', new File($this->unitSubLogo[0]['path']), $subName);
 
             // $main = Storage::move($this->unitSubLogo[0]['path'], public_path().'photos'.$mainName);
             // File:deleteDirectory('tmp/');
@@ -86,16 +89,17 @@ class UnitProfilForm extends Form
             // dd($unitProfil);
             if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
                 // $pathMain = public_path().'photos/'.$mainName;
-                $pathMain = '/photos/' . $this->unitMainLogoOld;
-                Storage::disk('public_upload')->delete($pathMain);
-                // File::disk('public_upload')->delete($pathMain);
-                // dd($pathMain, $test);
+                // $pathMain = '/photos/' . $this->unitMainLogoOld;
+                // Storage::disk('public_upload')->delete($pathMain);
+                $pathMain = 'public/basset/photos/' . $this->unitMainLogoOld;
+                Storage::delete($pathMain);
             }
             if ($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null) {
                 // $pathSub = public_path().'photos/'.$subName;
-                $pathSub = '/photos/' . $this->unitSubLogoOld;
-                Storage::disk('public_upload')->delete($pathSub);
-                // File::disk('public_upload')->delete($pathSub);
+                // $pathSub = '/photos/' . $this->unitSubLogoOld;
+                // Storage::disk('public_upload')->delete($pathSub);
+                $pathSub = 'public/basset/photos/' . $this->unitSubLogoOld;
+                Storage::delete($pathSub);
             }
             // Storage::deleteDirectory('tmp');
             // dd($delMain,$delSub);
