@@ -27,17 +27,18 @@
                       </button>
                   </p>
               </div>
-              <div class="col-lg-6 px-0 text-center">
+              <div class="col-lg-6 px-0">
                   {{-- <img 
                   class="mb-4" 
                   src="https://psurvey.pindadmedika.com/_next/image?url=%2Fbandung.jpeg&w=828&q=75" 
                   alt="logo" width="100%" height="100%"
                   style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;"> --}}
-                  <div class="cards">
+                  <div class="container">
                     <img 
-                    class="mb-4" 
-                    src="{{ asset('/photos/'.$mainLogo) }}" 
-                    alt="logo" width="100%" height="100%"
+                    class="mb-4 img-fluid" 
+                    src="{{ basset('photos/'.$mainLogo ?? 'default.png') }}" 
+                    alt="logo" 
+                    {{-- width="100%" height="100%" --}}
                     style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
                   </div>
               </div>
