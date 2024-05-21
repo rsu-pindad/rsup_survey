@@ -9,7 +9,7 @@
                     <div class="card" style="width: 6rem;">
                         <img 
                         class="img-thumbnail rounded"
-                        src="{{ asset('/photos/'.$this->unitSubLogo ?? 'default.png') }}" 
+                        src="{{ basset('photos/'.$this->unitSubLogo ?? 'defaultsub.png') }}" 
                         alt="current_logo_sub">
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="card text-center" style="width: 18rem;">
                         <img 
                         class="img-thumbnail rounded"
-                        src="{{ asset('/photos/'.$this->unitMainLogo ?? 'default.png') }}" 
+                        src="{{ basset('photos/'.$this->unitMainLogo ?? 'defaultmain.png') }}" 
                         alt="current_logo_main">
                     </div>
                 </div>
