@@ -36,7 +36,7 @@
                   <div class="cards">
                     <img 
                     class="mb-4" 
-                    src="{{ asset('/storage/basset/photos/'.$mainLogo) }}" 
+                    src="{{ asset('/photos/'.$mainLogo) }}" 
                     alt="logo" width="100%" height="100%"
                     style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
                   </div>

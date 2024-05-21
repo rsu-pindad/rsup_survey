@@ -16,11 +16,11 @@
             <div class="dz-bg-red-50 dz-p-4 dz-w-full dz-mb-4 dz-rounded dark:dz-bg-red-600">
                 <div class="dz-flex dz-gap-3 dz-items-start">
                     <i class="fa-solid fa-ban"></i>
-                    <h3 class="dz-text-sm dz-text-red-800 dz-font-medium dark:dz-text-red-100">{{ $error }}</h3>
+                    <h3 class="text-danger">{{ $error }}</h3>
                 </div>
             </div>
         @endif
-        <div class="dz-flex dz-justify-between dz-w-full">
+        <div class="d-flex justify-content-between">
             <label for="upload" class="dz-font-medium dz-text-lg dz-mb-2 dz-text-black dark:dz-text-white">{{ __('Upload files') }} <span class="dz-text-red-500">*</span></label>
             <div x-show="isLoading" role="status">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
@@ -70,18 +70,17 @@
             @endif
         </div>
 
-
-        @if(count($files) > 0)
+        @if($files != null && count($files) > 0)
             <div class="dz-flex dz-flex-wrap dz-gap-x-10 dz-gap-y-2 dz-justify-start dz-w-full dz-mt-5">
                 @foreach($files as $file)
                     <div class="dz-flex dz-items-center dz-justify-between dz-gap-2 dz-border dz-rounded dz-border-gray-200 dz-w-full dz-h-auto dz-overflow-hidden dark:dz-border-gray-700">
                         <div class="dz-flex dz-items-center dz-gap-3">
                             @if($this->isImageMime($file['extension']))
-                                <div class="dz-flex-none dz-w-14 dz-h-14">
-                                    <img src="{{ $file['temporaryUrl'] }}" class="dz-object-fill dz-w-full dz-h-full" alt="{{ $file['name'] }}">
+                                <div class="container">
+                                    <img src="{{ $file['temporaryUrl'] }}" class="img-thumbnail" alt="{{ $file['name'] }}" style="width: 10rem;">
                                 </div>
                             @else
-                                <div class="dz-flex dz-justify-center dz-items-center dz-w-14 dz-h-14 dz-bg-gray-100 dark:dz-bg-gray-700">
+                                <div class="container">
                                     <i class="fa-regular fa-file-image"></i>
                                 </div>
                             @endif

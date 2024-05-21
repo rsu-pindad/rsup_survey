@@ -11,7 +11,9 @@
             <div id="namaUnitHelp" class="form-text">
                 @error('namaUnit') <span class="error">{{ $message }}</span> @enderror 
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary">Tambah</button>        
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-floppy-disk"></i>
+        </button>
     </form>
 </div>

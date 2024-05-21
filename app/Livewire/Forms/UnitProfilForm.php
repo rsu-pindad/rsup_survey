@@ -6,6 +6,8 @@ use App\Models\Unit;
 use App\Models\UnitProfil;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
@@ -14,21 +16,32 @@ class UnitProfilForm extends Form
 {
     use WithFileUploads;
 
-    // #[Locked]
+    #[Locked]
     public $unitId;
 
+    // #[Reactive]
+    #[Validate('required')]
     public $unitMainLogo;
 
+    // #[Reactive]
+    #[Validate('required')]
     public $unitSubLogo;
 
+    // #[Reactive]
+    #[Validate('required')]
     public $unitMainLogoOld;
 
+    // #[Reactive]
+    #[Validate('required')]
     public $unitSubLogoOld;
 
+    #[Validate('required')]
     public $unitMotto;
 
+    #[Validate('required')]
     public $unitAlamat;
 
+    #[Validate('required')]
     public $unitNama;
 
     public function setUnit($id)
@@ -47,21 +60,18 @@ class UnitProfilForm extends Form
     {
         // dd($this->all());
         try {
-            $mainName = bcrypt($this->unitMainLogo[0]['name']).".".$this->unitMainLogo[0]['extension'];
-            $subName = bcrypt($this->unitSubLogo[0]['name']).".".$this->unitSubLogo[0]['extension'];
-            // dd($mainName);
+            $mainRandomName = Str::random(20);
+            $subRandomName = Str::random(20);
+            $mainName = $mainRandomName . '.' . $this->unitMainLogo[0]['extension'];
+            $subName = $subRandomName . '.' . $this->unitSubLogo[0]['extension'];
+            // dd($mainName, $subName);
 
-            $main = Storage::disk('public_upload')->putFileAs('/', new File($this->unitMainLogo[0]['path']), $mainName);
-            $sub = Storage::disk('public_upload')->putFileAs('/', new File($this->unitSubLogo[0]['path']), $subName);
-            // $main = Storage::move($this->unitSubLogo[0]['path'], public_path().'/photos/'.$mainName);
+            // Simpan photo pada folder public photos
+            Storage::disk('public_upload')->putFileAs('photos', new File($this->unitMainLogo[0]['path']), $mainName);
+            Storage::disk('public_upload')->putFileAs('photos', new File($this->unitSubLogo[0]['path']), $subName);
+
+            // $main = Storage::move($this->unitSubLogo[0]['path'], public_path().'photos'.$mainName);
             // File:deleteDirectory('tmp/');
-            // dd($main);
-            if($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null){
-                Storage::disk('public_upload')->delete('/',$this->unitMainLogoOld);
-            }
-            if($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null){
-                Storage::disk('public_upload')->delete('/',$this->unitSubLogoOld);
-            }
             $unitProfil = UnitProfil::updateOrCreate(
                 [
                     'unit_id' => $this->unitId,
@@ -73,8 +83,30 @@ class UnitProfilForm extends Form
                     'unit_motto' => $this->unitMotto,
                 ]
             );
+            // dd($unitProfil);
+            if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
+                // $pathMain = public_path().'photos/'.$mainName;
+                $pathMain = '/photos/' . $this->unitMainLogoOld;
+                Storage::disk('public_upload')->delete($pathMain);
+                // File::disk('public_upload')->delete($pathMain);
+                // dd($pathMain, $test);
+            }
+            if ($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null) {
+                // $pathSub = public_path().'photos/'.$subName;
+                $pathSub = '/photos/' . $this->unitSubLogoOld;
+                Storage::disk('public_upload')->delete($pathSub);
+                // File::disk('public_upload')->delete($pathSub);
+            }
             // Storage::deleteDirectory('tmp');
-            // return $unitProfil;
+            // dd($delMain,$delSub);
+            
+            // Delete Files pada folder tmp;
+            Storage::delete('/tmp/' . $this->unitMainLogo[0]['tmpFilename']);
+            Storage::delete('/tmp/' . $this->unitSubLogo[0]['tmpFilename']);
+            // File::delete($this->unitMainLogo[0]['tmpFilename']);
+            // File::delete($this->unitSubLogo[0]['tmpFilename']);
+
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

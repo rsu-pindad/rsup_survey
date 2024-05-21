@@ -22,13 +22,15 @@
                         <div class="d-flex flex-row justify-content-center">
                             <div class="align-self-center p-2">
                                 <a href="{{ route('root-unit') }}"
-                                    class="btn btn-outline-secondary">Batal</a>
+                                    class="btn btn-outline-secondary">
+                                    <i class="fa-solid fa-arrow-left-long"></i>
+                                </a>
                             </div>
                             <div class="align-self-center p-2">
                                 <button
                                     class="btn btn-outline-primary"
                                     type="submit">
-                                    Edit
+                                    <i class="fa-solid fa-floppy-disk"></i>
                                 </button>
                             </div>
                         </div>

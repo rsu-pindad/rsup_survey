@@ -31,12 +31,18 @@ final class UnitTable extends PowerGridComponent
         'cancalled'
     ];
 
+    public string $sortField = 'nama_unit';
+
+    public string $sortDirection = 'asc';
+
+    public bool $withSortStringNumber = true;
+
     public function setUp(): array
     {
         $this->showRadioButton();
 
         return [
-            Exportable::make('export')
+            Exportable::make(fileName:'Unit Survey')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
@@ -67,11 +73,18 @@ final class UnitTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')
+            ->visibleInExport(false)
+            ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+            ->title('No')
+            ->index(),
             Column::make('Nama unit', 'nama_unit')
+            ->title('Nama Unit')
                 ->sortable()
                 ->searchable(),
             Column::action('Action')
+            ->visibleInExport(false),
         ];
     }
 
@@ -118,15 +131,15 @@ final class UnitTable extends PowerGridComponent
     {
         return [
             Button::add('manage')
-                ->slot('manage')
+                ->slot('<i class="fa-solid fa-gear"></i>')
                 ->class('btn btn-secondary')
                 ->route('root-unit-profil', [$row->id]),
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-unit-edit', [$row->id]),
             Button::add('delete')
-                ->slot('hapus')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
                 ->id()
                 ->class('btn btn-warning')
                 ->dispatch('delete', ['rowId' => $row->id])
