@@ -122,3 +122,8 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/login', Login::class)->name('login');
     Route::get('/daftar', Register::class)->name('root-guest');
 });
+    Route::get('/linked', function(){
+        // echo public_path();
+        dd(Storage::disk('public_upload'));
+        // Storage::deleteDirectory('tmp');
+    });
