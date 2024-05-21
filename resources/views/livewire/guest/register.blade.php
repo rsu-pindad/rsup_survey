@@ -1,7 +1,7 @@
 <main class="form-signin w-100 m-auto">
     <div class="container mb-4">
         <form wire:submit>
-            <img class="mb-4" src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="300" height="auto">
+            <img class="mb-4" src="https://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="300" height="auto">
             <div class="form-floating">
                 <div>
                     @error('npp') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror

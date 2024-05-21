@@ -1,6 +1,6 @@
 <main class="form-signin w-100 m-auto">
     <form wire:submit="login">
-        <img class="mb-4" src="http://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="300" height="auto">
+        <img class="mb-4" src="https://psurvey.pindadmedika.com/_next/image?url=%2Frsu-pindad.png&w=384&q=75" alt="logo" width="300" height="auto">
         <div class="h4 mb-3 mt-3 fw-light text-center">Masuk</div>
         <div class="form-floating">
             <div>
