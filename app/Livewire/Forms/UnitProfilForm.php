@@ -64,26 +64,14 @@ class UnitProfilForm extends Form
             $subRandomName = Str::random(20);
             $mainName = $mainRandomName . '.' . $this->unitMainLogo[0]['extension'];
             $subName = $subRandomName . '.' . $this->unitSubLogo[0]['extension'];
-            // dd($mainName, $subName);
-
             // Simpan photo pada folder public photos
-            // Storage::disk('public_upload')->putFileAs('photos', new File($this->unitMainLogo[0]['path']), $mainName);
-            // Storage::disk('public_upload')->putFileAs('photos', new File($this->unitSubLogo[0]['path']), $subName);
-
-            Storage::putFileAs('public/basset/photos', new File($this->unitMainLogo[0]['path']), $mainName);
-            Storage::putFileAs('public/basset/photos', new File($this->unitSubLogo[0]['path']), $subName);
-
-            // /home/u5336745/pmu-laravel10-livewire-3-survey/public
-            // $pathSharedHosting = '/home/u5336745/pmu-laravel10-livewire-3-survey/public/photos/';
-            // if (env('APP_ENV') != 'local') {
-            //     $pathMain = 'public/basset/photos/' . $mainName;
-            //     $pathSub = 'public/basset/photos/' . $subName;
-            //     Storage::move($pathMain, $pathSharedHosting . $mainName);
-            //     Storage::move($pathSub, $pathSharedHosting . $subName);
-            // }
-
-            // $main = Storage::move($this->unitSubLogo[0]['path'], public_path().'photos'.$mainName);
-            // File:deleteDirectory('tmp/');
+            if (env('APP_ENV') == 'local') {
+                Storage::putFileAs('public/basset/photos', new File($this->unitMainLogo[0]['path']), $mainName);
+                Storage::putFileAs('public/basset/photos', new File($this->unitSubLogo[0]['path']), $subName);
+            } else {
+                Storage::disk('public_upload')->putFileAs('photos', new File($this->unitMainLogo[0]['path']), $mainName);
+                Storage::disk('public_upload')->putFileAs('photos', new File($this->unitSubLogo[0]['path']), $subName);
+            }
             $unitProfil = UnitProfil::updateOrCreate(
                 [
                     'unit_id' => $this->unitId,
@@ -95,47 +83,31 @@ class UnitProfilForm extends Form
                     'unit_motto' => $this->unitMotto,
                 ]
             );
-            // dd($unitProfil);
-            // if (env('APP_ENV') == 'local') {
+            if (env('APP_ENV') == 'local') {
                 if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
-                    // $pathMain = public_path().'photos/'.$mainName;
-                    // $pathMain = '/photos/' . $this->unitMainLogoOld;
-                    // Storage::disk('public_upload')->delete($pathMain);
                     $pathMain = 'public/basset/photos/' . $this->unitMainLogoOld;
                     Storage::delete($pathMain);
                 }
                 if ($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null) {
-                    // $pathSub = public_path().'photos/'.$subName;
-                    // $pathSub = '/photos/' . $this->unitSubLogoOld;
-                    // Storage::disk('public_upload')->delete($pathSub);
                     $pathSub = 'public/basset/photos/' . $this->unitSubLogoOld;
                     Storage::delete($pathSub);
                 }
-            // }else{
-            //     if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
-            //         // $pathMain = public_path().'photos/'.$mainName;
-            //         // $pathMain = '/photos/' . $this->unitMainLogoOld;
-            //         // Storage::disk('public_upload')->delete($pathMain);
-            //         $pathMain = $pathSharedHosting . $this->unitMainLogoOld;
-            //         Storage::delete($pathMain);
-            //     }
-            //     if ($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null) {
-            //         // $pathSub = public_path().'photos/'.$subName;
-            //         // $pathSub = '/photos/' . $this->unitSubLogoOld;
-            //         // Storage::disk('public_upload')->delete($pathSub);
-            //         $pathSub = $pathSharedHosting . $this->unitSubLogoOld;
-            //         Storage::delete($pathSub);
-            //     }
-            // }
+            } else {
+                if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
+                    $pathMain = '/photos/' . $this->unitMainLogoOld;
+                    Storage::disk('public_upload')->delete($pathMain);
+                }
+                if ($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null) {
+                    $pathSub = '/photos/' . $this->unitSubLogoOld;
+                    Storage::disk('public_upload')->delete($pathSub);
+                }
+            }
             // Storage::deleteDirectory('tmp');
-            // dd($delMain,$delSub);
-
             // Delete Files pada folder tmp;
             Storage::delete('/tmp/' . $this->unitMainLogo[0]['tmpFilename']);
             Storage::delete('/tmp/' . $this->unitSubLogo[0]['tmpFilename']);
             // File::delete($this->unitMainLogo[0]['tmpFilename']);
             // File::delete($this->unitSubLogo[0]['tmpFilename']);
-
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
