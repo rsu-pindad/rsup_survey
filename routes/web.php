@@ -122,8 +122,14 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/login', Login::class)->name('login');
     Route::get('/daftar', Register::class)->name('root-guest');
 });
-    Route::get('/linked', function(){
-        // echo public_path();
-        dd(Storage::disk('public_upload'));
-        // Storage::deleteDirectory('tmp');
-    });
+
+// Route::get('/linked', function () {
+    // echo public_path();
+    // dd(Storage::disk('public_upload'));
+    // Storage::deleteDirectory('tmp');
+    // $targetFolder = $_SERVER['DOCUMENT_ROOT'].'/../storage/app/public';
+    // $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
+    // echo $targetFolder;
+    // echo '<br/>';
+    // echo $linkFolder;
+// });
