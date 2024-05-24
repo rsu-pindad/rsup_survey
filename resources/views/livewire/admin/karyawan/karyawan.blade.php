@@ -3,10 +3,10 @@
     <livewire:admin.roots-admin /> 
     @endpersist
 
-    <main class="container-fluid p-4">
-        <div class="bg-body-tertiary p-5 rounded">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <main class="container-fluid px-5">
+        <div class="rounded">
+            <div class="row mb-3">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 my-2">
                     <div class="card">
                         <div class="card-header">
                             <h4>Tabel Karyawan</h4>
@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 my-2">
                     <div class="card">
                         <div class="card-header">
                             <h4>Tambah Karyawan</h4>
