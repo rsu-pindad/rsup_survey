@@ -6,8 +6,8 @@
 
 @section('contents')
     @persist('tabel-survey-petugas')
-        <main class="container-fluid p-4">
-            <div class="bg-body-tertiary p-5 rounded">
+        <main class="container-fluid px-5">
+            <div class="rounded">
                 <div class="card">
                     <div class="card-header">
                     </div>
