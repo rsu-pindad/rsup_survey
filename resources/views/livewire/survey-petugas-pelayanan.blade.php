@@ -4,6 +4,7 @@
     :unitAlamat="$unitAlamat"
     :layanan="$layanan"
     :petugas="$petugas"
+    :subLogo="$subLogo"
     />
     @endpersist
 

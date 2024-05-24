@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\AppSetting;
 use App\Models\KaryawanProfile;
 use App\Models\LayananRespon;
 use App\Models\Penjamin;
@@ -207,12 +208,14 @@ class SurveyPetugasPelayanan extends Component
                 Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
                 Kota Bandung, Jawa Barat 40285 </br>';
         $unit = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
+        $appSetting = AppSetting::get()->last();
         return view('livewire.survey-petugas-pelayanan')->with([
             'petugas' => session()->get('userName'),
-            'respons' => $sorted,
-            'unitNama' => $layananKaryawan->parentUnit->nama_unit,
-            'unitAlamat' => $unit->unitProfil->unit_alamat ?? $default,
             'layanan' => $layananKaryawan->parentLayanan->nama_layanan,
+            'unitNama' => $layananKaryawan->parentUnit->nama_unit,
+            'unitAlamat' => $unit->unitProfil->unit_alamat ?? $appSetting->initial_alamat_text,
+            'subLogo' => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
+            'respons' => $sorted,
         ]);
     }
 }
