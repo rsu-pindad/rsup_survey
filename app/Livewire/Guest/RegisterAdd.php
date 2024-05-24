@@ -16,7 +16,7 @@ class RegisterAdd extends Component
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
 
     public function mount($getNpp)
