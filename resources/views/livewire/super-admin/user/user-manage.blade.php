@@ -3,8 +3,8 @@
     <livewire:admin.roots-admin /> 
     @endpersist
 
-    <main class="container-fluid p-4">
-        <div class="bg-body-tertiary p-5 rounded">
+    <main class="container-fluid px-5">
+        <div class="rounded">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
@@ -28,8 +28,11 @@
                             @endforeach
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('root-super-admin-user') }}"
-                                class="btn btn-outline-secondary">kembali
+                            <a wire:navigate
+                                href="{{ route('root-super-admin-user') }}"
+                                class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-arrow-left-long"></i>
+                                kembali
                             </a>
                         </div>
                     </div>
