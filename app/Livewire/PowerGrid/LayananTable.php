@@ -29,8 +29,14 @@ final class LayananTable extends PowerGridComponent
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
+
+    public string $sortField = 'nama_layanan';
+
+    public string $sortDirection = 'asc';
+
+    public bool $withSortStringNumber = true;
 
     public function setUp(): array
     {
@@ -38,7 +44,7 @@ final class LayananTable extends PowerGridComponent
         $this->showRadioButton();
 
         return [
-            Exportable::make('export')
+            Exportable::make(fileName: 'Layanan Tabel')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
@@ -69,11 +75,17 @@ final class LayananTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
             Column::make('Nama layanan', 'nama_layanan')
                 ->sortable()
                 ->searchable(),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -120,11 +132,11 @@ final class LayananTable extends PowerGridComponent
     {
         return [
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-layanan-edit', [$row->id]),
             Button::add('delete')
-                ->slot('hapus')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
                 ->id()
                 ->class('btn btn-warning')
                 ->dispatch('delete', ['rowId' => $row->id])
