@@ -25,6 +25,7 @@ class SurveyPetugasPelayanan extends Component
     #[Validate('required')]
     public $nama_respon;
 
+    #[Validate('required')]
     public $time;
 
     public function mount()
@@ -32,7 +33,7 @@ class SurveyPetugasPelayanan extends Component
         Carbon::setLocale('id');
         // $time = \Carbon\Carbon::now()->shiftTimezone('Asia/Jakarta');
         $time = Carbon::now()->setTimezone('Asia/Jakarta');
-        $this->$time = $time;
+        $this->time = $time;
     }
 
     public function getListeners()
@@ -54,12 +55,18 @@ class SurveyPetugasPelayanan extends Component
         try {
             $this->validate();
             $store = $this->save($this->skor_respon, $this->nama_respon);
-            if ($store) {
+            if ($store == 1) {
+                // dd($store);
                 return $this->flash('success', 'Berhasil Menilai Layanan', [
                     'position' => 'center',
                     'toast' => true,
                 ], '/');
             }
+            return $this->flash('warning', 'Gagal Menilai Layanan', [
+                'position' => 'center',
+                'toast' => true,
+                'text' => $store,
+            ]);
         } catch (\Throwable $th) {
             return $this->flash('warning', 'Gagal Menilai Layanan', [
                 'position' => 'center',
@@ -87,25 +94,25 @@ class SurveyPetugasPelayanan extends Component
     public function save($responSkor, $responNama)
     {
         try {
-            $store = new SurveyPelanggan;
-            $store->karyawan_id = session()->get('karyawan_id');
-            $store->penjamin_layanan_id = session()->get('penjamin_layanan_id');
-            $store->nama_pelanggan = session()->get('nama_pelanggan');
-            $store->handphone_pelanggan = session()->get('handphone_pelanggan');
-            $store->shift = 1;
-            $store->nilai_skor = $responSkor;
-            // $store->nilai_skor = 1;
-            $store->created_at = $this->$time;
-            $store->updated_at = $this->$time;
-            $store->save();
-            if ($store) {
-                $writeSheet = $this->saveSheet($responSkor, $responNama, $time);
+            // $store = new SurveyPelanggan;
+            // $store->karyawan_id = session()->get('karyawan_id');
+            // $store->penjamin_layanan_id = session()->get('penjamin_layanan_id');
+            // $store->nama_pelanggan = session()->get('nama_pelanggan');
+            // $store->handphone_pelanggan = session()->get('handphone_pelanggan');
+            // $store->shift = 1;
+            // $store->nilai_skor = $responSkor;
+            // // $store->nilai_skor = 1;
+            // $store->created_at = $this->time;
+            // $store->updated_at = $this->time;
+            // $store->save();
+            // if ($store) {
+                $writeSheet = $this->saveSheet($responSkor, $responNama, $this->time);
                 // $this->sendWhatsapp();
-                $request->session()->forget([
+                session()->forget([
                     'penjamin_layanan_id', 'nama_pelanggan', 'handphone_pelanggan'
                 ]);
                 return $writeSheet;
-            }
+            // }
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -133,7 +140,9 @@ class SurveyPetugasPelayanan extends Component
                         ]
                     ]
                 );
-            return true;
+            // dd($sheets->updates->updatedRows);
+            // return true;
+            return $sheets->updates->updatedRows;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -203,10 +212,6 @@ class SurveyPetugasPelayanan extends Component
         $collectionRespon = collect((object) $respon->pluck('parentRespon'));
         $sorted = $collectionRespon->sortBy('urutan_respon');
         $sorted->values()->all();
-        // dd($sorted);
-        $default = 'RUMAH SAKIT UMUM PINDAD BANDUNG</br>
-                Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
-                Kota Bandung, Jawa Barat 40285 </br>';
         $unit = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
         $appSetting = AppSetting::get()->last();
         return view('livewire.survey-petugas-pelayanan')->with([
