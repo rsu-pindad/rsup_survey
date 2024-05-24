@@ -94,25 +94,25 @@ class SurveyPetugasPelayanan extends Component
     public function save($responSkor, $responNama)
     {
         try {
-            $store = new SurveyPelanggan;
-            $store->karyawan_id = session()->get('karyawan_id');
-            $store->penjamin_layanan_id = session()->get('penjamin_layanan_id');
-            $store->nama_pelanggan = session()->get('nama_pelanggan');
-            $store->handphone_pelanggan = session()->get('handphone_pelanggan');
-            $store->shift = 1;
-            $store->nilai_skor = $responSkor;
-            // $store->nilai_skor = 1;
-            $store->created_at = $this->time;
-            $store->updated_at = $this->time;
-            $store->save();
-            if ($store) {
+            // $store = new SurveyPelanggan;
+            // $store->karyawan_id = session()->get('karyawan_id');
+            // $store->penjamin_layanan_id = session()->get('penjamin_layanan_id');
+            // $store->nama_pelanggan = session()->get('nama_pelanggan');
+            // $store->handphone_pelanggan = session()->get('handphone_pelanggan');
+            // $store->shift = 1;
+            // $store->nilai_skor = $responSkor;
+            // // $store->nilai_skor = 1;
+            // $store->created_at = $this->time;
+            // $store->updated_at = $this->time;
+            // $store->save();
+            // if ($store) {
                 $writeSheet = $this->saveSheet($responSkor, $responNama, $this->time);
                 // $this->sendWhatsapp();
                 session()->forget([
                     'penjamin_layanan_id', 'nama_pelanggan', 'handphone_pelanggan'
                 ]);
                 return $writeSheet;
-            }
+            // }
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
