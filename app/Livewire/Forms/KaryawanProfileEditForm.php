@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Karyawan;
+use App\Models\User;
 use App\Models\KaryawanProfile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,7 @@ class KaryawanProfileEditForm extends Form
         $this->idUnit = $karyawanProfile->unit_id;
         $this->idLayanan = $karyawanProfile->layanan_id;
         $this->namaKaryawan = $karyawanProfile->nama_karyawanprofile;
+        // $this->emailKaryawan = User::find($this->idUser)->email;
     }
 
     public function store()
