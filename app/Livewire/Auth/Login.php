@@ -9,6 +9,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\AppSetting;
 
 class Login extends Component
 {
@@ -54,6 +55,8 @@ class Login extends Component
     #[Title('Masuk')]
     public function render()
     {
-        return view('livewire.auth.login');
+        return view('livewire.auth.login')->with([
+            'appSetting' => AppSetting::get()->last(),
+        ]);
     }
 }

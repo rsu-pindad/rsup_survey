@@ -13,13 +13,9 @@
       <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
           <div class="row">
               <div class="col-lg-6 p-2">
-                  <h1 class="display-4">{{ $unitNama }}</h1>
+                  <h1 class="display-4">{{ $unitNama ?? $appSetting->initial_body_text}}</h1>
                   <p class="lead my-3 d-none d-xs-none d-md-block">
-                      {{-- Memberikan Layanan Kesehatan Untuk Anda dan Keluarga.</br>
-                      Kami menerima pasien umum dan BPJS Kesehatan, </br>
-                      siap memberikan perawatan terbaik dengan pelayanan </br>
-                      profesional dan fasilitas modern. --}}
-                      {!! $unitMoto !!}
+                      {!! $unitMoto ?? $appSetting->initial_motto_text !!}
                   </p>
                   <p class="lead">
                       <button type="button" class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#modalSurvey">
@@ -28,24 +24,21 @@
                   </p>
               </div>
               <div class="col-lg-6 px-0">
-                  {{-- <img 
-                  class="mb-4" 
-                  src="https://psurvey.pindadmedika.com/_next/image?url=%2Fbandung.jpeg&w=828&q=75" 
-                  alt="logo" width="100%" height="100%"
-                  style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;"> --}}
-                  <div class="container">
-                    <img 
-                    class="mb-4 img-fluid" 
-                    @if(env('APP_ENV') == 'local')
-                    src="{{ asset('storage/basset/photos/'.$mainLogo ?? 'defaultmain.png') }}" 
-                    @else
-                    src="{{ asset('public/photos/'.$mainLogo ?? 'defaultmain.png') }}"
-                    @endif
-                    alt="logo" 
-                    {{-- width="100%" height="100%" --}}
-                    style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
-                    {{-- src="{{ asset('public/photos/'.$mainLogo ?? 'default.png') }}"  --}}
-                  </div>
+                  <div 
+                    class="container">
+                    {{-- <div class="row"> --}}
+                      <img 
+                      class="img-fluid" 
+                      @if(env('APP_ENV') == 'local')
+                      src="{{ asset('storage/basset/photos/'.$mainLogo) }}" 
+                      @else
+                      src="{{ asset('public/photos/'.$mainLogo) }}"
+                      @endif
+                      {{-- width="100px" height="100px" --}}
+                      alt="logo" 
+                      style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
+                    </div>
+                  {{-- </div> --}}
               </div>
           </div>
       </div>
