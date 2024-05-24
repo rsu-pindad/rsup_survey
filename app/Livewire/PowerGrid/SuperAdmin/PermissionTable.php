@@ -6,12 +6,10 @@ use App\Livewire\Attributes\Locked;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
-use PowerComponents\LivewirePowerGrid\Exportable;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
@@ -28,13 +26,17 @@ final class PermissionTable extends PowerGridComponent
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
+
+    public string $sortField = 'name';
+
+    public string $sortDirection = 'asc';
+
+    public bool $withSortStringNumber = true;
 
     public function setUp(): array
     {
-        $this->showRadioButton();
-
         return [
             Header::make()->showSearchInput(),
             Footer::make()
@@ -59,18 +61,27 @@ final class PermissionTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
-            ->add('created_at');
+            ->add('created_at_formatted', function ($permission) {
+                return Carbon::parse($permission->created_at)->format('d-M');  // 20/01/2024 10:05
+            });
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Name', 'name')
-                ->sortable(),
-            Column::make('Created at', 'created_at')
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
+            Column::make('Nama Permisi', 'name')
+                ->sortable()
+                ->searchable(),
+            Column::make('Created at', 'created_at_formatted')
                 ->sortable(),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -117,11 +128,11 @@ final class PermissionTable extends PowerGridComponent
     {
         return [
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-super-admin-permission-edit', [$row->id]),
             Button::add('delete')
-                ->slot('hapus')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
                 ->id()
                 ->class('btn btn-warning')
                 ->dispatch('delete', ['rowId' => $row->id])
