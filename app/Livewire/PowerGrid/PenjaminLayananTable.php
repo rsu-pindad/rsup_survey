@@ -7,7 +7,6 @@ use App\Models\PenjaminLayanan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -28,15 +27,21 @@ final class PenjaminLayananTable extends PowerGridComponent
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
+
+    public string $sortField = 'created_at';
+
+    public string $sortDirection = 'desc';
+
+    public bool $withSortStringNumber = true;
 
     public function setUp(): array
     {
         $this->showRadioButton();
 
         return [
-            Exportable::make('export')
+            Exportable::make(fileName: 'Penjamin_layanan')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
@@ -71,12 +76,18 @@ final class PenjaminLayananTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
             Column::make('Nama penjamin', 'penjamin_id')
                 ->sortable()
                 ->searchable(),
             Column::make('Nama layanan', 'layanan_id'),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -123,11 +134,11 @@ final class PenjaminLayananTable extends PowerGridComponent
     {
         return [
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-penjamin-layanan-edit', [$row->id]),
             Button::add('delete')
-                ->slot('hapus')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
                 ->id()
                 ->class('btn btn-warning')
                 ->dispatch('delete', ['rowId' => $row->id])

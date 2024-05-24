@@ -3,84 +3,114 @@
     <livewire:admin.roots-admin /> 
     @endpersist
 
-    <main class="container-fluid p-4">
-        <div class="bg-body-tertiary p-5 rounded">
-            <div class="row">
+    <main class="container-fluid px-5">
+        <div class="rounded">
+            <div class="row mb-3">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>Profile</h4>
                         </div>
                         <div class="card-body m-2">
-                            <div class="mb-2">
+                            <div class="row mb-3">
                                 <form wire:submit="editUser">
-                                    <div class="mb-3">
-                                        <label for="userEmail" class="form-label">Email</label>
-                                        <input 
-                                            wire:model.defer="profileForm.userEmail"
-                                            value="{{ $this->profileForm->userEmail }}"
-                                            type="email" 
-                                            class="form-control" 
-                                            id="userEmail" 
-                                            aria-describedby="userEmailHelp">
+                                    <div class="row mb-2">
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <input 
+                                                    wire:model.defer="profileForm.userEmail"
+                                                    value="{{ $this->profileForm->userEmail }}"
+                                                    type="email" 
+                                                    class="form-control" 
+                                                    id="userEmail" 
+                                                    aria-describedby="userEmailHelp">
+                                                <label for="userEmail" class="form-label">Email</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Ubah Email</button>                                
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
-                            <div class="mb-2">
+                            <div class="row">
                                 <form wire:submit="edit">
-                                    <div class="mb-3">
-                                        <label for="userNpp" class="form-label">Npp</label>
-                                        <input 
-                                            wire:model.defer="profileForm.nppKaryawan"
-                                            value="{{ $this->profileForm->nppKaryawan }}"
-                                            type="text" 
-                                            class="form-control" 
-                                            id="userNpp" 
-                                            aria-describedby="userNppHelp"
-                                            disabled
-                                            readonly>
+                                    <div class="row mb-2">
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="form-floating">
+                                                <input 
+                                                    wire:model.defer="profileForm.nppKaryawan"
+                                                    value="{{ $this->profileForm->nppKaryawan }}"
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="userNpp" 
+                                                    aria-describedby="userNppHelp"
+                                                    disabled
+                                                    readonly>
+                                                <label for="userNpp" class="form-label">Npp</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="form-floating">
+                                                <input 
+                                                    wire:model.defer="profileForm.unitKaryawan"
+                                                    value="{{ $this->profileForm->unitKaryawan }}"
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="userUnit" 
+                                                    aria-describedby="userUnitHelp"
+                                                    disabled
+                                                    readonly>
+                                                <label for="userUnit" class="form-label">Unit</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <div class="form-floating">
+                                                <input 
+                                                    wire:model.defer="profileForm.layananKaryawan"
+                                                    value="{{ $this->profileForm->layananKaryawan }}"
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="userLayanan" 
+                                                    aria-describedby="userLayananHelp"
+                                                    disabled
+                                                    readonly>
+                                                <label for="userLayanan" class="form-label">Layanan</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="userUnit" class="form-label">Unit</label>
-                                        <input 
-                                            wire:model.defer="profileForm.unitKaryawan"
-                                            value="{{ $this->profileForm->unitKaryawan }}"
-                                            type="text" 
-                                            class="form-control" 
-                                            id="userUnit" 
-                                            aria-describedby="userUnitHelp"
-                                            disabled
-                                            readonly>
+                                    <div class="row mb-2">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-floating">
+                                                <input 
+                                                    wire:model.defer="profileForm.namaKaryawan"
+                                                    value="{{ $this->profileForm->namaKaryawan }}"
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="userNama" 
+                                                    aria-describedby="userNamaHelp">
+                                                    <label for="userNama" class="form-label">Nama</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="userLayanan" class="form-label">Layanan</label>
-                                        <input 
-                                            wire:model.defer="profileForm.layananKaryawan"
-                                            value="{{ $this->profileForm->layananKaryawan }}"
-                                            type="text" 
-                                            class="form-control" 
-                                            id="userLayanan" 
-                                            aria-describedby="userLayananHelp"
-                                            disabled
-                                            readonly>
+                                    <div class="row mb-2">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fa-solid fa-floppy-disk"></i>
+                                            </button> 
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="userNama" class="form-label">Nama</label>
-                                        <input 
-                                            wire:model.defer="profileForm.namaKaryawan"
-                                            value="{{ $this->profileForm->namaKaryawan }}"
-                                            type="text" 
-                                            class="form-control" 
-                                            id="userNama" 
-                                            aria-describedby="userNamaHelp">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Simpan</button> 
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="card-header">

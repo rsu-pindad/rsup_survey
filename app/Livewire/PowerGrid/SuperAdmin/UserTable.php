@@ -6,7 +6,6 @@ use App\Livewire\Attributes\Locked;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
@@ -24,12 +23,18 @@ final class UserTable extends PowerGridComponent
     #[Locked]
     public $id;
 
+    public string $sortField = 'created_at';
+
+    public string $sortDirection = 'desc';
+
+    public bool $withSortStringNumber = true;
+
     public function setUp(): array
     {
         $this->showRadioButton();
 
         return [
-            Exportable::make('export')
+            Exportable::make(fileName: 'User')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
@@ -39,6 +44,7 @@ final class UserTable extends PowerGridComponent
         ];
     }
 
+    #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
         return User::query()->withoutRole('super-admin');
@@ -56,28 +62,54 @@ final class UserTable extends PowerGridComponent
             ->add('name')
             ->add('email')
             ->add('role', fn($user) => e($user->getRoleNames()))
+            ->add('role_format', function($user){
+                if(count($user->roles) < 1){
+                    return 'blm ada role';
+                }
+                $ulist = '';
+                foreach ($user->roles as $role => $value) {
+                    $ulist .= '<p>'.$value->name.'</p>';
+                }
+                return $ulist;
+            })
             ->add('last_login')
-            ->add('created_at');
+            ->add('last_login_formatted', function ($user) {
+                return Carbon::parse($user->last_login)->format('H:i D');  // 20/01/2024 10:05
+            })
+            ->add('created_at')
+            ->add('created_at_formatted', function ($user) {
+                return Carbon::parse($user->created_at)->format('d-M-Y');  // 20/01/2024 10:05
+            });
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
             Column::make('Name', 'name')
                 ->sortable()
                 ->searchable(),
             Column::make('Email', 'email')
+                ->searchable()
+                ->visibleInExport(true)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('Role', 'role_format')
                 ->sortable()
-                ->searchable(),
-            Column::make('Role', 'role')
+                ->searchable()
+                ->visibleInExport(false),
+            Column::make('Last login', 'last_login_formatted')
                 ->sortable()
-                ->searchable(),
-            Column::make('Last login', 'last_login')
-                ->sortable(),
-            Column::make('Created at', 'created_at')
-                ->sortable(),
+                ->visibleInExport(false),
+            Column::make('Created at', 'created_at_formatted')
+                ->sortable()
+                ->visibleInExport(false),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -86,18 +118,12 @@ final class UserTable extends PowerGridComponent
         return [];
     }
 
-    #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
-    {
-        $this->js('alert(' . $rowId . ')');
-    }
-
     public function actions(User $row): array
     {
         return [
             Button::add('manage')
-                ->slot('manage')
-                ->class('btn btn-primary')
+                ->slot('<i class="fa-solid fa-gear"></i>')
+                ->class('btn btn-secondary')
                 ->route('root-super-admin-user-manage', [$row->id]),
             // Button::add('edit')
             //     ->slot('edit')

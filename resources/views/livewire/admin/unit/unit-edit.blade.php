@@ -3,8 +3,8 @@
         <livewire:admin.roots-admin /> 
     @endpersist
 
-    <main class="container-fluid p-4">
-        <div class="bg-body-tertiary p-5 rounded">
+    <main class="container-fluid px-5">
+        <div class="rounded">
             <div class="card">
                 <div class="card-body m-2">
                     <form wire:submit="edit" wire:key="{{ $this->form->id }}">
@@ -21,7 +21,8 @@
                         </div>
                         <div class="d-flex flex-row justify-content-center">
                             <div class="align-self-center p-2">
-                                <a href="{{ route('root-unit') }}"
+                                <a wire:navigate
+                                    href="{{ route('root-unit') }}"
                                     class="btn btn-outline-secondary">
                                     <i class="fa-solid fa-arrow-left-long"></i>
                                 </a>

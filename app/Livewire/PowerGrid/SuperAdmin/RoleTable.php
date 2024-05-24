@@ -6,12 +6,10 @@ use App\Livewire\Attributes\Locked;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
-use PowerComponents\LivewirePowerGrid\Exportable;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
@@ -28,12 +26,18 @@ final class RoleTable extends PowerGridComponent
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
+
+    public string $sortField = 'created_at';
+
+    public string $sortDirection = 'desc';
+
+    public bool $withSortStringNumber = true;
 
     public function setUp(): array
     {
-        $this->showRadioButton();
+        // $this->showRadioButton();
 
         return [
             Header::make()->showSearchInput(),
@@ -46,7 +50,7 @@ final class RoleTable extends PowerGridComponent
     #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
-        return Role::query()->whereNot('name','super-admin');
+        return Role::query()->whereNot('name', 'super-admin');
     }
 
     public function relationSearch(): array
@@ -59,19 +63,38 @@ final class RoleTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('name')
-            ->add('permission', fn($role) => e($role->permissions()->pluck('name')))
-            ->add('created_at');
+            ->add('permission', fn($roles) => e($roles->permissions()->pluck('name')))
+            ->add('permission_format', function($roles){
+                // dd($roles->permissions);
+                if(count($roles->permissions) < 1){
+                    return 'blm ada permisi';
+                }
+                $list = '';
+                foreach ($roles->permissions as $permission => $value) {
+                    $list .= '<p>'.$value->name.'</p>';
+                }
+                return $list;
+            })
+            ->add('created_at_formatted', function ($role) {
+                return Carbon::parse($role->created_at)->format('d-M-Y');  // 20/01/2024 10:05
+            });
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
             Column::make('Nama Role', 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Permisi', 'permission'),
+            Column::make('Permisi', 'permission_format'),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -118,15 +141,15 @@ final class RoleTable extends PowerGridComponent
     {
         return [
             Button::add('manage')
-                ->slot('manage')
-                ->class('btn btn-primary')
+                ->slot('<i class="fa-solid fa-gear"></i>')
+                ->class('btn btn-secondary')
                 ->route('root-super-admin-role-manage', [$row->id]),
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-super-admin-role-edit', [$row->id]),
             Button::add('delete')
-                ->slot('hapus')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
                 ->id()
                 ->class('btn btn-warning')
                 ->dispatch('delete', ['rowId' => $row->id])

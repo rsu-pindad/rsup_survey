@@ -3,11 +3,11 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\SurveyForm as Form;
+use App\Models\AppSetting;
 use App\Models\KaryawanProfile;
 use App\Models\Layanan;
-use App\Models\Unit;
-use App\Models\UnitProfil;
 use App\Models\PenjaminLayanan;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -40,28 +40,27 @@ class Roots extends Component
     {
         // dd(auth()->user()->getRoleNames());
         $profile = KaryawanProfile::with('parentLayanan')->where('user_id', session()->get('userId'))->first();
-        
+
         if ($profile) {
             $layanan = Layanan::where('id', $profile->layanan_id)->first();
             if ($layanan != null) {
                 $penjaminLayanan = PenjaminLayanan::distinct()->where('layanan_id', $layanan->id)->get('penjamin_id');
                 $unit = Unit::with('unitProfil')->find($profile->parentUnit->id);
-                // dd($unit->unitProfil->unit_alamat);
-                $default = "RUMAH SAKIT UMUM PINDAD BANDUNG</br>
+                $default = 'RUMAH SAKIT UMUM PINDAD BANDUNG</br>
                 Jl. Gatot Subroto No.517, Sukapura, Kec. Kiaracondong, </br>
-                Kota Bandung, Jawa Barat 40285 </br>";
+                Kota Bandung, Jawa Barat 40285 </br>';
                 $defaultMain = 'main.webp';
                 $defaultSub = 'pmu.jpeg';
-                // dd($unit->unitProfil->unit_alamat);
+                $appSetting = AppSetting::get()->last();
                 return view('livewire.roots')->with([
                     'petugas' => session()->get('userName'),
                     'layanan' => $profile->parentLayanan->nama_layanan,
                     'unitNama' => $profile->parentUnit->nama_unit,
-                    'unitAlamat' => $unit->unitProfil->unit_alamat ?? $default,
+                    'unitAlamat' => $unit->unitProfil->unit_alamat ?? $appSetting->initial_alamat_text,
                     'penjamin' => $penjaminLayanan,
-                    'mainLogo' => $unit->unitProfil->unit_main_logo ?? $defaultMain,
-                    'subLogo' => $unit->unitProfil->unit_sub_logo ?? $defaultSub,
-                    'unitMoto' => $unit->unitProfil->unit_motto ?? 'belum ada moto',
+                    'mainLogo' => $unit->unitProfil->unit_main_logo ?? 'settings/' . $appSetting->initial_body_logo,
+                    'subLogo' => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
+                    'unitMoto' => $unit->unitProfil->unit_motto ?? $appSetting->initial_moto_text,
                 ]);
             } else {
                 return <<<HTML

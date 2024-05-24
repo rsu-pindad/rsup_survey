@@ -10,10 +10,7 @@
                 @else
                 src="{{ asset('public/photos/'.$subLogo ?? 'defaultsub.png') }}"
                 @endif
-                alt="logo" 
-                {{-- width="100%"  --}}
-                {{-- height="100%" --}}
-                >
+                alt="logo">
             </div>
         </div>
         <div class="col-lg-4 col-md-6 col-xs-8 d-none d-xs-none d-md-block">

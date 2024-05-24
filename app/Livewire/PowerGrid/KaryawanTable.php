@@ -27,15 +27,21 @@ final class KaryawanTable extends PowerGridComponent
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
+
+    public string $sortField = 'npp_karyawan';
+
+    public string $sortDirection = 'asc';
+
+    public bool $withSortStringNumber = true;
 
     public function setUp(): array
     {
         $this->showRadioButton();
 
         return [
-            Exportable::make('export')
+            Exportable::make(fileName: 'Data NPP Karyawan')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
@@ -62,21 +68,41 @@ final class KaryawanTable extends PowerGridComponent
             ->add('id')
             ->add('npp_karyawan')
             ->add('taken')
-            ->add('active');
+            ->add('taken_format', function ($karyawan) {
+                if ($karyawan->taken == 1) {
+                    return '<span class="badge rounded-pill text-bg-primary">Terpakai</span>';
+                }
+                return '<span class="badge rounded-pill text-bg-success">Belum terpakai</span>';
+            })
+            ->add('active')
+            ->add('active_format', function ($karyawan) {
+                if ($karyawan->active == 1) {
+                    return '<span class="badge rounded-pill text-bg-primary">Aktif</span>';
+                }
+                return '<span class="badge rounded-pill text-bg-success">Tidak Aktif</span>';
+            });
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
             Column::make('Npp karyawan', 'npp_karyawan')
                 ->sortable()
                 ->searchable(),
-            Column::make('Taken', 'taken')
-                ->sortable(),
-            Column::make('Active', 'active')
-                ->sortable(),
+            Column::make('Taken', 'taken_format')
+                ->sortable()
+                ->visibleInExport(false),
+            Column::make('Active', 'active_format')
+                ->sortable()
+                ->visibleInExport(false),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -123,11 +149,11 @@ final class KaryawanTable extends PowerGridComponent
     {
         return [
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-karyawan-edit', [$row->id]),
             Button::add('delete')
-                ->slot('hapus')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
                 ->id()
                 ->class('btn btn-warning')
                 ->dispatch('delete', ['rowId' => $row->id])
@@ -140,8 +166,17 @@ final class KaryawanTable extends PowerGridComponent
             Rule::radio()
                 ->when(fn($row) => $row->id == $this->selectedRow)
                 ->setAttribute('class', ''),
+            Rule::radio()
+                ->when(fn($row) => $row->active == 1)
+                ->hide(),
             Rule::rows()
                 ->setAttribute('class', ''),
+            Rule::button('edit')
+                ->when(fn($row) => $row->taken == 1)
+                ->hide(),
+            Rule::button('delete')
+                ->when(fn($row) => $row->active == 1)
+                ->hide()
         ];
     }
 }

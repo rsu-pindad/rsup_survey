@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:super-admin')->group(function () {
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', User::class)->name('root-super-admin-user');
-            Route::get('/user/{id}', UserManage::class)->name('root-super-admin-user-manage');
+            Route::get('/manage/{id}', UserManage::class)->name('root-super-admin-user-manage');
         });
         Route::group(['prefix' => 'permission'], function () {
             Route::get('/', Permission::class)->name('root-super-admin-permission');

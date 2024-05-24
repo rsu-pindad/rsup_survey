@@ -1,7 +1,16 @@
 <div>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">#</a>
+            <a class="navbar-brand" href="/">
+                <img 
+                @if(env('APP_ENV') == 'local')
+                src="{{ asset('storage/basset/photos/settings/'.$appSetting->initial_domain_logo ?? 'default_domain.png') }}"
+                @else
+                src="{{ asset('public/photos/settings/'.$appSetting->initial_domain_logo ?? 'default_domain.png') }}"
+                @endif 
+                alt="Logo" width="34" height="28" class="d-inline-block align-text-top"
+                />
+            </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

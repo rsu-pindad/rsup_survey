@@ -28,8 +28,14 @@ final class KaryawanProfileTable extends PowerGridComponent
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
+
+    public string $sortField = 'unit_id';
+
+    public string $sortDirection = 'asc';
+
+    public bool $withSortStringNumber = true;
 
     public function setUp(): array
     {
@@ -68,24 +74,35 @@ final class KaryawanProfileTable extends PowerGridComponent
             ->add('unit_id', fn(KaryawanProfile $karyawanProfile) => $karyawanProfile->parentUnit->nama_unit)
             ->add('layanan_id', fn(KaryawanProfile $karyawanProfile) => $karyawanProfile->parentLayanan->nama_layanan)
             ->add('nama_karyawanprofile')
-            ->add('updated_at');
+            ->add('updated_at')
+            ->add('updated_at_formatted', function ($karyawanProfile) {
+                return Carbon::parse($karyawanProfile->updated_at)->format('H:i:s D');  // 20/01/2024 10:05
+            });
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
-            Column::make('Email', 'user_id'),
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
+            Column::make('Unit', 'unit_id'),
             Column::make('Npp', 'karyawan_id')
                 ->sortable()
                 ->searchable(),
-            Column::make('Unit', 'unit_id'),
-            Column::make('Layanan', 'layanan_id'),
             Column::make('Nama', 'nama_karyawanprofile')
                 ->searchable(),
-            Column::make('Updated at', 'updated_at')
-                ->sortable(),
+            Column::make('Layanan', 'layanan_id'),
+            Column::make('Email', 'user_id')
+                ->visibleInExport(false),
+            Column::make('Updated at', 'updated_at_formatted')
+                ->sortable()
+                ->visibleInExport(false),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -132,11 +149,11 @@ final class KaryawanProfileTable extends PowerGridComponent
     {
         return [
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-karyawan-profile-edit', [$row->id]),
             Button::add('delete')
-                ->slot('hapus')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
                 ->id()
                 ->class('btn btn-warning')
                 ->dispatch('delete', ['rowId' => $row->id])
@@ -149,8 +166,17 @@ final class KaryawanProfileTable extends PowerGridComponent
             Rule::radio()
                 ->when(fn($row) => $row->id == $this->selectedRow)
                 ->setAttribute('class', ''),
+            Rule::radio()
+                ->when(fn($row) => $row->parentKaryawan->active == 1)
+                ->hide(),
             Rule::rows()
                 ->setAttribute('class', ''),
+            Rule::button('edit')
+            ->when(fn($row) => $row->parentKaryawan->active == 0)
+            ->hide(),
+            Rule::button('delete')
+            ->when(fn($row) => $row->parentKaryawan->active == 1)
+            ->hide()
         ];
     }
 }

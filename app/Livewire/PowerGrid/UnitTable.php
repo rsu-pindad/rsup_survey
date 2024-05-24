@@ -28,7 +28,7 @@ final class UnitTable extends PowerGridComponent
 
     protected $listeners = [
         'confirmed',
-        'cancalled'
+        'cancelled'
     ];
 
     public string $sortField = 'nama_unit';
@@ -42,7 +42,7 @@ final class UnitTable extends PowerGridComponent
         $this->showRadioButton();
 
         return [
-            Exportable::make(fileName:'Unit Survey')
+            Exportable::make(fileName: 'Unit Survey')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
@@ -74,17 +74,17 @@ final class UnitTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id')
-            ->visibleInExport(false)
-            ->hidden(isHidden: true, isForceHidden: true),
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
             Column::make('No', 'id')
-            ->title('No')
-            ->index(),
+                ->title('No')
+                ->index(),
             Column::make('Nama unit', 'nama_unit')
-            ->title('Nama Unit')
+                ->title('Nama Unit')
                 ->sortable()
                 ->searchable(),
             Column::action('Action')
-            ->visibleInExport(false),
+                ->visibleInExport(false),
         ];
     }
 
@@ -133,6 +133,10 @@ final class UnitTable extends PowerGridComponent
             Button::add('manage')
                 ->slot('<i class="fa-solid fa-gear"></i>')
                 ->class('btn btn-secondary')
+                ->route('root-unit-profil', [$row->id]),
+            Button::add('layanan')
+                ->slot('<i class="fa-solid fa-tags"></i>')
+                ->class('btn btn-outline-secondary')
                 ->route('root-unit-profil', [$row->id]),
             Button::add('edit')
                 ->slot('<i class="fa-solid fa-pen-to-square"></i>')

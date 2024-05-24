@@ -26,6 +26,17 @@ final class ResponTable extends PowerGridComponent
     #[Locked]
     public $id;
 
+    protected $listeners = [
+        'confirmed',
+        'cancelled'
+    ];
+
+    public string $sortField = 'urutan_respon';
+
+    public string $sortDirection = 'desc';
+
+    public bool $withSortStringNumber = true;
+
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -57,23 +68,38 @@ final class ResponTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('nama_respon')
-            ->add('icon_respon')
-            ->add('tag_warna_respon')
-            ->add('skor_respon');
+            ->add('tag_warna_respon', function ($respon) {
+                return '<span class="badge rounded-pill" style="background-color:' . $respon->tag_warna_respon . '">' . $respon->tag_warna_respon . '</span>';
+            })
+            ->add('icon_respon', function ($respon) {
+                return '<i class="' . $respon->icon_respon . ' fa-xl" style="color: ' . $respon->tag_warna_respon . ';"></i>';
+            })
+            ->add('skor_respon')
+            ->add('urutan_respon');
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id'),
+            Column::make('Id', 'id')
+                ->visibleInExport(false)
+                ->hidden(isHidden: true, isForceHidden: true),
+            Column::make('No', 'id')
+                ->title('No')
+                ->index(),
             Column::make('Nama respon', 'nama_respon')
                 ->sortable()
                 ->searchable(),
-            Column::make('Icon respon', 'icon_respon'),
-            Column::make('Tag warna respon', 'tag_warna_respon'),
-            Column::make('Skor respon', 'skor_respon'),
-            Column::make('Urutan respon', 'urutan_respon'),
+            Column::make('Icon respon', 'icon_respon')
+                ->visibleInExport(false),
+            Column::make('Tag warna respon', 'tag_warna_respon')
+                ->visibleInExport(false),
+            Column::make('Skor respon', 'skor_respon')
+                ->visibleInExport(false),
+            Column::make('Urutan respon', 'urutan_respon')
+                ->visibleInExport(false),
             Column::action('Action')
+                ->visibleInExport(false),
         ];
     }
 
@@ -120,9 +146,14 @@ final class ResponTable extends PowerGridComponent
     {
         return [
             Button::add('edit')
-                ->slot('edit')
+                ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
                 ->route('root-respon-edit', [$row->id]),
+            Button::add('delete')
+                ->slot('<i class="fa-solid fa-trash-can"></i>')
+                ->id()
+                ->class('btn btn-warning')
+                ->dispatch('delete', ['rowId' => $row->id])
         ];
     }
 

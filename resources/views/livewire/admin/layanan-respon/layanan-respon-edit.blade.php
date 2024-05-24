@@ -3,40 +3,57 @@
         <livewire:admin.roots-admin /> 
     @endpersist
 
-    <main class="container-fluid p-4">
-        <div class="bg-body-tertiary p-5 rounded">
+    <main class="container-fluid px-5">
+        <div class="rounded">
             <div class="card">
                 <div class="card-body m-2">
                     <form wire:submit="edit" wire:key="{{ $this->form->id }}">
-                        <div class="mb-2">
-                            <select 
-                                wire:model="form.idLayanan"
-                                class="form-select" aria-label="select-layanan">
-                                @forelse ($layanan as $l)
-                                <option value="{{ $l->id }}">{{ $l->nama_layanan }}</option>
-                                @empty
-                                <option disabled>Maaf layanan tidak ditemukan</option>
-                                @endforelse
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <select 
-                                wire:model="form.idRespon"
-                                class="form-select" aria-label="select-respon">
-                                @forelse ($respon as $r)
-                                <option value="{{ $r->id }}">{{ $r->nama_respon }}</option>
-                                @empty
-                                <option disabled>Maaf respon tidak ditemukan</option>
-                                @endforelse
-                            </select>
-                        </div>
-                        <div class="mb-2 d-flex flex-row justify-content-center">
-                            <div class="align-self-center p-2">
-                                <a href="{{ route('root-layanan-respon') }}"
-                                class="btn btn-outline-secondary">Batal</a>
+                        <div class="row mb-3">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-floating">
+                                    <select 
+                                        id="selectLayanan"
+                                        wire:model="form.idLayanan"
+                                        class="form-select" aria-label="select-layanan">
+                                        @forelse ($layanan as $l)
+                                        <option value="{{ $l->id }}">{{ $l->nama_layanan }}</option>
+                                        @empty
+                                        <option disabled>Maaf layanan tidak ditemukan</option>
+                                        @endforelse
+                                    </select>
+                                    <label for="selectLayanan">Pilih layanan</label>
+                                </div>
                             </div>
-                            <div class="align-self-center p-2">
-                                <button class="btn btn-primary" type="submit">Edit</button>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-floating">
+                                    <select 
+                                        id="selectRespon"
+                                        wire:model="form.idRespon"
+                                        class="form-select" aria-label="select-respon">
+                                        @forelse ($respon as $r)
+                                        <option value="{{ $r->id }}">{{ $r->nama_respon }}</option>
+                                        @empty
+                                        <option disabled>Maaf respon tidak ditemukan</option>
+                                        @endforelse
+                                    </select>
+                                    <label for="selectRespon">Pilih respon</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="mb-2 d-flex flex-row justify-content-center flex-wrap">
+                                <div class="align-self-center p-2">
+                                    <a wire:navigate
+                                        href="{{ route('root-layanan-respon') }}"
+                                        class="btn btn-secondary">
+                                        <i class="fa-solid fa-arrow-left-long"></i> kembali
+                                    </a>
+                                </div>
+                                <div class="align-self-center p-2">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fa-solid fa-floppy-disk"></i> perbarui
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
