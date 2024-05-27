@@ -5,9 +5,7 @@ namespace App\Livewire\PowerGrid;
 use App\Livewire\Attributes\Locked;
 use App\Models\Penjamin;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
@@ -24,6 +22,11 @@ final class PenjaminTable extends PowerGridComponent
 
     #[Locked]
     public $id;
+
+    protected $listeners = [
+        'confirmed',
+        'cancelled'
+    ];
 
     public string $sortField = 'nama_penjamin';
 
