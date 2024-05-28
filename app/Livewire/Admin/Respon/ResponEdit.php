@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Respon;
 
-use App\Livewire\Forms\ResponEditForm as Form;
+use App\Livewire\Forms\ResponForm as Form;
 use App\Models\Respon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Locked;
@@ -23,26 +23,26 @@ class ResponEdit extends Component
         $this->form->setRespon($this->respon);
     }
 
-    public function render()
-    {
-        return view('livewire.admin.respon.respon-edit');
-    }
-
     public function edit()
     {
+        $this->form->validate();
         $update = $this->form->update();
-        if ($update) {
-            return $this->flash('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'data respon berhasil diperbarui',
-            ], route('root-respon'));
-        } else {
+        if ($update != true) {
             return $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $update,
             ]);
         }
+        return $this->flash('success', 'berhasil', [
+            'position' => 'center',
+            'toast' => true,
+            'text' => 'data respon berhasil diperbarui',
+        ], route('root-respon'));
+    }
+
+    public function render()
+    {
+        return view('livewire.admin.respon.respon-edit');
     }
 }

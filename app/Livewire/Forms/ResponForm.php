@@ -7,7 +7,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class ResponEditForm extends Form
+class ResponForm extends Form
 {
     #[Locked]
     public $id;
@@ -48,9 +48,25 @@ class ResponEditForm extends Form
         $this->urutanRespon = $respon->urutan_respon;
     }
 
+    public function store()
+    {
+        try {
+            $respon = new Respon;
+            $respon->nama_respon = $this->namaRespon;
+            $respon->icon_respon = $this->iconRespon;
+            $respon->tag_warna_respon = $this->tagWarnaRespon;
+            $respon->skor_respon = $this->skorRespon;
+            $respon->urutan_respon = $this->urutanRespon;
+            $respon->save();
+            $this->reset();
+            return true;
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
     public function update()
     {
-        $this->validate();
         try {
             $respon = Respon::find($this->id);
             $respon->nama_respon = $this->namaRespon;
@@ -60,7 +76,7 @@ class ResponEditForm extends Form
             $respon->urutan_respon = $this->urutanRespon;
             $respon->save();
             $this->reset();
-            return $respon;
+            return true;
         } catch (\Throwable $th) {
             // report($th);
             // return false;

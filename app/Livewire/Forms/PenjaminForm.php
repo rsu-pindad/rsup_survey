@@ -7,7 +7,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class PenjaminEditForm extends Form
+class PenjaminForm extends Form
 {
     #[Locked]
     public $id;
@@ -30,6 +30,7 @@ class PenjaminEditForm extends Form
             $penjamin = new Penjamin;
             $penjamin->nama_penjamin = $this->namaPenjamin;
             $penjamin->save();
+            $this->reset();
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();

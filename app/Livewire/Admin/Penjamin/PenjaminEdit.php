@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Penjamin;
 
-use App\Livewire\Forms\PenjaminEditForm as Form;
+use App\Livewire\Forms\PenjaminForm as Form;
 use App\Models\Penjamin;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Locked;
@@ -13,7 +13,7 @@ class PenjaminEdit extends Component
     use LivewireAlert;
 
     public Form $form;
-    
+
     #[Locked]
     public $id;
 
@@ -21,11 +21,6 @@ class PenjaminEdit extends Component
     {
         $this->penjamin = Penjamin::findOrFail($id);
         $this->form->setPenjamin($this->penjamin);
-    }
-
-    public function render()
-    {
-        return view('livewire.admin.penjamin.penjamin-edit');
     }
 
     public function edit()
@@ -44,5 +39,10 @@ class PenjaminEdit extends Component
             'toast' => true,
             'text' => 'data penjamin berhasil diperbarui'
         ], route('root-penjamin'));
+    }
+
+    public function render()
+    {
+        return view('livewire.admin.penjamin.penjamin-edit');
     }
 }
