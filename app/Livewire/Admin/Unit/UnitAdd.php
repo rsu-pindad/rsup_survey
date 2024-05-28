@@ -30,7 +30,7 @@ class UnitAdd extends Component
             'toast' => true,
             'text' => 'data unit berhasil ditambahkan',
         ]);
-        $this->reset();
+        $this->form->reset();
         return $this->dispatch('table-updated');
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Unit;
 
-use App\Livewire\Forms\UnitEditForm as Form;
+use App\Livewire\Forms\UnitForm as Form;
 use App\Models\Unit;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Locked;
