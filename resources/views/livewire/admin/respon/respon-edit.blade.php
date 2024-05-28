@@ -28,7 +28,7 @@
                                             @enderror
                                             id="namaRespon" 
                                             value="{{ $this->form->namaRespon }}">
-                                        <label for="namaRespon" class="form-label">Nama Respon</label>
+                                        <label for="namaRespon">Nama Respon</label>
                                     </div>
                                     <div class="invalid-feedback">
                                         @error('form.namaRespon') 
@@ -146,7 +146,7 @@
                             <div class="align-self-center p-2">
                                 <a wire:navigate
                                     href="{{ route('root-respon') }}"
-                                    class="btn btn-outline-secondary">
+                                    class="btn btn-secondary">
                                     <i class="fa-solid fa-arrow-left-long"></i> kembali
                                 </a>
                             </div>

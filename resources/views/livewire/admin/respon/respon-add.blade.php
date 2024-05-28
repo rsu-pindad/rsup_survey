@@ -20,7 +20,7 @@
                             id="namaRespon" 
                             aria-describedby="namaResponHelp"
                             placeholder="masukan nama respon">
-                        <label for="namaRespon" class="form-label">Nama Respon</label>
+                        <label for="namaRespon">Nama Respon</label>
                     </div>
                     <div class="invalid-feedback">
                         @error('namaRespon') 
