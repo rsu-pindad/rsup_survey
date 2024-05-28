@@ -2,24 +2,27 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Unit;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
-use App\Models\Unit;
 
 class UnitForm extends Form
 {
-    #[Validate('required')]
+    #[Locked]
+    public $id;
+
+    #[Validate('required', message: 'mohon isi nama unit')]
+    #[Validate('min:4', message: 'minimal karakter 4')]
+    #[Validate('max:50', message: 'maksimal karakter 50')]
     public $namaUnit;
 
     public function store()
     {
-        $this->validate();
         try {
             $unit = new Unit;
             $unit->nama_unit = $this->namaUnit;
             $unit->save();
-            $this->reset(); 
-            return $unit;
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

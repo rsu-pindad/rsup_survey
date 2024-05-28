@@ -12,7 +12,9 @@ class UnitEditForm extends Form
     #[Locked]
     public $id;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi nama unit')]
+    #[Validate('min:4', message: 'minimal karakter 4')]
+    #[Validate('max:50', message: 'maksimal karakter 50')]
     public $namaUnit;
 
     public function setUnit(Unit $unit)
@@ -21,25 +23,7 @@ class UnitEditForm extends Form
         $this->id = $unit->id;
         $this->namaUnit = $unit->nama_unit;
     }
-
-    public function store()
-    {
-        $this->validate();
-        try {   
-            $unit = new Unit;
-            $unit->nama_unit = $this->namaUnit;
-            $unit->save();
-            if ($unit) {
-                $this->reset();
-                return true;
-            } else {
-                return false;
-            }
-        } catch (\Throwable $th) {
-            return $th->getMessage();
-        }
-    }
-
+    
     public function update()
     {
         $this->validate();

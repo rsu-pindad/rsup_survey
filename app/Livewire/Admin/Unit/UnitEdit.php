@@ -30,19 +30,19 @@ class UnitEdit extends Component
 
     public function edit()
     {
+        $this->form->validate();
         $update = $this->form->update();
-        if ($update) {
-            return $this->flash('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'data unit berhasil diperbarui',
-            ], route('root-unit'));
-        } else {
+        if ($update != true) {
             return $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $update,
             ]);
         }
+        return $this->flash('success', 'berhasil', [
+            'position' => 'center',
+            'toast' => true,
+            'text' => 'data unit berhasil diperbarui',
+        ], route('root-unit'));
     }
 }

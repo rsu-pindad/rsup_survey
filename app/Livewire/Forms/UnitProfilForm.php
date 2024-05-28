@@ -7,7 +7,6 @@ use App\Models\UnitProfil;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
@@ -16,37 +15,35 @@ class UnitProfilForm extends Form
 {
     use WithFileUploads;
 
+    public ?UnitProfil $unitProfile;
+
     #[Locked]
     public $unitId;
 
-    // #[Reactive]
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon unggah logo utama', onUpdate: false)]
     public $unitMainLogo;
 
-    // #[Reactive]
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon unggah logo kedua', onUpdate: false)]
     public $unitSubLogo;
 
-    // #[Reactive]
-    #[Validate('required')]
+    // #[Validate('required', onUpdate: false)]
     public $unitMainLogoOld;
 
-    // #[Reactive]
-    #[Validate('required')]
+    // #[Validate('required', onUpdate: false)]
     public $unitSubLogoOld;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi motto', onUpdate: false)]
     public $unitMotto;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi alamat', onUpdate: false)]
     public $unitAlamat;
 
-    #[Validate('required')]
+    #[Validate('required', onUpdate: false)]
     public $unitNama;
 
     public function setUnit($id)
     {
-        $unit = Unit::find($id);
+        $unit = Unit::findOrFail($id);
         $this->unitId = $unit->id;
         $this->unitNama = $unit->nama_unit;
         $unitProfil = UnitProfil::where('unit_id', $this->unitId)->first();
@@ -58,8 +55,8 @@ class UnitProfilForm extends Form
 
     public function store()
     {
-        // dd($this->all());
         try {
+            $this->validate();
             $mainRandomName = Str::random(20);
             $subRandomName = Str::random(20);
             $mainName = $mainRandomName . '.' . $this->unitMainLogo[0]['extension'];
