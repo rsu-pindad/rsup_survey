@@ -30,19 +30,19 @@ class PenjaminEdit extends Component
 
     public function edit()
     {
+        $this->form->validate();
         $update = $this->form->update();
-        if ($update) {
-            return $this->flash('success', 'berhasil', [
-                'postion' => 'center',
-                'toast' => true,
-                'text' => 'data penjamin berhasil diperbarui'
-            ], route('root-penjamin'));
-        } else {
+        if ($update != true) {
             return $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $update,
             ]);
         }
+        return $this->flash('success', 'berhasil', [
+            'postion' => 'center',
+            'toast' => true,
+            'text' => 'data penjamin berhasil diperbarui'
+        ], route('root-penjamin'));
     }
 }

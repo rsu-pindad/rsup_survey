@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Admin\Penjamin;
 
-use Livewire\Component;
-use App\Models\Penjamin as PenjaminModel;
 use App\Livewire\Forms\PenjaminEditForm as Form;
+use App\Models\Penjamin as PenjaminModel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class PenjaminAdd extends Component
 {
@@ -20,21 +20,21 @@ class PenjaminAdd extends Component
 
     public function save()
     {
+        $this->form->validate();
         $store = $this->form->store();
-        if ($store) {
-            $this->alert('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'data penjamin berhasil ditambahkan',
-            ]);
-            $this->dispatch('table-updated');
-        } else {
+        if ($store != true) {
             $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $store,
             ]);
         }
+        $this->alert('success', 'berhasil', [
+            'position' => 'center',
+            'toast' => true,
+            'text' => 'data penjamin berhasil ditambahkan',
+        ]);
+        $this->dispatch('table-updated');
     }
 
     public function render()
