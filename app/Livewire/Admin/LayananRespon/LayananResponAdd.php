@@ -2,9 +2,8 @@
 
 namespace App\Livewire\Admin\LayananRespon;
 
-use App\Livewire\Forms\LayananResponEditForm as Form;
+use App\Livewire\Forms\LayananResponForm as Form;
 use App\Models\Layanan;
-use App\Models\LayananRespon;
 use App\Models\Respon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -15,28 +14,24 @@ class LayananResponAdd extends Component
 
     public Form $form;
 
-    public function mount(LayananRespon $layananRespon)
-    {
-        $this->form->setLayananRespon($layananRespon);
-    }
-
     public function save()
     {
+        $this->form->validate();
         $store = $this->form->store();
-        if ($store) {
-            $this->alert('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'data layanan-respon berhasil ditambahkan',
-            ]);
-            $this->dispatch('table-updated');
-        } else {
+        if ($store != true) {
             $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $store,
             ]);
+            return $this->dispatch('table-updated');
         }
+        $this->alert('success', 'berhasil', [
+            'position' => 'center',
+            'toast' => true,
+            'text' => 'data layanan-respon berhasil ditambahkan',
+        ]);
+        return $this->dispatch('table-updated');
     }
 
     public function render()

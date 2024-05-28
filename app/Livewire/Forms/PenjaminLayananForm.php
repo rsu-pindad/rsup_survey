@@ -7,15 +7,15 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class PenjaminLayananEditForm extends Form
+class PenjaminLayananForm extends Form
 {
     #[Locked]
     public $id;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'pilih nama penjamin')]
     public $idPenjamin;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'pilih nama layanan')]
     public $idLayanan;
 
     public function setPenjaminLayanan(PenjaminLayanan $penjaminLayanan)
@@ -28,18 +28,13 @@ class PenjaminLayananEditForm extends Form
 
     public function store()
     {
-        $this->validate();
         try {
             $penjaminLayanan = new PenjaminLayanan;
             $penjaminLayanan->penjamin_id = $this->idPenjamin;
             $penjaminLayanan->layanan_id = $this->idLayanan;
             $penjaminLayanan->save();
-            if ($penjaminLayanan) {
-                $this->reset();
-                return true;
-            } else {
-                return false;
-            }
+            $this->reset();
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -52,8 +47,7 @@ class PenjaminLayananEditForm extends Form
             $penjaminLayanan->penjamin_id = $this->idPenjamin;
             $penjaminLayanan->layanan_id = $this->idLayanan;
             $penjaminLayanan->save();
-            $this->reset();
-            return $penjaminLayanan;
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

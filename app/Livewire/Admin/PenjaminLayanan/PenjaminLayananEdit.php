@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\PenjaminLayanan;
 
-use App\Livewire\Forms\PenjaminLayananEditForm as Form;
-use App\Models\Penjamin;
+use App\Livewire\Forms\PenjaminLayananForm as Form;
 use App\Models\Layanan;
+use App\Models\Penjamin;
 use App\Models\PenjaminLayanan;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Locked;
@@ -15,7 +15,7 @@ class PenjaminLayananEdit extends Component
     use LivewireAlert;
 
     public Form $form;
-    
+
     #[Locked]
     public $id;
 
@@ -25,16 +25,9 @@ class PenjaminLayananEdit extends Component
         $this->form->setPenjaminLayanan($this->penjaminLayanan);
     }
 
-    public function render()
-    {
-        return view('livewire.admin.penjamin-layanan.penjamin-layanan-edit')->with([
-            'penjamin' => Penjamin::get(),
-            'layanan' => Layanan::get()
-        ]);
-    }
-
     public function edit()
     {
+        $this->form->validate();
         $update = $this->form->update();
         if ($update) {
             return $this->flash('success', 'berhasil', [
@@ -51,4 +44,11 @@ class PenjaminLayananEdit extends Component
         }
     }
 
+    public function render()
+    {
+        return view('livewire.admin.penjamin-layanan.penjamin-layanan-edit')->with([
+            'penjamin' => Penjamin::get(),
+            'layanan' => Layanan::get()
+        ]);
+    }
 }
