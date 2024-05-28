@@ -4,15 +4,15 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="input-group has-validation">
                     <div 
-                        @error('namaRespon')
+                        @error('form.namaRespon')
                         class="form-floating is-invalid"
                         @else
                         class="form-floating"
                         @enderror
                         >
-                        <input wire:model.defer="namaRespon" 
+                        <input wire:model.defer="form.namaRespon" 
                             type="text" 
-                            @error('namaRespon')
+                            @error('form.namaRespon')
                             class="form-control is-invalid" 
                             @else
                             class="form-control" 
@@ -23,7 +23,7 @@
                         <label for="namaRespon">Nama Respon</label>
                     </div>
                     <div class="invalid-feedback">
-                        @error('namaRespon') 
+                        @error('form.namaRespon') 
                             <span class="error">{{ $message }}</span> 
                         @enderror
                     </div>
@@ -32,15 +32,15 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="input-group has-validation">
                     <div 
-                        @error('iconRespon')
+                        @error('form.iconRespon')
                         class="form-floating is-invalid"
                         @else
                         class="form-floating"
                         @enderror
                         >
-                        <input wire:model="iconRespon" 
+                        <input wire:model="form.iconRespon" 
                         type="text" 
-                        @error('iconRespon')
+                        @error('form.iconRespon')
                         class="form-control is-invalid" 
                         @else
                         class="form-control" 
@@ -48,10 +48,10 @@
                         id="iconRespon" 
                         aria-describedby="iconResponHelp"
                         placeholder="masukan icon respon">
-                        <label for="iconRespon" class="form-label">Icon Respon</label>
+                        <label for="iconRespon">Icon Respon</label>
                     </div>
                     <div class="invalid-feedback">
-                        @error('iconRespon') <span class="error">{{ $message }}</span> @enderror
+                        @error('form.iconRespon') <span class="error">{{ $message }}</span> @enderror
                     </div>
                 </div>
             </div>
@@ -60,15 +60,15 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="input-group has-validation">
                     <div
-                        @error('skorRespon')
+                        @error('form.skorRespon')
                         class="form-floating is-invalid"
                         @else
                         class="form-floating"
                         @enderror
                         >
-                        <input wire:model="skorRespon" 
+                        <input wire:model="form.skorRespon" 
                             type="number" 
-                            @error('skorRespon')
+                            @error('form.skorRespon')
                             class="form-control is-invalid" 
                             @else
                             class="form-control" 
@@ -76,25 +76,25 @@
                             id="skorRespon" 
                             aria-describedby="skorResponHelp"
                             placeholder="masukan skor respon">
-                        <label for="skorRespon" class="form-label">Skor Respon</label>
+                        <label for="skorRespon">Skor Respon</label>
                     </div>
                     <div class="invalid-feedback">
-                        @error('skorRespon') <span class="error">{{ $message }}</span> @enderror
+                        @error('form.skorRespon') <span class="error">{{ $message }}</span> @enderror
                     </div>
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="input-group has-validation">
                     <div
-                        @error('urutanRespon')
+                        @error('form.urutanRespon')
                         class="form-floating is-invalid"
                         @else
                         class="form-floating"
                         @enderror 
                         >
-                        <input wire:model="urutanRespon" 
+                        <input wire:model="form.urutanRespon" 
                             type="number" 
-                            @error('urutanRespon')
+                            @error('form.urutanRespon')
                             class="form-control is-invalid" 
                             @else
                             class="form-control" 
@@ -102,10 +102,10 @@
                             id="urutanRespon" 
                             aria-describedby="urutanResponHelp"
                             placeholder="masukan urutan respon">
-                        <label for="urutanRespon" class="form-label">Urutan Respon</label>
+                        <label for="urutanRespon">Urutan Respon</label>
                     </div>
                     <div class="invalid-feedback">
-                        @error('urutanRespon') <span class="error">{{ $message }}</span> @enderror 
+                        @error('form.urutanRespon') <span class="error">{{ $message }}</span> @enderror 
                     </div>
                 </div>
             </div>
@@ -114,17 +114,17 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="input-group has-validation flex-nowrap">
                     <span class="input-group-text">#</span>
-                    <input wire:model="tagWarnaRespon" 
+                    <input wire:model="form.tagWarnaRespon" 
                         id="tagWarnaRespon" 
                         type="color" 
-                        @error('tagWarnaRespon')
+                        @error('form.tagWarnaRespon')
                         class="form-control form-control-color is-invalid" 
                         @else
                         class="form-control form-control-color" 
                         @enderror
                         aria-describedby="tagWarnaResponHelp">
                 </div>
-                @error('tagWarnaRespon') <span class="text-danger">{{ $message }}</span> @enderror 
+                @error('form.tagWarnaRespon') <span class="text-danger">{{ $message }}</span> @enderror 
             </div>
         </div>
         <div class="row">
