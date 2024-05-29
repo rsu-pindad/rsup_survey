@@ -11,7 +11,9 @@ class PermissionForm extends Form
     #[Locked]
     public $id;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi nama permisi')]
+    #[Validate('min:3', message: 'minimal 5 huruf')]
+    #[Validate('max:30', message: 'maksimal 30 huruf')]
     public $namaPermisi;
 
     public function setPermission(Permission $permission)

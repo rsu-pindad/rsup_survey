@@ -11,7 +11,9 @@ class RoleForm extends Form
     #[Locked]
     public $id;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi nama role')]
+    #[Validate('min:2', message: 'minimal 2 huruf')]
+    #[Validate('max:30', message: 'maksimal 30 huruf')]
     public $namaRole;
 
     public function setRole(Role $role)
