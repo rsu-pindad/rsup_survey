@@ -54,8 +54,8 @@ return [
          * Path to service account json file. You can also pass the credentials as an array
          * instead of a file path.
          */
-        // 'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', ''),
-        'file' => storage_path('app\survey-pasien-422102-e24fd3bf34d1.json'),
+        'file' => env('GOOGLE_SERVICE_ACCOUNT_JSON_LOCATION', storage_path('app\survey-pasien-422102-e24fd3bf34d1.json')),
+        // 'file' => storage_path('app\survey-pasien-422102-e24fd3bf34d1.json'),
     ],
 
     /*
