@@ -11,13 +11,13 @@
     <main class="container">
         <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
             <div class="row">
-                <div class="col-lg-6 p-2">
-                    <h1 class="display-4">
+                <div class="col-lg-6">
+                    <h1 class="display-5 lh-base">
                         {{ $unitNama ?? $appSetting->initial_body_text}}
                     </h1>
-                    <p class="lead my-4 d-none d-xs-none d-md-block lh-lg">
+                    <div class="lead my-4 d-none d-xs-none d-sm-none d-md-block lh-lg">
                         {!! $unitMoto ?? $appSetting->initial_motto_text !!}
-                    </p>
+                    </div>
                     <p class="lead">
                         <button 
                             type="button" 
@@ -44,21 +44,6 @@
             </div>
         </div>
     </main>
-
-    <div class="container">
-    @persist('times')
-        <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
-        <p class="mb-0 fs-5">
-            <a href="#" class="text-decoration-none text-muted">waktu survey</a>
-        </p>
-        <p class="fs-4" 
-            x-data 
-            x-timeout:1000="$el.innerText=$moment().format('LTS')"
-            id="waktuSurvey">
-        </p>
-        </footer>
-    @endpersist
-    </div>
 
     <!-- Modal -->
     <div
@@ -217,6 +202,21 @@
         </div>
 
     </div>
+
+    @persist('times')
+        <footer class="py-5 text-center text-body-secondary">
+            <p class="mb-0 fs-5">
+                waktu survey
+            </p>
+            <p 
+                x-data 
+                x-timeout:1000="$el.innerText=$moment().format('LTS')"
+                id="waktuSurvey"
+                class="fs-4" 
+                >
+            </p>
+        </footer>
+    @endpersist
 
 </div>
 

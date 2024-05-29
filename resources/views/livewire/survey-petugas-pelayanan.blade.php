@@ -14,7 +14,7 @@
                 <p class="h1">
                     Survey Layanan {{ $layanan }}
                 </p>
-                <p class="h1">
+                <p class="h1 d-none d-sm-none d-md-none d-lg-block">
                     Selamat datang, {{ session()->get('nama_pelanggan') }}
                 </p>
             </div>
@@ -22,8 +22,7 @@
         <div 
             wire:loading.remove
             class="container-fluid">
-            <div 
-                class="d-flex flex-row flex-wrap justify-content-around text-center p-0 m-4">
+            <div class="d-flex flex-row flex-wrap justify-content-around text-center p-0 m-4">
                 @forelse ($respons as $item)
                 <div 
                     wire:key="{{ $item->id }}"
@@ -44,26 +43,34 @@
                     <p>tidak ada respon nilai</p>
                 @endforelse
             </div>
-            <div wire:loading wire:target="preSave">  
-                Menilai.....
+        </div>
+        <div 
+            wire:loading
+            wire:target="preSave"
+            class="container-fluid"
+            >
+            <div class="d-flex flex-column align-items-center">
+                <p class="fs-4">
+                    Menilai.....
+                </p>
             </div>
         </div>
     </main>
 
-    <div class="container">
-        @persist('times')
-            <footer class="py-5 text-center text-body-secondary">
-                <p class="mb-0">
-                    <a href="#" class="text-decoration-none text-muted">waktu survey</a>
-                </p>
-                <div 
-                    x-data 
-                    x-timeout:1000="$el.innerText=$moment().format('LTS')"
-                    id="waktuSurvey">
-                </div>
-            </footer>
-        @endpersist
-    </div>
+    @persist('times')
+        <footer class="py-5 text-center text-body-secondary">
+            <p class="mb-0 fs-5">
+                waktu survey
+            </p>
+            <p 
+                x-data 
+                x-timeout:1000="$el.innerText=$moment().format('LTS')"
+                id="waktuSurvey"
+                class="fs-4" 
+                >
+            </p>
+        </footer>
+    @endpersist
 
 </div>
 
