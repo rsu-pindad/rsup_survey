@@ -12,9 +12,9 @@
                             placeholder="masukan nama role">
                             <label for="namaRole" class="form-label">Nama Role</label>
                     </div>
-                </div>
-                <div class="invalid-feedback">
-                    @error('namaRole') <span class="error">{{ $message }}</span> @enderror
+                    <div class="invalid-feedback">
+                        @error('form.namaRole') <span class="error">{{ $message }}</span> @enderror
+                    </div>
                 </div>
             </div>
         </div>
