@@ -78,7 +78,11 @@ final class PermissionTable extends PowerGridComponent
             Column::make('Nama Permisi', 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Created at', 'created_at_formatted')
+            Column::make(
+                title: 'Created at',
+                field: 'created_at_formatted',
+                dataField: 'created_at'
+            )
                 ->sortable(),
             Column::action('Action')
                 ->visibleInExport(false),
