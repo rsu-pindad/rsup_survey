@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', Roots::class)->name('roots-dashboard');
-    Route::get('/logout', [Roots::class, 'logout'])->name('logout');
+    Route::get('/logout', [Login::class, 'logout'])->name('logout');
     Route::get('/sdm', RootsAdmin::class)->name('sdm');
 
     Route::middleware('role:super-admin')->group(function () {
@@ -66,7 +66,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware('role:sdm|super-admin')->group(function () {
+    Route::middleware('role:hr|super-admin')->group(function () {
         Route::group(['prefix' => 'karyawan'], function () {
             Route::get('/', Karyawan::class)->name('root-karyawan');
             Route::get('/edit/{id}', KaryawanEdit::class)->name('root-karyawan-edit');
@@ -75,14 +75,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', KaryawanProfile::class)->name('root-karyawan-profile');
             Route::get('/edit/{id}', KaryawanProfileEdit::class)->name('root-karyawan-profile-edit');
         });
-    });
-
-    Route::middleware('role:admin|super-admin')->group(function () {
         Route::group(['prefix' => 'unit'], function () {
-            Route::get('/', Unit::class)->name('root-unit')->middleware('permission:view_unit');
+            Route::get('/', Unit::class)->name('root-unit');
             Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
             Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
         });
+    });
+
+    Route::middleware('role:admin|super-admin')->group(function () {
         Route::group(['prefix' => 'penjamin'], function () {
             Route::get('/', Penjamin::class)->name('root-penjamin');
             Route::get('/edit/{id}', PenjaminEdit::class)->name('root-penjamin-edit');
