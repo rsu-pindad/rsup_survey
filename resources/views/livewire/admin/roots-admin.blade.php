@@ -1,7 +1,7 @@
 <div>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand m-2" href="/">
                 <img 
                 @if(env('APP_ENV') == 'local')
                 src="{{ asset('storage/basset/photos/settings/'.$appSetting->initial_domain_logo ?? 'default_domain.png') }}"
@@ -11,72 +11,124 @@
                 alt="Logo" width="34" height="28" class="d-inline-block align-text-top"
                 />
             </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
+            <button 
+                class="navbar-toggler m-2" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarCollapseSLU" 
+                aria-controls="navbarCollapseSLU" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-circle-chevron-down"></i>
+            </button>
+            <button 
+                class="navbar-toggler m-2" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarCollapse" 
+                aria-controls="navbarCollapse" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <button 
+                class="navbar-toggler m-2" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#navbarCollapseSelf" 
+                aria-controls="navbarCollapseSelf" 
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+                <i class="fa-solid fa-id-badge"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapseSLU">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0 mx-auto">
-                    @unlessrole('super-admin|admin')
+                    @cannot('view_petugas')
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page-survey" href="{{ route('root-survey-petugas', ['id' => Auth()->user()->id]) }}" wire:navigate="false">Survey</a>
                     </li>
-                    @endunlessrole
-                    @hasrole('super-admin|admin')
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page-unit" href="{{ route('root-unit') }}" wire:navigate="false">Unit</a>
-                        </li>    
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page-laporan" href="{{ route('root-laporan') }}" wire:navigate="false">Laporan</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Set Survey
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="{{ route('root-layanan-respon') }}" wire:navigate="false">Layanan-Respon</a></li>
-                            <li><a class="dropdown-item" href="{{ route('root-penjamin-layanan') }}" wire:navigate="false">Penjamin-Layanan</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Master Data
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="{{ route('root-layanan') }}" wire:navigate="false">Layanan</a></li>
-                            <li><a class="dropdown-item" href="{{ route('root-penjamin') }}" wire:navigate="false">Penjamin</a></li>
-                            <li><a class="dropdown-item" href="{{ route('root-respon') }}" wire:navigate="false">Respon</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Karyawan
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="{{ route('root-karyawan') }}" wire:navigate="false">Karyawan</a></li>
-                            <li><a class="dropdown-item" href="{{ route('root-karyawan-profile') }}" wire:navigate="false">Karyawan Profile</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Users
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ route('root-super-admin-user') }}" wire:navigate="false">User</a></li>
-                            <li><a class="dropdown-item" href="{{ route('root-super-admin-permission') }}" wire:navigate="false">Permission</a></li>
-                            <li><a class="dropdown-item" href="{{ route('root-super-admin-role') }}" wire:navigate="false">Role</a></li>
-                            </ul>
-                        </li>
-                    @endhasrole
+                    @endcannot
+                    @can('view_laporan')
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page-laporan" href="{{ route('root-laporan') }}" wire:navigate="false">Laporan</a>
+                    </li>
+                    @endcannot
+                    @can('view_unit')
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page-unit" href="{{ route('root-unit') }}" wire:navigate="false">Unit</a>
+                    </li>
+                    @endcan
                 </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0 mx-auto">
+                    @can('view_karyawan_data')
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Karyawan
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('root-karyawan') }}" wire:navigate="false">Karyawan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-karyawan-profile') }}" wire:navigate="false">Karyawan Profile</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('view_set_survey')
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Set Survey
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="{{ route('root-layanan-respon') }}" wire:navigate="false">Layanan-Respon</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-penjamin-layanan') }}" wire:navigate="false">Penjamin-Layanan</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('view_master_data')
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Master Data
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                        @can('view_layanan')
+                        <li><a class="dropdown-item" href="{{ route('root-layanan') }}" wire:navigate="false">Layanan</a></li>
+                        @endcan
+                        @can('view_penjamin')
+                        <li><a class="dropdown-item" href="{{ route('root-penjamin') }}" wire:navigate="false">Penjamin</a></li>
+                        @endcan
+                        @can('view_respon')
+                        <li><a class="dropdown-item" href="{{ route('root-respon') }}" wire:navigate="false">Respon</a></li>
+                        @endcan
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('view_users_data')
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Users
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{{ route('root-super-admin-user') }}" wire:navigate="false">User</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-super-admin-permission') }}" wire:navigate="false">Permission</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-super-admin-role') }}" wire:navigate="false">Role</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarCollapseSelf">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth()->user()->name }}
+                            {{ \Illuminate\Support\Str::limit(session()->get('userName'), 6, '..') }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="{{ route('root-self') }}">Pengaturan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('root-self') }}" wire:navigate="false">Pengaturan</a></li>
                         <li><a class="dropdown-item" href="#">Notifikasi</a></li>
-                        <li><a class="dropdown-item" href="{{ route('logout') }}">Keluar</a></li>
+                        @hasexactroles('super-admin')
+                        <li><a class="dropdown-item" href="{{ route('root-setting-app') }}" wire:navigate="false">App Profile</a></li>
+                        @endhasexactroles
+                        <li><a class="dropdown-item" href="{{ route('logout') }}" wire:navigate="false">Keluar</a></li>
                         </ul>
                     </li>
                 </ul>
