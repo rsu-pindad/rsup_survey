@@ -1,4 +1,4 @@
-<div wire:ignore>
+<div wire:ignore.self>
     <textarea class="form-control" id="{{ $joditId }}">{!! $value !!}</textarea>
 </div>
 
