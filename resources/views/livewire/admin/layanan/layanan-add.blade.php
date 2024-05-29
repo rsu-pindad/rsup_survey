@@ -3,17 +3,27 @@
         <div class="row mb-3">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="input-group has-validation">
-                    <div class="form-floating is-invalid">
+                    <div 
+                        @error('form.namaLayanan')
+                        class="form-floating is-invalid"
+                        @else
+                        class="form-floating"
+                        @enderror
+                        >
                         <input wire:model="form.namaLayanan" 
                             type="text" 
+                            @error('form.namaLayanan')
+                            class="form-control is-invalid" 
+                            @else
                             class="form-control" 
+                            @enderror
                             id="namaLayanan" 
                             aria-describedby="namaLayananHelp"
                             placeholder="masukan nama layanan">
-                            <label for="namaLayanan" class="form-label">Nama Layanan</label>
+                            <label for="namaLayanan">Nama Layanan</label>
                     </div>
                     <div class="invalid-feedback">
-                        @error('content') <span class="error">{{ $message }}</span> @enderror 
+                        @error('form.namaLayanan') <span class="error">{{ $message }}</span> @enderror 
                     </div>
                 </div>
             </div>

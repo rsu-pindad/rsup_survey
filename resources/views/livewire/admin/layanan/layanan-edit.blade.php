@@ -11,17 +11,28 @@
                         <div class="mb-3 row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="input-group has-validation">
-                                    <div class="form-floating is-invalid">
+                                    <div 
+                                        @error('form.namaLayanan')
+                                        class="form-floating is-invalid"
+                                        @else
+                                        class="form-floating"
+                                        @enderror
+                                        >
                                         <input 
                                             wire:model.defer="form.namaLayanan"
                                             type="text" 
+                                            @error('form.namaLayanan')
+                                            class="form-control is-invalid" 
+                                            @else
                                             class="form-control" 
+                                            @enderror
                                             id="namaLayanan" 
                                             value="{{ $this->form->namaLayanan }}">
                                         <label for="namaLayanan" class="form-label">Nama Layanan</label>
                                     </div>
-                                </div>
-                                <div class="invalid-feedback">
+                                    <div class="invalid-feedback">
+                                        @error('form.namaLayanan') <span class="error">{{ $message }}</span> @enderror 
+                                    </div>
                                 </div>
                             </div>
                         </div>

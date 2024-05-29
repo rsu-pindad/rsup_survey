@@ -7,25 +7,35 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class ResponEditForm extends Form
+class ResponForm extends Form
 {
     #[Locked]
     public $id;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi nama respon')]
+    #[Validate('min:4', message: 'minimal karakter 4')]
+    #[Validate('max:50', message: 'maksimal karakter 50')]
     public $namaRespon;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi icon respon')]
+    #[Validate('min:6', message: 'minimal karakter 6')]
+    #[Validate('max:32', message: 'maksimal karakter 32')]
     public $iconRespon;
 
-    #[Validate('required')]
-    public $tagWarnaRespon;
-
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi skor respon')]
+    #[Validate('numeric')]
+    #[Validate('min:0', message: 'minimal angka 0')]
+    #[Validate('max:9', message: 'maksimal angka 9')]
     public $skorRespon;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi urutan respon')]
+    #[Validate('numeric')]
+    #[Validate('min:1', message: 'minimal angka 1')]
+    #[Validate('max:10', message: 'maksimal angka 10')]
     public $urutanRespon;
+
+    #[Validate('required', message: 'mohon isi tag warna respon')]
+    public $tagWarnaRespon;
 
     public function setRespon(Respon $respon)
     {
@@ -40,7 +50,6 @@ class ResponEditForm extends Form
 
     public function store()
     {
-        $this->validate();
         try {
             $respon = new Respon;
             $respon->nama_respon = $this->namaRespon;
@@ -49,12 +58,8 @@ class ResponEditForm extends Form
             $respon->skor_respon = $this->skorRespon;
             $respon->urutan_respon = $this->urutanRespon;
             $respon->save();
-            if($respon){
-                $this->reset();
-                return true;
-            }else{
-                return false;
-            }
+            $this->reset();
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -62,7 +67,6 @@ class ResponEditForm extends Form
 
     public function update()
     {
-        $this->validate();
         try {
             $respon = Respon::find($this->id);
             $respon->nama_respon = $this->namaRespon;
@@ -72,8 +76,10 @@ class ResponEditForm extends Form
             $respon->urutan_respon = $this->urutanRespon;
             $respon->save();
             $this->reset();
-            return $respon;
+            return true;
         } catch (\Throwable $th) {
+            // report($th);
+            // return false;
             return $th->getMessage();
         }
     }

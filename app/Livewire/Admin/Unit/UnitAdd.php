@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin\Unit;
 
-use App\Livewire\Forms\UnitEditForm as Form;
+use App\Livewire\Forms\UnitForm as Form;
 use App\Models\Unit;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -13,28 +13,25 @@ class UnitAdd extends Component
 
     public Form $form;
 
-    public function mount(Unit $unit)
-    {
-        $this->form->setUnit($unit);
-    }
-
     public function save()
     {
+        $this->form->validate();
         $store = $this->form->store();
-        if ($store) {
-            $this->alert('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'data unit berhasil ditambahkan',
-            ]);
-            $this->dispatch('table-updated');
-        } else {
+        if ($store != true) {
             $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $store,
             ]);
+            return $this->dispatch('table-updated');
         }
+        $this->alert('success', 'berhasil', [
+            'position' => 'center',
+            'toast' => true,
+            'text' => 'data unit berhasil ditambahkan',
+        ]);
+        $this->form->reset();
+        return $this->dispatch('table-updated');
     }
 
     public function render()

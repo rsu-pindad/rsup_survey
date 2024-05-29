@@ -2,17 +2,19 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Layanan;
+use Livewire\Attribures\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
-use Livewire\Attribures\Locked;
-use App\Models\Layanan;
 
-class LayananEditForm extends Form
+class LayananForm extends Form
 {
     #[Locked]
     public $id;
 
-    #[Validate('required')]
+    #[Validate('required', message: 'mohon isi nama layanan')]
+    #[Validate('min:5', message: 'minimal karakter 5')]
+    #[Validate('max:50', message: 'maksimal karakter 50')]
     public $namaLayanan;
 
     public function setLayanan(Layanan $layanan)
@@ -24,17 +26,12 @@ class LayananEditForm extends Form
 
     public function store()
     {
-        $this->validate();
         try {
             $layanan = new Layanan;
             $layanan->nama_layanan = $this->namaLayanan;
             $layanan->save();
-            if($layanan){
-                $this->reset();
-                return true;
-            }else{
-                return false;
-            }
+            $this->reset();
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
@@ -42,16 +39,13 @@ class LayananEditForm extends Form
 
     public function update()
     {
-        $this->validate();
         try {
             $layanan = Layanan::find($this->id);
             $layanan->nama_layanan = $this->namaLayanan;
             $layanan->save();
-            $this->reset();
-            return $layanan;
+            return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
     }
-
 }

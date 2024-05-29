@@ -64,14 +64,14 @@ final class RoleTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('permission', fn($roles) => e($roles->permissions()->pluck('name')))
-            ->add('permission_format', function($roles){
+            ->add('permission_format', function ($roles) {
                 // dd($roles->permissions);
-                if(count($roles->permissions) < 1){
+                if (count($roles->permissions) < 1) {
                     return 'blm ada permisi';
                 }
                 $list = '';
                 foreach ($roles->permissions as $permission => $value) {
-                    $list .= '<p>'.$value->name.'</p>';
+                    $list .= '<p>' . $value->name . '</p>';
                 }
                 return $list;
             })
@@ -92,7 +92,13 @@ final class RoleTable extends PowerGridComponent
             Column::make('Nama Role', 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Permisi', 'permission_format'),
+            Column::make(
+                title: 'Permisi',
+                field: 'permission_format',
+                dataField: 'permission'
+            )
+                ->searchable(),
+            // ->sortable(),
             Column::action('Action')
                 ->visibleInExport(false),
         ];

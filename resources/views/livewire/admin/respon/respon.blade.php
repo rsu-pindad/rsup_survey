@@ -3,7 +3,7 @@
     <livewire:admin.roots-admin /> 
     @endpersist
 
-    <main class="container-fluid px-5">
+    <main class="container-fluid px-5 my-5">
         <div class="rounded">
             <div class="row">
                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12 my-2">

@@ -3,7 +3,7 @@
         <livewire:admin.roots-admin /> 
     @endpersist
 
-    <main class="container-fluid px-5">
+    <main class="container-fluid px-5 my-5">
         <div class="rounded">
             <div class="card">
                 <div class="card-body m-2">
@@ -11,16 +11,27 @@
                         <div class="mb-3 row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="input-group has-validation">
-                                    <div class="form-floating is-invalid">
+                                    <div 
+                                        @error('form.namaPenjamin')
+                                        class="form-floating is-invalid"
+                                        @else
+                                        class="form-floating"
+                                        @enderror
+                                        >
                                         <input 
-                                            wire:model.defer="form.namaPenjamin"
+                                            wire:model="form.namaPenjamin"
                                             type="text" 
+                                            @error('form.namaPenjamin')
+                                            class="form-control is-invalid" 
+                                            @else
                                             class="form-control" 
+                                            @enderror
                                             id="namaPenjamin" 
                                             value="{{ $this->form->namaPenjamin }}">
                                         <label for="namaPenjamin" class="form-label">Nama Penjamin</label>
                                     </div>
                                     <div class="invalid-feedback">
+                                        @error('form.namaPenjamin') <span class="error">{{ $message }}</span> @enderror 
                                     </div>
                                 </div>
                             </div>

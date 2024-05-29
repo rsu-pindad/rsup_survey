@@ -30,6 +30,7 @@ use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
 use App\Livewire\SuperAdmin\RolePermission\RoleManage;
 use App\Livewire\SuperAdmin\User\User;
 use App\Livewire\SuperAdmin\User\UserManage;
+use App\Livewire\SuperAdmin\Setting\AppSetting;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
 use Illuminate\Support\Facades\Route;
@@ -47,10 +48,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', Roots::class)->name('roots-dashboard');
-    Route::get('/logout', [Roots::class, 'logout'])->name('logout');
-    Route::get('/sdm', RootsAdmin::class)->name('sdm');
+    Route::get('/logout', [Login::class, 'logout'])->name('logout');
+    Route::get('/lihat', RootsAdmin::class)->name('lihat');
 
     Route::middleware('role:super-admin')->group(function () {
+        Route::group(['prefix' => 'setting'], function(){
+            Route::get('/', AppSetting::class)->name('root-setting-app');
+        });
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', User::class)->name('root-super-admin-user');
             Route::get('/manage/{id}', UserManage::class)->name('root-super-admin-user-manage');
@@ -66,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware('role:sdm|super-admin')->group(function () {
+    Route::middleware('role:hr|super-admin')->group(function () {
         Route::group(['prefix' => 'karyawan'], function () {
             Route::get('/', Karyawan::class)->name('root-karyawan');
             Route::get('/edit/{id}', KaryawanEdit::class)->name('root-karyawan-edit');
@@ -75,14 +79,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', KaryawanProfile::class)->name('root-karyawan-profile');
             Route::get('/edit/{id}', KaryawanProfileEdit::class)->name('root-karyawan-profile-edit');
         });
-    });
-
-    Route::middleware('role:admin|super-admin')->group(function () {
         Route::group(['prefix' => 'unit'], function () {
-            Route::get('/', Unit::class)->name('root-unit')->middleware('permission:view_unit');
+            Route::get('/', Unit::class)->name('root-unit');
             Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
             Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
         });
+    });
+
+    Route::middleware('role:admin|super-admin')->group(function () {
         Route::group(['prefix' => 'penjamin'], function () {
             Route::get('/', Penjamin::class)->name('root-penjamin');
             Route::get('/edit/{id}', PenjaminEdit::class)->name('root-penjamin-edit');
@@ -104,6 +108,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', LayananResponEdit::class)->name('root-layanan-respon-edit');
         });
     });
+
     Route::middleware('role:employee|super-admin')->group(function () {
         Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
         Route::get('/laporan', Laporan::class)->name('root-laporan');

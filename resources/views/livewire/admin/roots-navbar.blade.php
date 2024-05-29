@@ -6,9 +6,9 @@
                 <img 
                 class="m-2 px-2 img-fluid" 
                 @if(env('APP_ENV') == 'local')
-                src="{{ asset('storage/basset/photos/'.$subLogo ?? 'defaultmain.png') }}" 
+                src="{{ asset('storage/basset/photos/'.$subLogo ?? 'default_domain.png') }}" 
                 @else
-                src="{{ asset('public/photos/'.$subLogo ?? 'defaultsub.png') }}"
+                src="{{ asset('public/photos/'.$subLogo ?? 'default_domain.png') }}"
                 @endif
                 alt="logo">
             </div>

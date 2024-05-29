@@ -2,10 +2,9 @@
 
 namespace App\Livewire\Admin\Respon;
 
-use Livewire\Component;
-use App\Models\Respon as ResponModel;
-use App\Livewire\Forms\ResponEditForm as Form;
+use App\Livewire\Forms\ResponForm as Form;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class ResponAdd extends Component
 {
@@ -13,28 +12,24 @@ class ResponAdd extends Component
 
     public Form $form;
 
-    public function mount(ResponModel $respon)
-    {
-        $this->form->setRespon($respon);
-    }
-
     public function save()
     {
+        $this->form->validate();
         $store = $this->form->store();
-        if ($store) {
-            $this->alert('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'data respon berhasil ditambahkan',
-            ]);
-            $this->dispatch('table-updated');
-        } else {
+        if ($store != true) {
             $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $store,
             ]);
+            return $this->dispatch('table-updated');
         }
+        $this->alert('success', 'berhasil', [
+            'position' => 'center',
+            'toast' => true,
+            'text' => 'data respon berhasil ditambahkan',
+        ]);
+        return $this->dispatch('table-updated');
     }
 
     public function render()

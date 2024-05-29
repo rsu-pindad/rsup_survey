@@ -2,10 +2,9 @@
 
 namespace App\Livewire\Admin\Layanan;
 
-use Livewire\Component;
-use App\Models\Layanan as LayananModel;
-use App\Livewire\Forms\LayananEditForm as Form;
+use App\Livewire\Forms\LayananForm as Form;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class LayananAdd extends Component
 {
@@ -13,28 +12,24 @@ class LayananAdd extends Component
 
     public Form $form;
 
-    public function mount(LayananModel $layanan)
-    {
-        $this->form->setLayanan($layanan);
-    }
-
     public function save()
     {
+        $this->form->validate();
         $store = $this->form->store();
-        if ($store) {
-            $this->alert('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'data layanan berhasil ditambahkan',
-            ]);
-            $this->dispatch('table-updated');
-        } else {
+        if ($store != true) {
             $this->alert('warning', 'gagal', [
                 'position' => 'center',
                 'toast' => true,
                 'text' => $store,
             ]);
+            return $this->dispatch('table-updated');
         }
+        $this->alert('success', 'berhasil', [
+            'position' => 'center',
+            'toast' => true,
+            'text' => 'data layanan berhasil ditambahkan',
+        ]);
+        return $this->dispatch('table-updated');
     }
 
     public function render()
