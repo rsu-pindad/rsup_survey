@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-2" wire:ignore>
+                                <div class="row mb-2" wire:ignore.self>
                                     <div class="col-12">
                                         <label for="unitAlamat" class="input-group-text">Alamat</label>
                                         <livewire:jodit-text-editor 
@@ -101,7 +101,7 @@
                                             />
                                     </div>
                                 </div>
-                                <div class="row mb-2" wire:ignore>
+                                <div class="row mb-2" wire:ignore.self>
                                     <div class="col-12">
                                         <label for="unitMotto" class="input-group-text">Motto</label>
                                         <livewire:jodit-text-editor 
