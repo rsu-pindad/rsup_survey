@@ -30,6 +30,7 @@ use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
 use App\Livewire\SuperAdmin\RolePermission\RoleManage;
 use App\Livewire\SuperAdmin\User\User;
 use App\Livewire\SuperAdmin\User\UserManage;
+use App\Livewire\SuperAdmin\Setting\AppSetting;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
 use Illuminate\Support\Facades\Route;
@@ -48,9 +49,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::get('/', Roots::class)->name('roots-dashboard');
     Route::get('/logout', [Login::class, 'logout'])->name('logout');
-    Route::get('/sdm', RootsAdmin::class)->name('sdm');
+    Route::get('/lihat', RootsAdmin::class)->name('lihat');
 
     Route::middleware('role:super-admin')->group(function () {
+        Route::group(['prefix' => 'setting'], function(){
+            Route::get('/', AppSetting::class)->name('root-setting-app');
+        });
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', User::class)->name('root-super-admin-user');
             Route::get('/manage/{id}', UserManage::class)->name('root-super-admin-user-manage');
@@ -104,6 +108,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', LayananResponEdit::class)->name('root-layanan-respon-edit');
         });
     });
+
     Route::middleware('role:employee|super-admin')->group(function () {
         Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
         Route::get('/laporan', Laporan::class)->name('root-laporan');
