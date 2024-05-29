@@ -13,7 +13,7 @@
                         <label for="namaPermisi" class="form-label">Nama Permisi</label>
                     </div>
                     <div class="invalid-feedback">
-                        @error('namaPermisi') <span class="error">{{ $message }}</span> @enderror 
+                        @error('form.namaPermisi') <span class="error">{{ $message }}</span> @enderror 
                     </div>
                 </div>
             </div>
