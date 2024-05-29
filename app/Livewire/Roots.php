@@ -12,7 +12,6 @@ use Livewire\Component;
 
 class Roots extends Component
 {
-
     public Form $form;
 
     public function save()
