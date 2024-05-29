@@ -47,7 +47,7 @@ final class UserTable extends PowerGridComponent
     #[\Livewire\Attributes\On('table-updated')]
     public function datasource(): Builder
     {
-        return User::query()->withoutRole('super-admin');
+        return User::query()->withoutRole('super-admin')->withoutRole(auth()->user()->getRoleNames());
     }
 
     public function relationSearch(): array
@@ -61,22 +61,22 @@ final class UserTable extends PowerGridComponent
             ->add('id')
             ->add('name')
             ->add('email')
-            ->add('role', fn($user) => e($user->getRoleNames()))
-            ->add('role_format', function($user){
-                if(count($user->roles) < 1){
+            ->add('role_id', fn($user) => e($user->getRoleNames()))
+            ->add('roles_format', function ($user) {
+                if (count($user->roles) < 1) {
                     return 'blm ada role';
                 }
                 $ulist = '';
                 foreach ($user->roles as $role => $value) {
-                    $ulist .= '<p>'.$value->name.'</p>';
+                    $ulist .= '<p>' . $value->name . '</p>';
                 }
                 return $ulist;
             })
-            ->add('last_login')
+            // ->add('last_login')
             ->add('last_login_formatted', function ($user) {
                 return Carbon::parse($user->last_login)->format('H:i D');  // 20/01/2024 10:05
             })
-            ->add('created_at')
+            // ->add('created_at')
             ->add('created_at_formatted', function ($user) {
                 return Carbon::parse($user->created_at)->format('d-M-Y');  // 20/01/2024 10:05
             });
@@ -98,14 +98,26 @@ final class UserTable extends PowerGridComponent
                 ->searchable()
                 ->visibleInExport(true)
                 ->hidden(isHidden: true, isForceHidden: true),
-            Column::make('Role', 'role_format')
-                ->sortable()
+            Column::make(
+                title: 'Role',
+                field: 'roles_format',
+                dataField: 'model_has_roles.role_id'
+            )
+                // ->sortable()
                 ->searchable()
                 ->visibleInExport(false),
-            Column::make('Last login', 'last_login_formatted')
+            Column::make(
+                title: 'Last login',
+                field: 'last_login_formatted',
+                dataField: 'last_login'
+            )
                 ->sortable()
                 ->visibleInExport(false),
-            Column::make('Created at', 'created_at_formatted')
+            Column::make(
+                title: 'Created at',
+                field: 'created_at_formatted',
+                dataField: 'created_at'
+            )
                 ->sortable()
                 ->visibleInExport(false),
             Column::action('Action')
