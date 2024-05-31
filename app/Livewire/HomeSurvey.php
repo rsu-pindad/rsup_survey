@@ -76,12 +76,7 @@ class HomeSurvey extends Component
 
     public function cancelledDataDiri()
     {
-        return $this->flash('success', 'berhasil', [
-            'position' => 'center',
-            'toast' => false,
-            'timer' => 3000,
-            'text' => 'terimakasih telah mengikuti peniliaian survey kami'
-        ], '/');
+        $this->save();
     }
 
     public function preSave($id)
