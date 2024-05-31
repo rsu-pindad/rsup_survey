@@ -148,7 +148,9 @@
                                         id="dataDiri"
                                         class="form-check-input" 
                                         type="checkbox"
-                                        @if($this->form->hasQuestion == true) @endif
+                                        @if($this->form->hasQuestion == true) 
+                                        checked
+                                        @endif
                                         >
                                     <label class="form-check-label" for="dataDiri">
                                         isi data diri
