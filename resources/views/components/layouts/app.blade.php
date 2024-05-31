@@ -15,6 +15,7 @@
         @basset('vendor/jodit-4.0.1-dist/css/jodit.min.css')
         
         @stack('styles')
+        
         @once
             @push('styles')
                 @lagoonStyles
