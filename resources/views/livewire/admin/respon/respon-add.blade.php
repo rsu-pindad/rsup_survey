@@ -111,7 +111,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="input-group has-validation flex-nowrap">
                     <span class="input-group-text">#</span>
                     <input wire:model="form.tagWarnaRespon" 
@@ -125,6 +125,19 @@
                         aria-describedby="tagWarnaResponHelp">
                 </div>
                 @error('form.tagWarnaRespon') <span class="text-danger">{{ $message }}</span> @enderror 
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-check">
+                    <input 
+                        wire:model="form.hasQuestion" 
+                        id="dataDiri"
+                        class="form-check-input" 
+                        type="checkbox" 
+                        checked>
+                    <label class="form-check-label" for="dataDiri">
+                        isi data diri
+                    </label>
+                </div>
             </div>
         </div>
         <div class="row">
