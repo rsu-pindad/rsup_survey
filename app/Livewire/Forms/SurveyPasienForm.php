@@ -68,7 +68,8 @@ class SurveyPasienForm extends Form
                             'PEGAWAI' => $karyawan->nama_karyawanprofile,
                             'UNIT' => $karyawan->parentUnit->nama_unit,
                             'PELAYANAN' => $karyawan->parentLayanan->nama_layanan,
-                            'NAMA_PASIEN' => session()->get('nama_pelanggan') ?? '-',
+                            'NAMA_PASIEN' => $this->namaPasien ?? '-',
+                            'TELEPON_PASIEN' => $this->teleponPasien ?? '-',
                             'PENJAMIN' => $penjamin->nama_penjamin,
                             'NILAI_SURVEY_KEPUASAN' => session()->get('namaRespon'),
                         ]
