@@ -32,6 +32,8 @@ use App\Livewire\SuperAdmin\User\User;
 use App\Livewire\SuperAdmin\User\UserManage;
 use App\Livewire\SuperAdmin\Setting\AppSetting;
 use App\Livewire\Roots;
+use App\Livewire\Home;
+use App\Livewire\HomeSurvey;
 use App\Livewire\SurveyPetugasPelayanan;
 use Illuminate\Support\Facades\Route;
 
@@ -47,7 +49,8 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', Roots::class)->name('roots-dashboard');
+    // Route::get('/', Roots::class)->name('roots-dashboard');
+    Route::get('/', Home::class)->name('roots-dashboard');
     Route::get('/logout', [Login::class, 'logout'])->name('logout');
     Route::get('/lihat', RootsAdmin::class)->name('lihat');
 
@@ -113,7 +116,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
         Route::get('/laporan', Laporan::class)->name('root-laporan');
         Route::get('/self', UserSetting::class)->name('root-self');
-        Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
+        // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
+        Route::get('/survey', HomeSurvey::class)->name('isi-survey-pelayanan');
     });
 
     // Route::get('/unit/profil/edit/{id}', UnitProfil::class)->name('root-unit-profil');

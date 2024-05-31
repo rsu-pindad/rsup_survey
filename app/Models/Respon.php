@@ -16,6 +16,7 @@ class Respon extends Model
     protected $fillable = [
         'nama_respon',
         'icon_respon',
+        'has_question',
         'tag_warna_respon',
         'skor_respon',
         'urutan_respon'

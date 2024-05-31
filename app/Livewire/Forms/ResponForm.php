@@ -37,6 +37,8 @@ class ResponForm extends Form
     #[Validate('required', message: 'mohon isi tag warna respon')]
     public $tagWarnaRespon;
 
+    public $hasQuestion;
+
     public function setRespon(Respon $respon)
     {
         $this->respon = $respon;
@@ -44,6 +46,7 @@ class ResponForm extends Form
         $this->namaRespon = $respon->nama_respon;
         $this->iconRespon = $respon->icon_respon;
         $this->tagWarnaRespon = $respon->tag_warna_respon;
+        $this->hasQuestion = $respon->has_question;
         $this->skorRespon = $respon->skor_respon;
         $this->urutanRespon = $respon->urutan_respon;
     }
@@ -55,6 +58,7 @@ class ResponForm extends Form
             $respon->nama_respon = $this->namaRespon;
             $respon->icon_respon = $this->iconRespon;
             $respon->tag_warna_respon = $this->tagWarnaRespon;
+            $respon->has_question = $this->hasQuestion;
             $respon->skor_respon = $this->skorRespon;
             $respon->urutan_respon = $this->urutanRespon;
             $respon->save();
@@ -72,6 +76,7 @@ class ResponForm extends Form
             $respon->nama_respon = $this->namaRespon;
             $respon->icon_respon = $this->iconRespon;
             $respon->tag_warna_respon = $this->tagWarnaRespon;
+            $respon->has_question = $this->hasQuestion;
             $respon->skor_respon = $this->skorRespon;
             $respon->urutan_respon = $this->urutanRespon;
             $respon->save();
