@@ -1,68 +1,109 @@
-<main class="form-signin w-100 m-auto">
-    <form wire:submit="login">
-        <img 
-            class="mb-4" 
-            @if(env('APP_ENV') == 'local')
-            src="{{ asset('storage/basset/photos/settings/'.$appSetting->initial_header_logo ?? 'default_header.png') }}" 
-            @else
-            src="{{ asset('public/photos/settings/'.$appSetting->initial_header_logo ?? 'default_header.png') }}"
-            @endif
-            alt="logo" 
-            width="300pt" 
-            height="auto">
-        <div class="h4 mb-3 mt-3 fw-light text-center">Masuk</div>
-        <div class="form-floating">
-            <div>
-                @error('form.email') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
-            </div>
-            <input wire:model="form.email"
-            type="email" 
-            class="form-control" 
-            placeholder="masukan email"
-            autocomplete="on"
-            value="{{ old('form.email', '') }}">
-            <label for="floatingInput">Email</label>
-        </div>
-        <div class="form-floating">
-            <div>
-                @error('form.password') <span class="error text-warning-emphasis">{{ $message }}</span> @enderror
-            </div>
-            <input 
-            wire:model="form.password"
-            type="password" 
-            class="form-control" 
-            id="floatingPassword" 
-            placeholder="masukan password"
-            autocomplete="on">
-            <label for="floatingPassword">Password</label>
-        </div>
-    
-        <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                Ingat saya
-            </label>
-        </div>
-        <div class="container-fluid">
-            <div class="d-flex flex-column justify-content-center">
-                <div class="align-self-center p-2">
-                    <button 
-                        wire:loading.attr="disabled"
-                        wire:loading.remove
-                        class="btn btn-primary w-100 py-2" 
-                        type="submit">Masuk</button>
+<main class="form-signin w-100 h-100 m-auto">
+    <div class="row">
+        <form wire:submit="login">
+            <img 
+                class="img-fluid" 
+                @if(env('APP_ENV') == 'local')
+                src="{{ asset('storage/basset/photos/settings/'.$appSetting->initial_header_logo ?? 'default_header.png') }}" 
+                @else
+                src="{{ asset('public/photos/settings/'.$appSetting->initial_header_logo ?? 'default_header.png') }}"
+                @endif
+                alt="logo" 
+                width="280pt" 
+                height="auto"
+            >
+            
+            <div class="p-2 mt-3">
+                <div class="input-group has-validation">
+                    <div 
+                        @error('form.email')
+                        class="form-floating is-invalid"
+                        @else
+                        class="form-floating"
+                        @enderror
+                        >
+                        <input wire:model="form.email"
+                            type="email" 
+                            @error('form.email')
+                            class="form-control is-invalid" 
+                            @else
+                            class="form-control" 
+                            @enderror
+                            autocomplete="on"
+                            placeholder="masukan email"
+                            value="{{ old('form.email', '') }}">
+                        <label for="floatingInput">Email</label>
+                    </div>
+                    <div class="invalid-feedback">
+                        @error('form.email') 
+                        <span class="error text-warning-emphasis">
+                            {{ $message }}
+                        </span> 
+                        @enderror
+                    </div>
                 </div>
-                <div class="align-self-center p-2">
-                        <i wire:loading 
-                        class="fa-solid fa-spinner"></i>
+                <div class="input-group has-validation">
+                    <div
+                        @error('form.password')
+                        class="form-floating is-invalid"
+                        @else
+                        class="form-floating"
+                        @enderror 
+                        >
+                        <input 
+                            wire:model="form.password"
+                            type="password" 
+                            @error('form.password')
+                            class="form-control is-invalid" 
+                            @else
+                            class="form-control" 
+                            @enderror
+                            placeholder="masukan password"
+                            id="floatingPassword" 
+                            autocomplete="on">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="invalid-feedback">
+                        @error('form.password') 
+                        <span class="error text-warning-emphasis">
+                            {{ $message }}
+                        </span> 
+                        @enderror
+                    </div>
                 </div>
-                <div class="align-self-center p-2">
-                    <p class="mt-5 mb-3 text-body-secondary text-uppercase">©2024 Rsu Pindad</p>
+                <div class="form-check">
+                    <input 
+                        wire:model="form.remember"
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Ingat saya
+                    </label>
+                </div>
+                <div class="container-fluid">
+                    <div class="d-flex flex-column justify-content-center">
+                        <div class="align-self-center p-2">
+                            <button 
+                                wire:loading.attr="disabled"
+                                wire:loading.remove
+                                class="btn btn-primary w-100 py-2" 
+                                type="submit">Masuk</button>
+                        </div>
+                        <div class="align-self-center p-2">
+                                <i wire:loading 
+                                class="fa-solid fa-spinner"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </form>
+        <div class="d-flex flex-row justify-content-center p-2">
+            <a target="_blanks"
+                href="https://www.pindadmedika.com"
+                class="m-auto text-body-secondary text-uppercase text-decoration-none">©2024 Rsu Pindad</a>
         </div>
-
-    </form>
+    </div>
 </main>
 
 @push('styles')
