@@ -25,20 +25,23 @@ class ResponEdit extends Component
 
     public function edit()
     {
-        $this->form->validate();
+        // $this->form->validate();
         $update = $this->form->update();
-        if ($update != true) {
-            return $this->alert('warning', 'gagal', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => $update,
-            ]);
+        if ($update === true) {
+            return $this->flash('success', 'berhasil', [
+                'position' => 'top',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'text' => 'data respon berhasil diperbarui',
+            ], route('root-respon'));
         }
-        return $this->flash('success', 'berhasil', [
-            'position' => 'center',
-            'toast' => true,
-            'text' => 'data respon berhasil diperbarui',
-        ], route('root-respon'));
+        return $this->alert('error', 'gagal', [
+            'position' => 'bottom',
+            'timer' => '10000',
+            'toast' => false,
+            'text' => $update,
+            'timerProgressBar' => true,
+        ]);
     }
 
     public function render()
