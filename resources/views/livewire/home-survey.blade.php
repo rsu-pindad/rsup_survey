@@ -17,7 +17,7 @@
             </a>
             <nav class="nav nav-masthead justify-content-center py-0 text-uppercase">
                 <p class="nav-link fs-3" style="animation: judul 10s infinite;">
-                    Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ session()->get('userName') }})</span><br><span>{{ $penjamin }}</span>
+                    Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ \Illuminate\Support\Str::limit($petugas, 5, '..') }})</span><br><span>{{ $penjamin }}</span>
                 </p>
                 <a href="{{ route('roots-dashboard') }}" class="nav-link fs-3 text-decoration-none">
                     <span class="fw-semibold">kembali</span>
