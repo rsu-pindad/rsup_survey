@@ -39,16 +39,14 @@
             <div class="col-lg-4">
                 <div class="container">
                     <img 
-                        class="img-fluid" 
                         @if(env('APP_ENV') == 'local')
                         src="{{ asset('storage/basset/photos/'.$mainLogo) }}" 
                         @else
                         src="{{ asset('public/photos/'.$mainLogo) }}"
                         @endif
                         alt="logo" 
-                        width="240"
-                        height="240"
-                        style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
+                        style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;"
+                        >
                         @persist('times')
                             <div class="py-2 text-body-secondary">
                                 <span class="mb-0 fs-5">
