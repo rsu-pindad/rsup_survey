@@ -17,11 +17,14 @@ class LayananForm extends Form
     #[Validate('max:50', message: 'maksimal karakter 50')]
     public $namaLayanan;
 
+    public $multiLayanan = false;
+
     public function setLayanan(Layanan $layanan)
     {
         $this->layanan = $layanan;
         $this->id = $layanan->id;
         $this->namaLayanan = $layanan->nama_layanan;
+        $this->multiLayanan = $layanan->multi_layanan;
     }
 
     public function store()
@@ -29,6 +32,7 @@ class LayananForm extends Form
         try {
             $layanan = new Layanan;
             $layanan->nama_layanan = $this->namaLayanan;
+            $layanan->multi_layanan = $this->multiLayanan;
             $layanan->save();
             $this->reset();
             return true;
@@ -42,6 +46,7 @@ class LayananForm extends Form
         try {
             $layanan = Layanan::find($this->id);
             $layanan->nama_layanan = $this->namaLayanan;
+            $layanan->multi_layanan = $this->multiLayanan;
             $layanan->save();
             return true;
         } catch (\Throwable $th) {
