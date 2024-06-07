@@ -67,7 +67,10 @@ final class UnitTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('nama_unit');
+            ->add('nama_unit')
+            ->add('multi_penilaian' , function($unit){
+                return $unit->multi_penilaian == true ? '<span class="badge rounded-pill text-bg-success">Iya</span>' : '<span class="badge rounded-pill text-bg-danger">Tidak</span>';
+            });
     }
 
     public function columns(): array
@@ -83,6 +86,9 @@ final class UnitTable extends PowerGridComponent
                 ->title('Nama Unit')
                 ->sortable()
                 ->searchable(),
+            Column::make('Multi Penilaian', 'multi_penilaian')
+                ->title('Multi Penilaian')
+                ->sortable(),
             Column::action('Action')
                 ->visibleInExport(false),
         ];
@@ -137,7 +143,7 @@ final class UnitTable extends PowerGridComponent
             Button::add('layanan')
                 ->slot('<i class="fa-solid fa-tags"></i>')
                 ->class('btn btn-outline-secondary')
-                ->route('root-unit-profil', [$row->id]),
+                ->route('root-multi-layanan', [$row->id]),
             Button::add('edit')
                 ->slot('<i class="fa-solid fa-pen-to-square"></i>')
                 ->class('btn btn-info')
@@ -158,6 +164,9 @@ final class UnitTable extends PowerGridComponent
                 ->setAttribute('class', ''),
             Rule::rows()
                 ->setAttribute('class', ''),
+            Rule::button('layanan')
+                ->when(fn($row) => $row->multi_penilaian === 0)
+                ->hide(),
         ];
     }
 }
