@@ -37,7 +37,7 @@ class LayananResponAdd extends Component
     public function render()
     {
         return view('livewire.admin.layanan-respon.layanan-respon-add')->with([
-            'layanan' => Layanan::get(),
+            'layanan' => Layanan::get()->where('multi_layanan', false),
             'respon' => Respon::get(),
         ]);
     }
