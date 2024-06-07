@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body m-2">
                     <form wire:submit="edit" wire:key="{{ $this->form->id }}">
-                        <div class="mb-3 row">
+                        <div class="row mb-3">
                             <div class="col-12">
                                 <div class="input-group has-validation">
                                     <div 
@@ -35,6 +35,24 @@
                                         <span class="error">{{ $message }}</span> 
                                         @enderror
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input 
+                                        wire:model="form.multiPenilaian" 
+                                        id="multiPenilaian"
+                                        class="form-check-input" 
+                                        type="checkbox"
+                                        @if($this->form->multiPenilaian == true) 
+                                        checked
+                                        @endif
+                                        >
+                                    <label class="form-check-label" for="multiPenilaian">
+                                        multi penilaian
+                                    </label>
                                 </div>
                             </div>
                         </div>
