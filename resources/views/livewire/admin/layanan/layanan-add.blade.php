@@ -28,6 +28,21 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                <div class="form-check">
+                    <input 
+                        wire:model="form.multiLayanan" 
+                        id="multiLayanan"
+                        class="form-check-input" 
+                        type="checkbox" 
+                        checked>
+                    <label class="form-check-label" for="multiLayanan">
+                        multi layanan
+                    </label>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <button type="submit" class="btn btn-primary">

@@ -36,6 +36,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input 
+                                        wire:model="form.multiLayanan" 
+                                        id="multiLayanan"
+                                        class="form-check-input" 
+                                        type="checkbox"
+                                        @if($this->form->multiLayanan == true) 
+                                        checked
+                                        @endif
+                                        >
+                                    <label class="form-check-label" for="multiLayanan">
+                                        multi layanan
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-flex flex-row justify-content-center flex-wrap">
                             <div class="align-self-center p-2">
                                 <a wire:navigate
