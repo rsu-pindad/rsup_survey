@@ -12,6 +12,7 @@
     "dasundev/livewire-dropzone": "^1.0",
     "guzzlehttp/guzzle": "^7.2",
     "helvetitec/lagoon-charts": "~2.0",
+    "intervention/image-laravel": "^1.2",
     "jantinnerezo/livewire-alert": "^3.0",
     "laravel/framework": "^10.0",
     "laravel/sanctum": "^3.3",

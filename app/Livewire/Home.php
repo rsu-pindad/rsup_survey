@@ -11,6 +11,8 @@ use App\Models\Unit;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+// use Intervention\Image\Laravel\Facades\Image;
+
 class Home extends Component
 {
     public Form $form;
@@ -27,14 +29,19 @@ class Home extends Component
         if ($store != true) {
             return $store;
         }
+
+        if (session()->get('multiPenilaian') === 1 && session()->get('userLayananMulti') === 1) {
+            // Multiple
+            return redirect()->route('isi-survey-pelayanan-multi');
+        }
+        // Non Multiple
         return redirect()->route('isi-survey-pelayanan');
     }
 
     #[Layout('components.layouts.beranda')]
     public function render()
     {
-        $profile = KaryawanProfile::with('parentLayanan')->where('user_id', session()->get('userId'))->first();
-
+        $profile = KaryawanProfile::where('user_id', session()->get('userId'))->first();
         if ($profile == null) {
             return <<<HTML
                 <div>
@@ -55,8 +62,12 @@ class Home extends Component
         $penjaminLayanan = PenjaminLayanan::distinct()->where('layanan_id', $layanan->id)->get('penjamin_id');
         $unit = Unit::with('unitProfil')->find($profile->parentUnit->id);
         $appSetting = AppSetting::get()->last();
+        session()->put('multiPenilaian', $profile->parentUnit->multi_penilaian);
+        session()->put('userUnitId', $profile->parentUnit->id);
+        session()->put('userLayananId', $profile->parentLayanan->id);
+        session()->put('userLayananMulti', $profile->parentLayanan->multi_layanan);
         return view('livewire.home')->with([
-            'petugas' => session()->get('userName'),
+            'petugas' => $profile->nama_karyawanprofile,
             'layanan' => $profile->parentLayanan->nama_layanan,
             'unitNama' => $profile->parentUnit->nama_unit,
             'unitAlamat' => $unit->unitProfil->unit_alamat ?? $appSetting->initial_alamat_text,

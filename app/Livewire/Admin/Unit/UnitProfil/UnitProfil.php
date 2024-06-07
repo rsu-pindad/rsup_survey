@@ -30,17 +30,20 @@ class UnitProfil extends Component
     public function save()
     {
         $store = $this->form->store();
-        if ($store === true) {
-            return $this->flash('success', 'berhasil', [
-                'position' => 'center',
-                'toast' => true,
-                'text' => 'unit profil berhasil disimpan',
-            ], route('root-unit-profil', $this->id));
+        if ($store !== true) {
+            return $this->alert('error', 'gagal', [
+                'position' => 'bottom',
+                'timer' => '10000',
+                'toast' => false,
+                'text' => $store,
+                'timerProgressBar' => true,
+            ]);
         }
-        return $this->alert('warning', 'gagal', [
-            'position' => 'center',
-            'toast' => true,
-            'text' => $store,
-        ]);
+        return $this->flash('success', 'berhasil', [
+            'position' => 'top',
+            'toast' => false,
+            'timerProgressBar' => true,
+            'text' => 'unit profil berhasil disimpan',
+        ], route('root-unit-profil', $this->id));
     }
 }

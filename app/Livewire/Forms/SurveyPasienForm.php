@@ -2,31 +2,22 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Attributes\Validate;
-use Livewire\Form;
 use App\Models\KaryawanProfile;
 use App\Models\Penjamin;
 use Carbon\Carbon;
+use Livewire\Attributes\Validate;
+use Livewire\Form;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 class SurveyPasienForm extends Form
 {
-
-    public $namaPasien = '';
-
-    public $teleponPasien = '';
-
-    public $namaRespon = '';
-
-    public $skorRespon = '';
 
     public $time = '';
 
     public function mount()
     {
         Carbon::setLocale('id');
-        $time = Carbon::now()->setTimezone('Asia/Jakarta');
-        $this->time = $time;
+        $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
     }
 
     public function save()
@@ -36,7 +27,7 @@ class SurveyPasienForm extends Form
         session()->get('namaRespon');
         try {
             $writeSheet = $this->saveSheet();
-            if ($writeSheet == 1) {
+            if ($writeSheet > 0) {
                 session()->forget([
                     'penjamin_layanan_id',
                     'shift',
@@ -45,7 +36,6 @@ class SurveyPasienForm extends Form
                 ]);
             }
             return $writeSheet;
-            // }
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

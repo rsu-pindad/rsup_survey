@@ -1,4 +1,4 @@
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+<div class="cover-container d-flex w-100 h-100 p-auto mx-auto flex-column">
 
     <header class="mb-auto">
         <div>
@@ -11,34 +11,63 @@
                     src="{{ asset('public/photos/'.$subLogo ?? 'default_domain.png') }}"
                     @endif
                     alt="logo"
-                    width="160"
-                    height="60"
+                    width="160px"
+                    height="60px"
                 >
             </a>
-            <nav class="nav nav-masthead justify-content-center py-0 text-uppercase">
-                <p class="nav-link fs-3" style="animation: judul 10s infinite;">
-                    Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ \Illuminate\Support\Str::limit($petugas, 5, '..') }})</span><br><span>{{ $penjamin }}</span>
+            <nav class="nav nav-masthead justify-content-center py-0 text-uppercase fs-4">
+                <p class="nav-link text-truncate" style="animation: judul 10s infinite;">
+                    Survey Pelayanan Penjamin {{  $this->penjamin  }}
                 </p>
-                <a href="{{ route('roots-dashboard') }}" class="nav-link fs-3 text-decoration-none">
-                    <span class="fw-semibold">kembali</span>
-                </a>
+                <span class="nav-link">
+                    <a href="{{ route('roots-dashboard') }}" class="fw-semibold text-decoration-none">kembali</a>
+                </span>
             </nav>
         </div>
     </header>
 
-    <main class="px-2 mt-auto mb-auto mx-auto">
-        <div class="d-flex flex-row justify-content-center rainbow">
+    <main class="px-auto mx-auto">
+        <div class="d-flex flex-row justify-content-center">
+            @if ($this->jumlahLayanan == session()->get('incrementNilai'))
+            <div wire:transition.out.opacity>
+                <p class="h3 text-uppercase fw-bold">
+                    mohon tunggu nilai sedang di simpan
+                </p>
+            </div>
+            @else
+            <ul class="list-group list-group-horizontal">
+                @foreach ($this->multiLayanan as $item)
+                    @if(!in_array($item->layanan_id, session()->get('idLayanan') ?? []))
+                    <li 
+                        wire:key="{{ $item->id }}"
+                        wire:click="$dispatch('show-layanan', {id: {{ $item->layanan_id }} })"
+                        id="items{{ $item->layanan_id }}"
+                        class="mx-2 border border-2 rounded-4 list-group-item {{ $this->selectedLayananId == $item->layanan_id ? 'active' : '' }}"
+                        style="max-width: min-content;
+                        cursor:pointer;"
+                        >
+                        <p class="h6 my-2 text-uppercase fw-bold">
+                            {{ $item->parentLayanan->nama_layanan }}
+                        </p>
+                    </li>
+                    @endif
+                @endforeach
+            </ul>
+            @endif
+        </div>
+        @if ($setLayanan)
+        <div wire:transition.out.opacity
+            class="d-flex flex-row justify-content-center rainbow">
             <ul class="list-group list-group-horizontal p-4">
-                @foreach ($respons as $item)
+                @foreach ($this->listRespon as $item)
                 <li 
                     wire:key="{{ $item->id }}"
-                    wire:click="preSave({{ $item->id }})"
-                    wire:loading.attr="disabled" 
+                    wire:click="$dispatch('pre-save', {id: {{ $item->id }} })"
                     class="mx-4 border border-2 rounded-4 list-group-item btn-custom li-custom"
                     style="max-width: min-content;
-                    color:{{ $item->tag_warna_respon }};
-                    box-shadow:{{ \Spatie\Color\Hex::fromString($item->tag_warna_respon)->toRgba() }} 0px 8px 22px 0px;
-                    cursor:pointer;"
+                        color:{{ $item->tag_warna_respon }};
+                        box-shadow:{{ \Spatie\Color\Hex::fromString($item->tag_warna_respon)->toRgba() }} 0px 8px 22px 0px;
+                        cursor:pointer;"
                     >
                     <i class="fa-regular fa-circle-dot my-2"></i>
                     <i class="{{ $item->icon_respon }} fa-6x px-2 survey-box"></i>
@@ -47,21 +76,32 @@
                 @endforeach
             </ul>
         </div>
+        @endif
     </main>
 
-    <footer class="mt-auto">
-        {{-- <p class="fs-3">
-            waktu survey
-        </p> --}}
-        <p 
-            x-data 
-            x-timeout:1000="$el.innerText=$moment().format('LTS')"
-            id="waktuSurvey"
-            class="fs-3 fw-bold" 
-            >
-        </p>
+    <footer class="d-flex flex-row mt-auto">
+        <div class="flex-shrink-1 align-self-center">
+            <button 
+                wire:click="$dispatch('ulangi-survey')"
+                class="btn btn-outline-primary">Ulangi</button>
+        </div>
+        <div class="flex-grow-1 align-self-center">
+            <p 
+                x-data 
+                x-timeout:1000="$el.innerText=$moment().format('LTS')"
+                id="waktuSurvey"
+                class="fs-3 fw-bold" 
+                >
+            </p>
+        </div>
+        {{-- <div class="align-items-center"> --}}
+            {{-- @if ($this->jumlahLayanan == session()->get('incrementNilai'))
+            <button 
+                wire:click="preStore"
+                class="btn btn-success">Selesai</button>
+            @endif --}}
+        {{-- </div> --}}
     </footer>
-
     <!-- Modal -->
     <div
         {{-- wire:key=uniqid() --}}
@@ -70,22 +110,21 @@
         id="modalDataDiri" 
         tabindex="-1" 
         aria-labelledby="modalSurveyLabel" 
-        aria-hidden="true">
+        aria-hidden="true"
+        data-enable-remember="{{ $rememberState }}"
+        >
         
         <div class="modal-dialog modal-fullscreen modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body mx-auto">
                     <div class="card border border-0">
                         <div class="card-body">
-                            <div class="fs-5 card-text lh-sm text-wrap d-sm-none d-md-block" style="text-align: center !important;">
-                                Terimakasih telah menggunakan layanan kami</br>
-                                Silahkan isi form data diri pasien dibawah ini. </br>
-                                Terimakasih.
-                            </div>
+                            <p class="fs-5 card-text lh-sm text-wrap d-sm-none d-md-block" style="text-align: center !important;">
+                                Mohon isi form data diri pasien dibawah ini,</br>
+                                Untuk menyelesaikan survey, terimakasih
+                            </p>
                             <hr class="border border-secondary border-2 opacity-30">
-                            <form
-                                wire:submit="save" 
-                                class="mt-2">
+                            <form class="mt-2">
                                 <div class="row mb-2">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div
@@ -93,27 +132,17 @@
                                             <span class="input-group-text">
                                                 <i class="fa-solid fa-person-circle-question"></i>
                                             </span>
-                                            <div 
-                                                @error('form.namaPasien')
-                                                class="form-floating is-invalid"
-                                                @else
-                                                class="form-floating"
-                                                @enderror
-                                                >
+                                            <div class="form-floating @error('namaPasien') is-invalid @enderror">
                                                 <input 
-                                                    wire:model.defer="form.namaPasien"
+                                                    wire:model.defer="namaPasien"
                                                     type="text" 
-                                                    @error('form.namaPasien')
-                                                    class="form-control is-invalid" 
-                                                    @else
-                                                    class="form-control" 
-                                                    @enderror
+                                                    class="form-control @error('namaPasien') is-invalid @enderror" 
                                                     id="namaPasien" 
                                                     placeholder="Nama Anda">
                                                 <label for="namaPasien">Nama Anda</label>
                                             </div>
                                             <div class="invalid-feedback">
-                                                @error('form.namaPasien') <span class="text-danger">{{ $message }}</span> @enderror 
+                                                @error('namaPasien') <span class="text-danger">{{ $message }}</span> @enderror 
                                             </div>
                                         </div>
                                     </div>
@@ -125,27 +154,17 @@
                                             <span class="input-group-text">
                                                 <i class="fa-solid fa-phone"></i>
                                             </span>
-                                            <div 
-                                                @error('form.teleponPasien')
-                                                class="form-floating is-invalid"
-                                                @else
-                                                class="form-floating"
-                                                @enderror
-                                                >
+                                            <div class="form-floating @error('teleponPasien') is-invalid @enderror">
                                                 <input 
-                                                    wire:model="form.teleponPasien"
+                                                    wire:model="teleponPasien"
                                                     type="tel" 
-                                                    @error('form.teleponPasien')
-                                                    class="form-control is-invalid" 
-                                                    @else
-                                                    class="form-control" 
-                                                    @enderror
+                                                    class="form-control @error('teleponPasien') is-invalid @enderror" 
                                                     id="gawaiPasien" 
                                                     placeholder="Nama Anda">
                                                 <label for="gawaiPasien">Nomor Telepon</label>
                                             </div>
                                             <div class="invalid-feedback">
-                                                @error('form.teleponPasien') <span class="text-danger">{{ $message }}</span> @enderror 
+                                                @error('teleponPasien') <span class="text-danger">{{ $message }}</span> @enderror 
                                             </div>
                                         </div>
                                     </div>
@@ -153,17 +172,26 @@
                                 <div class="d-flex flex-row justify-content-center">
                                     <div class="align-self-center p-2">
                                         <button
-                                            type="submit" 
+                                            wire:click="saveModal"
+                                            type="button" 
                                             class="btn btn-primary">
                                             Selesai
                                         </button>
                                     </div>
                                     <div class="align-self-center p-2">
-                                        <span wire:loading>Menyimpan</span>
+                                        <button 
+                                            wire:click="$dispatch('ulangi-survey')"
+                                            type="button"
+                                            class="btn btn-outline-danger">Ulangi
+                                        </button>
                                     </div>
-                                    @if($this->hasQuestion != true)
                                     <div class="align-self-center p-2">
-                                        <button wire:loading.remove
+                                        <span wire:loading wire:target="saveModal">Menyimpan</span>
+                                    </div>
+                                    @if(session()->get('mustQuestion') != true)
+                                    <div class="align-self-center p-2">
+                                        <button 
+                                            wire:loading.remove
                                             type="button" 
                                             class="btn btn-outline-secondary" 
                                             data-bs-dismiss="modal"
@@ -197,12 +225,6 @@
         }
     }
 
-    /* @keyframes rotate {
-        100% {
-            transform: rotate(2turn);
-        }
-    } */
-
     @keyframes pulse {
         0% {
             transform: scale(1);
@@ -232,6 +254,7 @@
         /* transform-style: preserve-3d; */
         /* transition: all 250ms; */
     }
+
     .btn-custom:hover, .btn-custom:active, .btn-custom:focus {
         transform: translateY(-10px);
         /* transform: rotate3d(0.5, 1, 0, 30deg); */
@@ -249,6 +272,10 @@
     $wire.on('modal-data-diri', () => {
         dataDiriModal.show();
     });
+
+    $wire.on('ulangi-survey-diri', () => {
+        dataDiriModal.hide();
+    })
 </script>
 @endscript
 

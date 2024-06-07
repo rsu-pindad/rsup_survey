@@ -13,7 +13,6 @@ use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-
 // use Spatie\Color\Rgba;
 // use Spatie\Color\Hex;
 
@@ -29,20 +28,27 @@ class HomeSurvey extends Component
 
     public $skorRespon = '';
 
+    public function boot()
+    {
+        if (session()->get('multiPenilaian') !== 0 && session()->get('userLayananMulti') !== 0) {
+            // Multiple
+            // return redirect()->route('isi-survey-pelayanan-multi');
+            return abort(404);
+        }
+    }
+
     public function mount()
     {
         Carbon::setLocale('id');
-        // $time = \Carbon\Carbon::now()->shiftTimezone('Asia/Jakarta');
-        $time = Carbon::now()->setTimezone('Asia/Jakarta');
-        $this->time = $time;
+        $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
     }
 
     public function getListeners()
     {
         return [
             'confirmed',
-            'confirmedDataDiri',
             'cancelled',
+            'confirmedDataDiri',
             'cancelledDataDiri'
         ];
     }
@@ -56,14 +62,14 @@ class HomeSurvey extends Component
 
     public function confirmed()
     {
-        if ($this->hasQuestion == true) {
+        if ($this->hasQuestion === true) {
             return $this->dispatch('modal-data-diri')->self();
         }
         return $this->confirm('apakah bersedia isi data diri ?', [
             'icon' => 'question',
             'onConfirmed' => 'confirmedDataDiri',
             'allowOutsideClick' => false,
-            'confirmButtonText' => 'Isi',
+            'confirmButtonText' => 'Iya',
             'cancelButtonText' => 'Tidak',
             'onDismissed' => 'cancelledDataDiri'
         ]);
@@ -101,18 +107,20 @@ class HomeSurvey extends Component
         session()->put('skorRespon', $this->skorRespon);
         // dd(session()->get('skorRespon'));
         $store = $this->form->save();
-        if ($store != 1) {
-            return $this->flash('error', 'Gagal Menilai Layanan', [
-                'position' => 'center',
-                'toast' => true,
+        if ($store !== 1) {
+            return $this->flash('error', 'gagal menilai layanan', [
+                'position' => 'bottom',
+                'toast' => false,
                 'text' => $store,
+                'timer' => '10000',
+                'timerProgressBar' => true,
             ]);
         }
         return $this->flash('success', 'berhasil', [
             'position' => 'center',
             'toast' => false,
-            'timer' => 3000,
-            'text' => 'terimakasih telah mengikuti peniliaian survey kami'
+            'text' => 'terimakasih telah mengikuti peniliaian survey kami',
+            'timerProgressBar' => true,
         ], '/');
     }
 
@@ -133,17 +141,14 @@ class HomeSurvey extends Component
         $sorted = $collectionRespon->sortBy('urutan_respon');
         $unit = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
         $appSetting = AppSetting::get()->last();
-        // dd(session()->get('penjamin_layanan_id'));
-        $penjamin = Penjamin::where('id', session()->get('penjamin_layanan_id'))->sole();
-        // dd($penjamin);
+        $penjamin = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
         return view('livewire.home-survey')->with([
-            'petugas' => session()->get('userName'),
+            'petugas' => $layananKaryawan->nama_karyawanprofile,
             'layanan' => $layananKaryawan->parentLayanan->nama_layanan,
             'unitNama' => $layananKaryawan->parentUnit->nama_unit,
-            'unitAlamat' => $unit->unitProfil->unit_alamat ?? $appSetting->initial_alamat_text,
             'subLogo' => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
             'respons' => $sorted->values()->all(),
-            'penjamin' => $penjamin->nama_penjamin,
+            'penjamin' => $penjamin,
         ]);
     }
 }

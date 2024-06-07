@@ -15,6 +15,7 @@ use App\Livewire\Admin\PenjaminLayanan\PenjaminLayananEdit;
 use App\Livewire\Admin\Respon\Respon;
 use App\Livewire\Admin\Respon\ResponEdit;
 use App\Livewire\Admin\Unit\UnitProfil\UnitProfil;
+use App\Livewire\Admin\Unit\UnitMultiLayanan\MultiLayanan;
 use App\Livewire\Admin\Unit\Unit;
 use App\Livewire\Admin\Unit\UnitEdit;
 use App\Livewire\Admin\RootsAdmin;
@@ -34,6 +35,7 @@ use App\Livewire\SuperAdmin\Setting\AppSetting;
 use App\Livewire\Roots;
 use App\Livewire\Home;
 use App\Livewire\HomeSurvey;
+use App\Livewire\HomeSurveyMulti;
 use App\Livewire\SurveyPetugasPelayanan;
 use Illuminate\Support\Facades\Route;
 
@@ -86,6 +88,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', Unit::class)->name('root-unit');
             Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
             Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
+            Route::group(['prefix' => 'multi-layanan'], function(){
+                Route::get('/{id}', MultiLayanan::class)->name('root-multi-layanan');
+            });
         });
     });
 
@@ -118,6 +123,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/self', UserSetting::class)->name('root-self');
         // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
         Route::get('/survey', HomeSurvey::class)->name('isi-survey-pelayanan');
+        Route::get('/multi-survey', HomeSurveyMulti::class)->name('isi-survey-pelayanan-multi');
     });
 
     // Route::get('/unit/profil/edit/{id}', UnitProfil::class)->name('root-unit-profil');

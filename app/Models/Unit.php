@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\belongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Unit extends Model
 {
@@ -21,6 +22,7 @@ class Unit extends Model
 
     protected $fillable = [
         'nama_unit',
+        'multi_penilaian'
     ];
 
     protected $hidden = [
@@ -33,13 +35,23 @@ class Unit extends Model
         'nama_unit' => 'string'
     ];
 
-    public function penjamin() : HasMany
+    public function penjamin(): HasMany
     {
         return $this->hasMany(Penjamin::class);
     }
 
-    public function unitProfil() : HasOne
+    public function unitProfil(): HasOne
     {
-        return $this->hasOne(UnitProfil::class ,'unit_id');
+        return $this->hasOne(UnitProfil::class, 'unit_id');
+    }
+
+    public function unitMultiLayanan() : BelongsToMany
+    {
+        return $this->belongsToMany(Layanan::class, 'unit_multi_layanan', 'unit_id', 'layanan_id');
+    }
+
+    public function layanans(): BelongsToMany
+    {
+        return $this->belongsToMany(Layanan::class);
     }
 }

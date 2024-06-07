@@ -2,10 +2,8 @@
 
 namespace App\Livewire\Auth;
 
-use App\Livewire\Forms\LoginForm;
+use App\Livewire\Forms\AuthForm;
 use App\Models\AppSetting;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
@@ -15,39 +13,32 @@ class Login extends Component
 {
     use LivewireAlert;
 
-    public LoginForm $form;
+    public AuthForm $form;
 
     public function login()
     {
-        $this->form->checkAuth();
-        if (!Auth::attempt($this->form->all())) {
-            $this->form->reset('password');
-            return $this->alert('warning', 'Gagal', [
-                'position' => 'center',
-                'timer' => 2000,
-                'toast' => true,
-                'text' => 'email atau password salah !',
-                'timerProgressBar' => true,
-            ]);
+        $this->form->validate();
+        $auth = $this->form->auth();
+        if ($auth === true) {
+            return redirect()->intended('/');
         }
-        Carbon::setLocale('id');
-        $time = Carbon::now()->setTimezone('Asia/Jakarta');
-        session()->regenerate();
-        session()->put('userName', Auth::user()->name);
-        session()->put('userId', Auth::user()->id);
-        $user = User::find(Auth::user()->id);
-        $user->last_login = $time;
-        $user->save();
-        return redirect()->intended('/');
+        $this->form->reset('password');
+        return $this->alert('warning', 'Gagal', [
+            'position' => 'top',
+            'timer' => 3000,
+            'toast' => true,
+            'text' => 'email atau password salah !',
+            'timerProgressBar' => true,
+        ]);
     }
-    
+
     public function logout()
     {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
         return $this->flash('info', 'selamat tinggal', [
-            'position' => 'center',
+            'position' => 'top',
         ], route('login'));
     }
 

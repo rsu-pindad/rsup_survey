@@ -69,7 +69,10 @@ final class LayananTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('nama_layanan');
+            ->add('nama_layanan')
+            ->add('multi_layanan', function ($layanan) {
+                return $layanan->multi_layanan == true ? '<span class="badge rounded-pill text-bg-success">Iya</span>' : '<span class="badge rounded-pill text-bg-danger">Tidak</span>';
+            });
     }
 
     public function columns(): array
@@ -84,6 +87,8 @@ final class LayananTable extends PowerGridComponent
             Column::make('Nama layanan', 'nama_layanan')
                 ->sortable()
                 ->searchable(),
+            Column::make('Multi layanan', 'multi_layanan')
+                ->sortable(),
             Column::action('Action')
                 ->visibleInExport(false),
         ];

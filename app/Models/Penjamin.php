@@ -15,6 +15,7 @@ class Penjamin extends Model
 
     protected $fillable = [
         'nama_penjamin',
+        'multi_layanan'
     ];
 
     protected $guarded = 'id';

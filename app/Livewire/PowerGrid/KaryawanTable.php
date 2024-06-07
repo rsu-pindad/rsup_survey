@@ -167,15 +167,15 @@ final class KaryawanTable extends PowerGridComponent
                 ->when(fn($row) => $row->id == $this->selectedRow)
                 ->setAttribute('class', ''),
             Rule::radio()
-                ->when(fn($row) => $row->active == 1)
+                ->when(fn($row) => $row->active === true)
                 ->hide(),
             Rule::rows()
                 ->setAttribute('class', ''),
             Rule::button('edit')
-                ->when(fn($row) => $row->taken == 1)
+                ->when(fn($row) => $row->taken === true)
                 ->hide(),
             Rule::button('delete')
-                ->when(fn($row) => $row->active == 1)
+                ->when(fn($row) => $row->active === true)
                 ->hide()
         ];
     }
