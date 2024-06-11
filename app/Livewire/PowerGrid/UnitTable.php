@@ -5,9 +5,7 @@ namespace App\Livewire\PowerGrid;
 use App\Livewire\Attributes\Locked;
 use App\Models\Unit;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -37,19 +35,53 @@ final class UnitTable extends PowerGridComponent
 
     public bool $withSortStringNumber = true;
 
+    // public $tableName = [];
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+            <div class="spinner-grow text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            HTML;
+    }
+
     public function setUp(): array
     {
-        $this->showRadioButton();
+        // $this->showRadioButton();
+        $this->showCheckBox();
+        $this->persist(
+            tableItems: ['columns', 'sort'],
+            prefix: auth()->user()->id
+        );
 
         return [
             Exportable::make(fileName: 'Unit Survey')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make()
+                ->showToggleColumns()
+                ->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
         ];
+    }
+
+    public function header(): array
+    {
+        return [
+            Button::add('bulk-delete')
+                ->slot(__('Bulk delete (<span x-text="window.pgBulkActions.count(\'' . $this->tableName . '\')"></span>)'))
+                ->class('btn btn-secondary-outline')
+                ->dispatch('bulkDelete' . $this->tableName, []),
+        ];
+    }
+
+    #[\Livewire\Attributes\On('bulkDelete.{tableName}')]
+    public function bulkDelete(): void
+    {
+        $this->js("alert(window.pgBulkActions.get('" . $this->tableName . "'))");
     }
 
     #[\Livewire\Attributes\On('table-updated')]
@@ -68,26 +100,31 @@ final class UnitTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('nama_unit')
-            ->add('multi_penilaian' , function($unit){
-                return $unit->multi_penilaian == true ? '<span class="badge rounded-pill text-bg-success">Iya</span>' : '<span class="badge rounded-pill text-bg-danger">Tidak</span>';
+            ->add('multi_penilaian_formatted', function ($unit) {
+                return $unit->multi_penilaian === true ? '<span class="badge rounded-pill text-bg-success">Iya</span>' : '<span class="badge rounded-pill text-bg-danger">Tidak</span>';
             });
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id')
+            Column::add()
+                ->title('Id')
+                ->field('id')
                 ->visibleInExport(false)
                 ->hidden(isHidden: true, isForceHidden: true),
-            Column::make('No', 'id')
+            Column::add()
                 ->title('No')
+                ->field('id')
                 ->index(),
-            Column::make('Nama unit', 'nama_unit')
+            Column::add()
                 ->title('Nama Unit')
+                ->field('nama_unit')
                 ->sortable()
                 ->searchable(),
-            Column::make('Multi Penilaian', 'multi_penilaian')
+            Column::add()
                 ->title('Multi Penilaian')
+                ->field(field: 'multi_penilaian_formatted', dataField: 'multi_penilaian')
                 ->sortable(),
             Column::action('Action')
                 ->visibleInExport(false),
@@ -120,13 +157,13 @@ final class UnitTable extends PowerGridComponent
             $unit = Unit::find($this->id);
             $unit->delete();
             return $this->alert('success', 'berhasil', [
-                'position' => 'center',
+                'position' => 'center-start',
                 'toast' => true,
                 'text' => 'data unit berhasil dihapus',
             ]);
         } catch (\Throwable $th) {
             return $this->alert('warning', 'gagal', [
-                'position' => 'center',
+                'position' => 'bottom',
                 'toast' => true,
                 'text' => $th->getMessage(),
             ]);
@@ -160,12 +197,12 @@ final class UnitTable extends PowerGridComponent
     {
         return [
             Rule::radio()
-                ->when(fn($row) => $row->id == $this->selectedRow)
+                ->when(fn($row) => $row->id === $this->selectedRow)
                 ->setAttribute('class', ''),
             Rule::rows()
                 ->setAttribute('class', ''),
             Rule::button('layanan')
-                ->when(fn($row) => $row->multi_penilaian === 0)
+                ->when(fn($row) => $row->multi_penilaian === false)
                 ->hide(),
         ];
     }
