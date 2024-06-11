@@ -25,11 +25,19 @@
     <main class="px-2 m-2">
         <div class="d-flex flex-row justify-content-center">
             @if ($this->jumlahLayanan == session()->get('incrementNilai'))
-            <div wire:transition.out.opacity>
-                <p class="h3 text-uppercase fw-bold">
-                    mohon tunggu nilai sedang di simpan
-                </p>
-            </div>
+                @if($this->jumlahLayanan == 0)
+                <div wire:transition.out.opacity>
+                    <p class="h4 text-uppercase fw-bold">
+                        tidak ada layanan, mohon aktifkan pada menu unit
+                    </p>
+                </div>
+                @else
+                <div wire:transition.out.opacity>
+                    <p class="h3 text-uppercase fw-bold">
+                        mohon tunggu nilai sedang di simpan
+                    </p>
+                </div>
+                @endif
             @else
             <ul class="list-group list-group-horizontal">
                 @foreach ($this->multiLayanan as $item)
