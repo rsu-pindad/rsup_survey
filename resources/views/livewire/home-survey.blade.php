@@ -12,7 +12,7 @@
                 >
             </a>
             <nav class="nav nav-masthead justify-content-center py-0 text-uppercase">
-                <p class="nav-link fs-3" style="animation: judul 10s infinite;">
+                <p class="nav-link fs-5" style="animation: judul 10s infinite;">
                     Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ \Illuminate\Support\Str::limit($petugas, 5, '..') }})</span><br><span>{{ $penjamin }}</span>
                 </p>
                 <a href="{{ route('roots-dashboard') }}" class="nav-link fs-3 text-decoration-none">
@@ -26,7 +26,7 @@
         <div class="d-flex flex-row justify-content-center rainbow">
             @if(!$hideRespon)
             <ul class="list-group list-group-horizontal p-4">
-                @if(session()->get('userLayananMulti') === 1)
+                @if(session()->get('userLayananMulti') === true)
                 <p>Layanan Anda Termasuk Kedalam Multiple</p>
                 @endif
                 @foreach ($respons as $item)
