@@ -45,11 +45,7 @@
             <div class="col-lg-4">
                 <div class="container">
                     <img 
-                        @if(env('APP_ENV') == 'local')
-                        src="{{ asset('storage/basset/photos/'.$mainLogo) }}" 
-                        @else
-                        src="{{ asset('public/photos/'.$mainLogo) }}"
-                        @endif
+                        src="{{ basset('photos/'.$mainLogo) }}" 
                         alt="logo" 
                         style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;"
                         >

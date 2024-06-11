@@ -49,11 +49,7 @@
                                         <div class="card" style="width: 12rem;">
                                             <img 
                                                 class="img-thumbnail rounded"
-                                                @if(env('APP_ENV') == 'local')
-                                                src="{{ asset('storage/basset/photos/'.$this->form->unitMainLogoOld ?? 'defaultmain.png') }}" 
-                                                @else
-                                                src="{{ asset('public/photos/'.$this->form->unitMainLogoOld ?? 'defaultmain.png') }}"
-                                                @endif
+                                                src="{{ basset('photos/'.$this->form->unitMainLogoOld ?? 'defaultmain.png') }}"
                                                 alt="current_logo_main">
                                         </div>
                                     </div>
@@ -73,11 +69,7 @@
                                         <div class="card" style="width: 12rem;">
                                             <img 
                                                 class="img-thumbnail rounded"
-                                                @if(env('APP_ENV') == 'local')
-                                                src="{{ asset('storage/basset/photos/'.$this->form->unitSubLogoOld ?? 'default.png') }}" 
-                                                @else
-                                                src="{{ asset('public/photos/'.$this->form->unitSubLogoOld ?? 'defaultsub.png') }}"
-                                                @endif
+                                                src="{{ basset('photos/'.$this->form->unitSubLogoOld ?? 'default.png') }}"
                                                 alt="current_logo_sub">
                                         </div>
                                     </div>

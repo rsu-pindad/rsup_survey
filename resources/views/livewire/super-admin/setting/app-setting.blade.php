@@ -18,11 +18,7 @@
                                 <div class="card" style="width: 12rem;">
                                     <img 
                                         class="img-thumbnail rounded"
-                                        @if(env('APP_ENV') == 'local')
-                                        src="{{ asset('storage/basset/photos/settings/'.$this->form->initialDomainImg ?? 'default_domain.png') }}" 
-                                        @else
-                                        src="{{ asset('public/photos/settings/'.$this->form->initialDomainImg ?? 'default_domain.png') }}"
-                                        @endif
+                                        src="{{ basset('photos/settings/'.$this->form->initialDomainImg ?? 'default_domain.png') }}" 
                                         alt="current_logo_domain">
                                 </div>
                             </div>
@@ -42,11 +38,7 @@
                                 <div class="card" style="width: 12rem;">
                                     <img 
                                         class="img-thumbnail rounded"
-                                        @if(env('APP_ENV') == 'local')
-                                        src="{{ asset('storage/basset/photos/settings/'.$this->form->initialBodyImg ?? 'default_body.png') }}" 
-                                        @else
-                                        src="{{ asset('public/photos/settings/'.$this->form->initialBodyImg ?? 'default_body.png') }}"
-                                        @endif
+                                        src="{{ basset('photos/settings/'.$this->form->initialBodyImg ?? 'default_body.png') }}" 
                                         alt="current_logo_body">
                                 </div>
                             </div>
@@ -66,11 +58,7 @@
                                 <div class="card" style="width: 12rem;">
                                     <img 
                                         class="img-thumbnail rounded"
-                                        @if(env('APP_ENV') == 'local')
-                                        src="{{ asset('storage/basset/photos/settings/'.$this->form->initialHeaderImg ?? 'default_header.png') }}" 
-                                        @else
-                                        src="{{ asset('public/photos/settings/'.$this->form->initialHeaderImg ?? 'default_header.png') }}"
-                                        @endif
+                                        src="{{ basset('photos/settings/'.$this->form->initialHeaderImg ?? 'default_header.png') }}" 
                                         alt="current_logo_header">
                                 </div>
                             </div>

@@ -3,11 +3,7 @@
         <div class="container">
             <a class="navbar-brand m-2" href="/">
                 <img 
-                @if(env('APP_ENV') == 'local')
-                src="{{ asset('storage/basset/photos/settings/'.$appSetting->initial_domain_logo ?? 'default_domain.png') }}"
-                @else
-                src="{{ asset('public/photos/settings/'.$appSetting->initial_domain_logo ?? 'default_domain.png') }}"
-                @endif 
+                src="{{ basset('photos/settings/'.$appSetting->initial_domain_logo ?? 'default_domain.png') }}" 
                 alt="Logo" width="34" height="28" class="d-inline-block align-text-top"
                 />
             </a>
