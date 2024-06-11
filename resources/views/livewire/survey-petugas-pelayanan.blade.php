@@ -11,10 +11,10 @@
     <main class="container">
         <div class="container-fluid">
             <div class="d-flex flex-column align-items-center p-4">
-                <p class="h1">
+                <p class="fs-5">
                     Survey Layanan {{ $layanan }}
                 </p>
-                <p class="h1 d-none d-sm-none d-md-none d-lg-block">
+                <p class="fs-5 d-none d-sm-none d-md-none d-lg-block">
                     Selamat datang, {{ session()->get('nama_pelanggan') }}
                 </p>
             </div>
