@@ -3,7 +3,6 @@
         <img 
             class="d-inline-block align-text-top img-thumbnail"
             src="{{ basset('photos/'.$subLogo ?? 'default_domain.png') }}" 
-            @endif
             alt="logo"
             >
     </a>
