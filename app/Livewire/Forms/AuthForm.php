@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
+use Illuminate\Support\Facades\Cache;
 
 class AuthForm extends Form
 {
@@ -24,14 +25,10 @@ class AuthForm extends Form
     #[Locked]
     public $time;
 
-    public function mount()
+    public function auth()
     {
         Carbon::setLocale('id');
         $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
-    }
-
-    public function auth()
-    {
         if (Auth::viaRemember()) {
             return redirect()->intended('/');
         }

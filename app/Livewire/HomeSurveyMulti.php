@@ -107,7 +107,7 @@ class HomeSurveyMulti extends Component
 
     public function confirmed()
     {
-        if ($this->hasQuestion === 1) {
+        if ($this->hasQuestion === true) {
             $this->mustQuestion = true;
             session()->put('mustQuestion', true);
         }
@@ -132,7 +132,7 @@ class HomeSurveyMulti extends Component
         ]);
         // if(session()->get('incrementNilai') == $this->jumlahLayanan){
         if ($this->incrementNilai == $this->jumlahLayanan) {
-            $this->selectedLayananId = null;
+            $this->selectedLayananId = '';
             // return $this->dispatch('info-survey')->self();
             return $this->dispatch('same-jumlah')->self();
         }
@@ -147,7 +147,7 @@ class HomeSurveyMulti extends Component
     public function confirmedReset()
     {
         $this->incrementNilai = 0;
-        $this->selectedLayananId;
+        $this->selectedLayananId = '';
         $this->rememberState = false;
         session()->forget(['idLayanan', 'jawabanPasien']);
         session()->put('incrementNilai', $this->incrementNilai);
