@@ -5,11 +5,7 @@
             <a href="#" class="float-md-start mb-0 navbar-brand py-3 d-none d-xs-none d-sm-none d-md-block">
                 <img 
                     class="d-inline-block align-text-top img-thumbnail" 
-                    @if(env('APP_ENV') == 'local')
-                    src="{{ asset('storage/basset/photos/'.$subLogo ?? 'default_domain.png') }}" 
-                    @else
-                    src="{{ asset('public/photos/'.$subLogo ?? 'default_domain.png') }}"
-                    @endif
+                    src="{{ basset('photos/'.$subLogo ?? 'default_domain.png') }}" 
                     alt="logo"
                     width="160px"
                     height="60px"

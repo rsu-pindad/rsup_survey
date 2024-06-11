@@ -4,12 +4,8 @@
         <div class="col-lg-4 col-md-3 col-xs-2 d-none d-xs-none d-md-block">
             <div class="container">
                 <img 
-                class="m-2 px-2 img-fluid" 
-                @if(env('APP_ENV') == 'local')
-                src="{{ asset('storage/basset/photos/'.$subLogo ?? 'default_domain.png') }}" 
-                @else
-                src="{{ asset('public/photos/'.$subLogo ?? 'default_domain.png') }}"
-                @endif
+                class="m-2 px-2 img-fluid"
+                src="{{ basset('photos/'.$subLogo ?? 'default_domain.png') }}" 
                 alt="logo">
             </div>
         </div>
