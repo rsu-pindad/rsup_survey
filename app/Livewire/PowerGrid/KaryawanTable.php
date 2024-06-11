@@ -95,10 +95,14 @@ final class KaryawanTable extends PowerGridComponent
             Column::make('Npp karyawan', 'npp_karyawan')
                 ->sortable()
                 ->searchable(),
-            Column::make('Taken', 'taken_format')
+            Column::add()
+                ->title('Taken')
+                ->field(field: 'taken_format', dataField: 'taken')
                 ->sortable()
                 ->visibleInExport(false),
-            Column::make('Active', 'active_format')
+            Column::add()
+                ->title('Active')
+                ->field(field: 'active_format', dataField: 'active')
                 ->sortable()
                 ->visibleInExport(false),
             Column::action('Action')

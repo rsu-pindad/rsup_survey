@@ -89,16 +89,25 @@ final class KaryawanProfileTable extends PowerGridComponent
             Column::make('No', 'id')
                 ->title('No')
                 ->index(),
-            Column::make('Unit', 'unit_id'),
+            Column::make('Unit', 'unit_id')
+                ->sortable()
+                ->searchable(),
             Column::make('Npp', 'karyawan_id')
                 ->sortable()
                 ->searchable(),
             Column::make('Nama', 'nama_karyawanprofile')
+                ->sortable()
                 ->searchable(),
-            Column::make('Layanan', 'layanan_id'),
+            Column::make('Layanan', 'layanan_id')
+                ->sortable()
+                ->searchable(),
             Column::make('Email', 'user_id')
+                ->sortable()
+                ->searchable()
                 ->visibleInExport(false),
-            Column::make('Updated at', 'updated_at_formatted')
+            Column::add()
+                ->title('Updated at')
+                ->field(field: 'updated_at_formatted', dataField: 'updated_at')
                 ->sortable()
                 ->visibleInExport(false),
             Column::action('Action')
@@ -167,16 +176,16 @@ final class KaryawanProfileTable extends PowerGridComponent
                 ->when(fn($row) => $row->id == $this->selectedRow)
                 ->setAttribute('class', ''),
             Rule::radio()
-                ->when(fn($row) => $row->parentKaryawan->active == 1)
+                ->when(fn($row) => $row->parentKaryawan->active === true)
                 ->hide(),
             Rule::rows()
                 ->setAttribute('class', ''),
             Rule::button('edit')
-            ->when(fn($row) => $row->parentKaryawan->active == 0)
-            ->hide(),
+                ->when(fn($row) => $row->parentKaryawan->active === false)
+                ->hide(),
             Rule::button('delete')
-            ->when(fn($row) => $row->parentKaryawan->active == 1)
-            ->hide()
+                ->when(fn($row) => $row->parentKaryawan->active === true)
+                ->hide()
         ];
     }
 }

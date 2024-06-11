@@ -69,10 +69,18 @@ final class LayananResponTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('layanan_id', fn(LayananRespon $layananRespon) => $layananRespon->parentLayanan->nama_layanan)
-            ->add('respon_id', fn(LayananRespon $layananRespon) => $layananRespon->parentRespon->nama_respon)
-            ->add('skor_respon', fn(LayananRespon $layananRespon) => $layananRespon->parentRespon->skor_respon)
-            ->add('urutan_respon', fn(LayananRespon $layananRespon) => $layananRespon->parentRespon->urutan_respon);
+            ->add('nama_layanan', function ($layananRespon) {
+                return $layananRespon->parentLayanan->nama_layanan;
+            })
+            ->add('nama_respon', function ($layananRespon) {
+                return $layananRespon->parentRespon->nama_respon;
+            })
+            ->add('skor_respon', function ($layananRespon) {
+                return $layananRespon->parentRespon->skor_respon;
+            })
+            ->add('urutan_respon', function ($layananRespon) {
+                return $layananRespon->parentRespon->urutan_respon;
+            });
     }
 
     public function columns(): array
@@ -84,13 +92,19 @@ final class LayananResponTable extends PowerGridComponent
             Column::make('No', 'id')
                 ->title('No')
                 ->index(),
-            Column::make('Nama layanan', 'layanan_id')
+            Column::add()
+                ->title('Nama layanan')
+                ->field(field: 'nama_layanan', dataField: 'layanan_id')
                 ->sortable()
                 ->searchable(),
-            Column::make('Nama respon', 'respon_id')
+            Column::add()
+                ->title('Nama respon')
+                ->field(field: 'nama_respon', dataField: 'respon_id')
                 ->sortable()
                 ->searchable(),
-            Column::make('Skor respon', 'skor_respon')
+            Column::add()
+                ->title('Skor respon')
+                ->field(field: 'skor_respon', dataField: 'respon_id')
                 ->sortable(),
             Column::make('Urutan respon', 'urutan_respon'),
             Column::action('Action')
