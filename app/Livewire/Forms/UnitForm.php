@@ -47,6 +47,9 @@ class UnitForm extends Form
             $unit = Unit::find($this->id);
             $unit->nama_unit = $this->namaUnit;
             $unit->multi_penilaian = $this->multiPenilaian;
+            if($this->multiPenilaian == false){
+                $unit->removeMulti();
+            }
             $unit->save();
             return $unit;
         } catch (\Throwable $th) {

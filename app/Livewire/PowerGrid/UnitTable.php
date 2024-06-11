@@ -68,15 +68,15 @@ final class UnitTable extends PowerGridComponent
         ];
     }
 
-    public function header(): array
-    {
-        return [
-            Button::add('bulk-delete')
-                ->slot(__('Bulk delete (<span x-text="window.pgBulkActions.count(\'' . $this->tableName . '\')"></span>)'))
-                ->class('btn btn-secondary-outline')
-                ->dispatch('bulkDelete' . $this->tableName, []),
-        ];
-    }
+    // public function header(): array
+    // {
+    //     return [
+    //         Button::add('bulk-delete')
+    //             ->slot(__('Bulk delete (<span x-text="window.pgBulkActions.count(\'' . $this->tableName . '\')"></span>)'))
+    //             ->class('btn btn-secondary-outline')
+    //             ->dispatch('bulkDelete' . $this->tableName, []),
+    //     ];
+    // }
 
     #[\Livewire\Attributes\On('bulkDelete.{tableName}')]
     public function bulkDelete(): void
