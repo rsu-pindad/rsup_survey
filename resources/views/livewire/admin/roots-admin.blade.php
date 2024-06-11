@@ -48,10 +48,12 @@
                         <a class="nav-link" aria-current="page-survey" href="{{ route('root-survey-petugas', ['id' => Auth()->user()->id]) }}" wire:navigate="false">Survey</a>
                     </li>
                     @endcannot
+                    @hasexactroles('employee')
                     @can('view_laporan')
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page-laporan" href="{{ route('root-laporan') }}" wire:navigate="false">Laporan</a>
                     </li>
+                    @endhasexactroles
                     @endcannot
                     @can('view_unit')
                     <li class="nav-item">
