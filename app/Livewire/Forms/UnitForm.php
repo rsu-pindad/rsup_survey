@@ -48,7 +48,7 @@ class UnitForm extends Form
             $unit->nama_unit = $this->namaUnit;
             $unit->multi_penilaian = $this->multiPenilaian;
             if($this->multiPenilaian == false){
-                $unit->removeMulti();
+                $unit->pivotsMultiLayanan()->detach();
             }
             $unit->save();
             return $unit;

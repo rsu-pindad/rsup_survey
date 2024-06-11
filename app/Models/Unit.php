@@ -62,11 +62,11 @@ class Unit extends Model
         return $this->belongsToMany(MultiLayanan::class, 'unit_multi_layanan', 'unit_id', 'id');
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::removeMulti(function ($unit) {
-            $unit->pivotsMultiLayanan()->detach();
-        });
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::removeMulti(function ($unit) {
+    //         $unit->pivotsMultiLayanan()->detach();
+    //     });
+    // }
 }
