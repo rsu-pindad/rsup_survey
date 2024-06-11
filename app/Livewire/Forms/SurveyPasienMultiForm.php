@@ -34,8 +34,8 @@ class SurveyPasienMultiForm extends Form
                     'PEGAWAI' => $this->karyawan->nama_karyawanprofile,
                     'UNIT' => $this->karyawan->parentUnit->nama_unit,
                     'PELAYANAN' => $items['namaLayanan'],
-                    'NAMA_PASIEN' => $items['hasQuestion'] == true ? $this->namaPasien : '',
-                    'TELEPON_PASIEN' => $items['hasQuestion'] == true ? $this->teleponPasien : '',
+                    'NAMA_PASIEN' => $items['hasQuestion'] === true ? $this->namaPasien : '',
+                    'TELEPON_PASIEN' => $items['hasQuestion'] === true ? $this->teleponPasien : '',
                     'PENJAMIN' => $this->penjamin->nama_penjamin,
                     'NILAI_SURVEY_KEPUASAN' => $items['namaRespon'],
                 ];

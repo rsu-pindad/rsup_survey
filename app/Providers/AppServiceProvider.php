@@ -27,5 +27,8 @@ class AppServiceProvider extends ServiceProvider
         //     $this->dynamicProperties['icon'] = $name;
         //     return $this;
         // });
+        // Pulse::user(fn ($user) => [
+        //     'name' => $user->name,
+        // ]);
     }
 }

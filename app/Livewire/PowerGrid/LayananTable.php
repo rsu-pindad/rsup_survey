@@ -70,8 +70,8 @@ final class LayananTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('nama_layanan')
-            ->add('multi_layanan', function ($layanan) {
-                return $layanan->multi_layanan == true ? '<span class="badge rounded-pill text-bg-success">Iya</span>' : '<span class="badge rounded-pill text-bg-danger">Tidak</span>';
+            ->add('multi_layanan_formatted', function ($layanan) {
+                return $layanan->multi_layanan === true ? '<span class="badge rounded-pill text-bg-success">Iya</span>' : '<span class="badge rounded-pill text-bg-danger">Tidak</span>';
             });
     }
 
@@ -87,7 +87,9 @@ final class LayananTable extends PowerGridComponent
             Column::make('Nama layanan', 'nama_layanan')
                 ->sortable()
                 ->searchable(),
-            Column::make('Multi layanan', 'multi_layanan')
+            Column::add()
+                ->title('Multi layanan')
+                ->field(field: 'multi_layanan_formatted', dataField: 'multi_layanan')
                 ->sortable(),
             Column::action('Action')
                 ->visibleInExport(false),
@@ -118,7 +120,14 @@ final class LayananTable extends PowerGridComponent
     {
         try {
             $layanan = Layanan::find($this->id);
-            $layanan->delete();
+            $result = $layanan->delete();
+            if ($result === false) {
+                return $this->alert('warning', 'peringatan', [
+                    'position' => 'bootom-end',
+                    'toast' => true,
+                    'text' => 'terdapat karyawan yang masih menggunakan layanan ini',
+                ]);
+            }
             return $this->alert('success', 'berhasil', [
                 'position' => 'center',
                 'toast' => true,

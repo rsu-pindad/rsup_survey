@@ -17,25 +17,10 @@ class Home extends Component
 {
     public Form $form;
 
-    public function next()
-    {
-        $this->dispatch('open-penjamin-modal')->self();
-    }
-
     public function save()
     {
         $this->form->validate();
-        $store = $this->form->store();
-        if ($store != true) {
-            return $store;
-        }
-
-        if (session()->get('multiPenilaian') === 1 && session()->get('userLayananMulti') === 1) {
-            // Multiple
-            return redirect()->route('isi-survey-pelayanan-multi');
-        }
-        // Non Multiple
-        return redirect()->route('isi-survey-pelayanan');
+        return $this->form->store();
     }
 
     #[Layout('components.layouts.beranda')]
@@ -59,7 +44,9 @@ class Home extends Component
                 </div>
                 HTML;
         }
-        $penjaminLayanan = PenjaminLayanan::distinct()->where('layanan_id', $layanan->id)->get('penjamin_id');
+        $penjaminLayanan = PenjaminLayanan::distinct()
+            ->where('layanan_id', $layanan->id)
+            ->get('penjamin_id');
         $unit = Unit::with('unitProfil')->find($profile->parentUnit->id);
         $appSetting = AppSetting::get()->last();
         session()->put('multiPenilaian', $profile->parentUnit->multi_penilaian);

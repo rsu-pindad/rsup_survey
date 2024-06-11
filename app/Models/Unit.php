@@ -32,7 +32,8 @@ class Unit extends Model
     ];
 
     protected $casts = [
-        'nama_unit' => 'string'
+        'nama_unit' => 'string',
+        'multi_penilaian' => 'boolean'
     ];
 
     public function penjamin(): HasMany

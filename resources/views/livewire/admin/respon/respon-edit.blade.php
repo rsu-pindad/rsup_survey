@@ -19,13 +19,14 @@
                                         @enderror
                                         >
                                         <input 
-                                            wire:model.defer="form.namaRespon"
+                                            wire:model.blur="form.namaRespon"
                                             type="text" 
                                             @error('form.namaRespon')
                                             class="form-control is-invalid"
                                             @else
                                             class="form-control"
                                             @enderror
+                                            wire:dirty.class="border border-3"
                                             id="namaRespon" 
                                             value="{{ $this->form->namaRespon }}">
                                         <label for="namaRespon">Nama Respon</label>
@@ -47,7 +48,7 @@
                                         @enderror
                                         >
                                         <input 
-                                            wire:model.defer="form.iconRespon"
+                                            wire:model.blur="form.iconRespon"
                                             type="text" 
                                             @error('form.iconRespon')
                                             class="form-control is-invalid" 
@@ -77,7 +78,7 @@
                                         @enderror
                                         >
                                         <input 
-                                            wire:model.defer="form.skorRespon"
+                                            wire:model.blur="form.skorRespon"
                                             type="number" 
                                             @error('form.skorRespon')
                                             class="form-control is-invalid" 
@@ -105,7 +106,7 @@
                                         @enderror
                                         >
                                         <input 
-                                            wire:model.defer="form.urutanRespon"
+                                            wire:model.blur="form.urutanRespon"
                                             type="number" 
                                             @error('form.urutanRespon')
                                             class="form-control is-invalid" 
@@ -129,7 +130,7 @@
                                 <div class="input-group has-validation flex-nowrap">
                                     <span class="input-group-text">#</span>
                                     <input 
-                                        wire:model.defer="form.tagWarnaRespon"
+                                        wire:model.blur="form.tagWarnaRespon"
                                         type="color" 
                                         id="tagWarnaRespon" 
                                         @error('tagWarnaRespon')

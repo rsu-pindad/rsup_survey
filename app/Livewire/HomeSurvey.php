@@ -9,12 +9,12 @@ use App\Models\LayananRespon;
 use App\Models\Penjamin;
 use App\Models\Respon;
 use App\Models\Unit;
-use Carbon\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 // use Spatie\Color\Rgba;
 // use Spatie\Color\Hex;
+use Livewire\Attributes\Validate;
 
 class HomeSurvey extends Component
 {
@@ -28,19 +28,29 @@ class HomeSurvey extends Component
 
     public $skorRespon = '';
 
+    #[Validate('required', message: 'mohon masukan nama anda')]
+    #[Validate('string', message: 'hanya huruf')]
+    #[Validate('min:3', message: 'minimal 3 huruf')]
+    public $namaPasien = '';
+
+    #[Validate('required', message: 'mohon masukan nomor telepon')]
+    #[Validate('numeric', message: 'hanya angka')]
+    #[Validate('min:9', message: 'minimal 9 angka')]
+    public $teleponPasien = '';
+
+    public $hideRespon = false;
+
     public function boot()
     {
-        if (session()->get('multiPenilaian') !== 0 && session()->get('userLayananMulti') !== 0) {
+        if (session()->get('multiPenilaian') === true && session()->get('userLayananMulti') === true) {
             // Multiple
             // return redirect()->route('isi-survey-pelayanan-multi');
             return abort(404);
         }
-    }
 
-    public function mount()
-    {
-        Carbon::setLocale('id');
-        $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
+        if (session()->get('userLayananMulti') === true) {
+            return abort(404);
+        }
     }
 
     public function getListeners()
@@ -57,11 +67,15 @@ class HomeSurvey extends Component
     {
         $this->namaRespon = '';
         $this->skorRespon = '';
+        $this->namaPasien = '';
+        $this->teleponPasien = '';
         $this->hasQuestion = false;
+        $this->hideRespon = false;
     }
 
     public function confirmed()
     {
+        // dd($this->hasQuestion);
         if ($this->hasQuestion === true) {
             return $this->dispatch('modal-data-diri')->self();
         }
@@ -69,7 +83,7 @@ class HomeSurvey extends Component
             'icon' => 'question',
             'onConfirmed' => 'confirmedDataDiri',
             'allowOutsideClick' => false,
-            'confirmButtonText' => 'Iya',
+            'confirmButtonText' => 'Isi',
             'cancelButtonText' => 'Tidak',
             'onDismissed' => 'cancelledDataDiri'
         ]);
@@ -82,11 +96,13 @@ class HomeSurvey extends Component
 
     public function cancelledDataDiri()
     {
+        $this->hideRespon = false;
         $this->save();
     }
 
     public function preSave($id)
     {
+        $this->hideRespon = true;
         $respon = Respon::find($id);
         $this->namaRespon = $respon->nama_respon;
         $this->skorRespon = $respon->skor_respon;
@@ -103,11 +119,16 @@ class HomeSurvey extends Component
 
     public function save()
     {
+        if ($this->hasQuestion === true) {
+            $this->validate();
+        }
         session()->put('namaRespon', $this->namaRespon);
         session()->put('skorRespon', $this->skorRespon);
+        session()->put('namaPasien', $this->namaPasien);
+        session()->put('teleponPasien', $this->teleponPasien);
         // dd(session()->get('skorRespon'));
         $store = $this->form->save();
-        if ($store !== 1) {
+        if ($store < 1) {
             return $this->flash('error', 'gagal menilai layanan', [
                 'position' => 'bottom',
                 'toast' => false,

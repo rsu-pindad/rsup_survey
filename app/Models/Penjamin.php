@@ -17,17 +17,18 @@ class Penjamin extends Model
         'nama_penjamin',
         'multi_layanan'
     ];
-
+    
     protected $guarded = 'id';
-
+    
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at'
     ];
-
-    protected $cast = [
-        'nama_penjamin' => 'string'
+    
+    protected $casts = [
+        'nama_penjamin' => 'string',
+        'multi_layanan' => 'boolean'
     ];
     
     public function parentUnit() : BelongsTo

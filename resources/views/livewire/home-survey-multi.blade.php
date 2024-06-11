@@ -1,6 +1,6 @@
 <div class="cover-container d-flex w-100 h-100 p-auto mx-auto flex-column">
 
-    <header class="mb-auto">
+    <header class="mb-2">
         <div>
             <a href="#" class="float-md-start mb-0 navbar-brand py-3 d-none d-xs-none d-sm-none d-md-block">
                 <img 
@@ -26,7 +26,7 @@
         </div>
     </header>
 
-    <main class="px-auto mx-auto">
+    <main class="px-2 m-2">
         <div class="d-flex flex-row justify-content-center">
             @if ($this->jumlahLayanan == session()->get('incrementNilai'))
             <div wire:transition.out.opacity>
@@ -56,8 +56,7 @@
             @endif
         </div>
         @if ($setLayanan)
-        <div wire:transition.out.opacity
-            class="d-flex flex-row justify-content-center rainbow">
+        <div class="d-flex flex-col justify-content-center rainbow">
             <ul class="list-group list-group-horizontal p-4">
                 @foreach ($this->listRespon as $item)
                 <li 
@@ -75,17 +74,16 @@
                 </li>
                 @endforeach
             </ul>
-        </div>
         @endif
     </main>
 
-    <footer class="d-flex flex-row mt-auto">
-        <div class="flex-shrink-1 align-self-center">
+    <footer class="mt-3">
+        <div class="position-absolute bottom-0 start-0 p-2">
             <button 
                 wire:click="$dispatch('ulangi-survey')"
                 class="btn btn-outline-primary">Ulangi</button>
         </div>
-        <div class="flex-grow-1 align-self-center">
+        <div class="position-absolute bottom-0 start-50 translate-middle-x">
             <p 
                 x-data 
                 x-timeout:1000="$el.innerText=$moment().format('LTS')"
@@ -94,7 +92,7 @@
                 >
             </p>
         </div>
-        {{-- <div class="align-items-center"> --}}
+        {{-- <div class="position-absolute bottom-0 end-0"> --}}
             {{-- @if ($this->jumlahLayanan == session()->get('incrementNilai'))
             <button 
                 wire:click="preStore"
@@ -116,7 +114,7 @@
         
         <div class="modal-dialog modal-fullscreen modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body mx-auto">
+                <div class="modal-body mx-2">
                     <div class="card border border-0">
                         <div class="card-body">
                             <p class="fs-5 card-text lh-sm text-wrap d-sm-none d-md-block" style="text-align: center !important;">

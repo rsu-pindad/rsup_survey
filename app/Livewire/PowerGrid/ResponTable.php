@@ -71,7 +71,7 @@ final class ResponTable extends PowerGridComponent
             ->add('tag_warna_respon', function ($respon) {
                 return '<span class="badge rounded-pill" style="background-color:' . $respon->tag_warna_respon . '">' . $respon->tag_warna_respon . '</span>';
             })
-            ->add('has_question', function ($respon){
+            ->add('has_question', function ($respon) {
                 return $respon->has_question == true ? '<span class="badge rounded-pill text-bg-success">Iya</span>' : '<span class="badge rounded-pill text-bg-danger">Tidak</span>';
             })
             ->add('icon_respon', function ($respon) {

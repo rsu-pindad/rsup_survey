@@ -26,15 +26,18 @@
         </div>
     </header>
 
-    <main class="px-2 mt-auto mb-auto mx-auto">
+    <main class="px-2 m-auto">
         <div class="d-flex flex-row justify-content-center rainbow">
+            @if(!$hideRespon)
             <ul class="list-group list-group-horizontal p-4">
+                @if(session()->get('userLayananMulti') === 1)
+                <p>Layanan Anda Termasuk Kedalam Multiple</p>
+                @endif
                 @foreach ($respons as $item)
                 <li 
                     wire:key="{{ $item->id }}"
                     wire:click="preSave({{ $item->id }})"
-                    wire:loading.attr="disabled" 
-                    class="mx-4 border border-2 rounded-4 list-group-item btn-custom li-custom"
+                    class="mx-4 border border-2 rounded-4 list-group-item btn-custom"
                     style="max-width: min-content;
                     color:{{ $item->tag_warna_respon }};
                     box-shadow:{{ \Spatie\Color\Hex::fromString($item->tag_warna_respon)->toRgba() }} 0px 8px 22px 0px;
@@ -46,13 +49,11 @@
                 </li>
                 @endforeach
             </ul>
+            @endif
         </div>
     </main>
 
     <footer class="mt-auto">
-        {{-- <p class="fs-3">
-            waktu survey
-        </p> --}}
         <p 
             x-data 
             x-timeout:1000="$el.innerText=$moment().format('LTS')"
@@ -93,27 +94,17 @@
                                             <span class="input-group-text">
                                                 <i class="fa-solid fa-person-circle-question"></i>
                                             </span>
-                                            <div 
-                                                @error('form.namaPasien')
-                                                class="form-floating is-invalid"
-                                                @else
-                                                class="form-floating"
-                                                @enderror
-                                                >
+                                            <div class="form-floating @error('namaPasien') is-invalid @enderror">
                                                 <input 
-                                                    wire:model.defer="form.namaPasien"
-                                                    type="text" 
-                                                    @error('form.namaPasien')
-                                                    class="form-control is-invalid" 
-                                                    @else
-                                                    class="form-control" 
-                                                    @enderror
+                                                    wire:model="namaPasien"
+                                                    type="text"
+                                                    class="form-control @error('namaPasien') is-invalid @enderror" 
                                                     id="namaPasien" 
                                                     placeholder="Nama Anda">
                                                 <label for="namaPasien">Nama Anda</label>
                                             </div>
                                             <div class="invalid-feedback">
-                                                @error('form.namaPasien') <span class="text-danger">{{ $message }}</span> @enderror 
+                                                @error('namaPasien') <span class="text-danger">{{ $message }}</span> @enderror 
                                             </div>
                                         </div>
                                     </div>
@@ -125,27 +116,17 @@
                                             <span class="input-group-text">
                                                 <i class="fa-solid fa-phone"></i>
                                             </span>
-                                            <div 
-                                                @error('form.teleponPasien')
-                                                class="form-floating is-invalid"
-                                                @else
-                                                class="form-floating"
-                                                @enderror
-                                                >
+                                            <div class="form-floating @error('teleponPasien') is-invalid @enderror">
                                                 <input 
-                                                    wire:model="form.teleponPasien"
+                                                    wire:model="teleponPasien"
                                                     type="tel" 
-                                                    @error('form.teleponPasien')
-                                                    class="form-control is-invalid" 
-                                                    @else
-                                                    class="form-control" 
-                                                    @enderror
-                                                    id="gawaiPasien" 
-                                                    placeholder="Nama Anda">
-                                                <label for="gawaiPasien">Nomor Telepon</label>
+                                                    class="form-control @error('teleponPasien') is-invalid @enderror" 
+                                                    id="teleponPasien" 
+                                                    placeholder="Nomor telepon">
+                                                <label for="teleponPasien">Nomor Telepon</label>
                                             </div>
                                             <div class="invalid-feedback">
-                                                @error('form.teleponPasien') <span class="text-danger">{{ $message }}</span> @enderror 
+                                                @error('teleponPasien') <span class="text-danger">{{ $message }}</span> @enderror 
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +142,7 @@
                                     <div class="align-self-center p-2">
                                         <span wire:loading>Menyimpan</span>
                                     </div>
-                                    @if($this->hasQuestion != true)
+                                    @if($this->hasQuestion !== true)
                                     <div class="align-self-center p-2">
                                         <button wire:loading.remove
                                             type="button" 
@@ -205,20 +186,20 @@
 
     @keyframes pulse {
         0% {
-            transform: scale(1);
+            transform: scale(0.8);
         }
 
         50% {
-            transform: scale(1.1);
+            transform: scale(1);
         }
 
         100% {
-            transform: scale(1);
+            transform: scale(0.8);
         }
     }
     
     .survey-box{
-        animation: pulse 3s infinite;
+        animation: pulse 6s infinite;
     }
 
     .survey-box:hover {
@@ -234,6 +215,7 @@
     }
     .btn-custom:hover, .btn-custom:active, .btn-custom:focus {
         transform: translateY(-10px);
+        animation-play-state: paused;
         /* transform: rotate3d(0.5, 1, 0, 30deg); */
     }
 </style>

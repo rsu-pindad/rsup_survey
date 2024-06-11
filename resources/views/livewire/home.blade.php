@@ -27,7 +27,7 @@
                         Mulai survey
                     </button> --}}
                     <button 
-                        wire:click="next"
+                        wire:click="$dispatch('open-penjamin-modal')"
                         type="button" 
                         class="btn btn-lg btn-success"
                         >
@@ -35,6 +35,12 @@
                     </button>
                     {{-- <a href="{{ route('isi-survey-pelayanan') }}" class="btn btn-lg btn-success" role="button">Mulai Survey</a> --}}
                 </p>
+                {{-- <p>
+                    Multi Pelayanan {{ session()->get('multiPenilaian') }}
+                </p>
+                <p>
+                    User Layanan Multi {{ session()->get('userLayananMulti') }}
+                </p> --}}
             </div>
             <div class="col-lg-4">
                 <div class="container">
@@ -84,8 +90,8 @@
         
         <div class="modal-dialog modal-fullscreen modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-body mx-auto">
-                    <div class="card">
+                <div class="modal-body position-relative">
+                    <div class="card position-absolute top-50 start-50 translate-middle">
                         <div class="card-header mb-auto">
                             <p class="fs-4 text-uppercase">Mohon Pilih Penjamin</p>
                         </div>
@@ -100,21 +106,10 @@
                                             <span class="input-group-text">
                                                 <i class="fa-solid fa-clipboard-list"></i>
                                             </span>
-                                            <div 
-                                                @error('form.penjamin')
-                                                class="form-floating is-invalid"
-                                                @else
-                                                class="form-floating"
-                                                @enderror
-                                                >
+                                            <div class="form-floating @error('form.penjamin') is-invalid @enderror">
                                                 <select wire:model="form.penjamin" 
                                                     id="penjamin_user"
-                                                    @error('form.penjamin')
-                                                    class="form-control is-invalid"
-                                                    @else
-                                                    class="form-control"
-                                                    @enderror
-                                                    >
+                                                    class="form-control @error('form.penjamin') is-invalid @enderror">
                                                     <option hidden>Pilih penjamin</option>
                                                     @forelse ($penjamin as $p)
                                                     <option value="{{ $p->parentPenjamin->id }}">{{ $p->parentPenjamin->nama_penjamin }}</option>

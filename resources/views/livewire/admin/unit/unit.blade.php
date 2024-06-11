@@ -12,7 +12,7 @@
                             <h4>Tabel Unit</h4>
                         </div>
                         <div class="card-body m-2">
-                            <livewire:PowerGrid.UnitTable/>
+                            <livewire:PowerGrid.UnitTable lazy="on-load"/>
                         </div>
                     </div>
                 </div>
