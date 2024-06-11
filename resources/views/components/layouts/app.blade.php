@@ -4,11 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link 
-        @if(env('APP_ENV') == 'local')
-        href="{{ asset('storage/basset/photos/settings/default_domain.png') }}"
-        @else
-        href="{{ asset('public/photos/settings/default_domain.png') }}"
-        @endif
+        src="{{ basset('photos/settings/default_domain.png') }}"
         rel="icon" 
         type="image/x-icon">
         @basset('vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css')
