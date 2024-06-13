@@ -70,16 +70,16 @@ final class LayananResponTable extends PowerGridComponent
         return PowerGrid::fields()
             ->add('id')
             ->add('nama_layanan', function ($layananRespon) {
-                return $layananRespon->parentLayanan->nama_layanan;
+                return $layananRespon->parentLayanan->nama_layanan ?? '';
             })
             ->add('nama_respon', function ($layananRespon) {
-                return $layananRespon->parentRespon->nama_respon;
+                return $layananRespon->parentRespon->nama_respon ?? '';
             })
             ->add('skor_respon', function ($layananRespon) {
-                return $layananRespon->parentRespon->skor_respon;
+                return $layananRespon->parentRespon->skor_respon ?? '';
             })
             ->add('urutan_respon', function ($layananRespon) {
-                return $layananRespon->parentRespon->urutan_respon;
+                return $layananRespon->parentRespon->urutan_respon ?? '';
             });
     }
 
