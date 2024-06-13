@@ -17,6 +17,13 @@ class Home extends Component
 {
     public Form $form;
 
+    public function boot()
+    {
+        if (!auth()->user()->hasRole('employee')) {
+            return redirect()->intended('/lihat');
+        }
+    }
+
     public function save()
     {
         $this->form->validate();
