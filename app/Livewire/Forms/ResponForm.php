@@ -3,12 +3,14 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Respon;
-use Illuminate\Validation\Rule as ValidationRule;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Locked;
 use Livewire\Form;
 
 class ResponForm extends Form
 {
+    public ?Respon $respon;
+
     #[Locked]
     public $id;
     
@@ -24,40 +26,45 @@ class ResponForm extends Form
 
     public $hasQuestion = false;
 
+    // public function boot()
+    // {
+    //     $this->respon = new Respon();
+    // }
+
     public function rules()
     {
         return [
             'namaRespon' => [
                 'required',
-                ValidationRule::unique('respon', 'nama_respon')->ignore($this->namaRespon),
+                Rule::unique('respon', 'nama_respon')->ignore($this->respon->nama_respon),
                 'min:4',
                 'max:50',
                 'string'
             ],
             'iconRespon' => [
                 'required',
-                ValidationRule::unique('respon', 'icon_respon')->ignore($this->iconRespon),
+                Rule::unique('respon', 'icon_respon')->ignore($this->respon->icon_respon),
                 'min:6',
                 'max:32',
                 'string'
             ],
             'skorRespon' => [
                 'required',
-                ValidationRule::unique('respon', 'skor_respon')->ignore($this->skorRespon),
+                Rule::unique('respon', 'skor_respon')->ignore($this->respon->skor_respon),
                 'min:0',
                 'max:9',
                 'numeric'
             ],
             'urutanRespon' => [
                 'required',
-                ValidationRule::unique('respon', 'urutan_respon')->ignore($this->urutanRespon),
+                Rule::unique('respon', 'urutan_respon')->ignore($this->respon->urutan_respon),
                 'min:1',
                 'max:10',
                 'numeric'
             ],
             'tagWarnaRespon' => [
                 'required',
-                ValidationRule::unique('respon', 'tag_warna_respon')->ignore($this->tagWarnaRespon),
+                Rule::unique('respon', 'tag_warna_respon')->ignore($this->respon->tag_warna_respon),
                 'hex_color'
             ],
         ];
@@ -132,14 +139,15 @@ class ResponForm extends Form
     public function update()
     {
         try {
-            $this->validate();
+            // $this->validate();
+            // dd($this->namaRespon);
             $respon = Respon::find($this->id);
-            $respon->nama_respon = $this->only('namaRespon');
-            $respon->icon_respon = $this->only('iconRespon');
-            $respon->tag_warna_respon = $this->only('tagWarnaRespon');
-            $respon->has_question = $this->only('hasQuestion');
-            $respon->skor_respon = $this->only('skorRespon');
-            $respon->urutan_respon = $this->only('urutanRespon');
+            $respon->nama_respon = $this->namaRespon;
+            $respon->icon_respon = $this->iconRespon;
+            $respon->tag_warna_respon = $this->tagWarnaRespon;
+            $respon->has_question = $this->hasQuestion;
+            $respon->skor_respon = $this->skorRespon;
+            $respon->urutan_respon = $this->urutanRespon;
             $respon->save();
             $this->reset();
             return true;
