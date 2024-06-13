@@ -22,10 +22,13 @@
         </div>
     </header>
 
-    <main class="px-2 m-auto">
-        <div class="d-flex flex-row justify-content-center rainbow">
+    <main class="px-2">
+        <div class="d-flex flex-row justify-content-center rainbow" 
+            style="overflow-x: overlay;
+            scroll-behavior:smooth;
+            scrollbar-width:none;">
             @if(!$hideRespon)
-            <ul class="list-group list-group-horizontal p-4">
+            <ul class="list-group list-group-horizontal p-3">
                 @if(session()->get('userLayananMulti') === true)
                 <p>Layanan Anda Termasuk Kedalam Multiple</p>
                 @endif
@@ -36,7 +39,7 @@
                     class="mx-4 border border-2 rounded-4 list-group-item btn-custom"
                     style="max-width: min-content;
                     color:{{ $item->tag_warna_respon }};
-                    box-shadow:{{ \Spatie\Color\Hex::fromString($item->tag_warna_respon)->toRgba() }} 0px 8px 22px 0px;
+                    box-shadow:{{ \Spatie\Color\Hex::fromString($item->tag_warna_respon)->toRgba() }} 0px 4px 12px 0px;
                     cursor:pointer;"
                     >
                     <i class="fa-regular fa-circle-dot my-2"></i>
