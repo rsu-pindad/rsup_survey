@@ -16,7 +16,9 @@
                     Survey Pelayanan Penjamin {{  $this->penjamin  }}
                 </p>
                 <span class="nav-link">
-                    <a href="{{ route('roots-dashboard') }}" class="fw-semibold text-decoration-none">kembali</a>
+                    <a href="{{ route('roots-dashboard') }}" class="btn btn-info fs-4">
+                            <i class="fa-solid fa-circle-arrow-left"></i> Kembali
+                    </a>
                 </span>
             </nav>
         </div>
@@ -64,20 +66,22 @@
             style="overflow-x: overlay;
             scroll-behavior:smooth;
             scrollbar-width:none;">
-            <ul class="list-group list-group-horizontal p-3">
+            <ul class="list-group list-group-horizontal py-3">
                 @foreach ($this->listRespon as $item)
                 <li 
                     wire:key="{{ $item->id }}"
                     wire:click="$dispatch('pre-save', {id: {{ $item->id }} })"
                     class="mx-4 border border-2 rounded-4 list-group-item btn-custom li-custom"
-                    style="max-width: min-content;
+                    style="width: 180px; height:220px;
                         color:{{ $item->tag_warna_respon }};
                         box-shadow:{{ \Spatie\Color\Hex::fromString($item->tag_warna_respon)->toRgba() }} 0px 4px 12px 0px;
                         cursor:pointer;"
                     >
-                    <i class="fa-regular fa-circle-dot my-2"></i>
-                    <i class="{{ $item->icon_respon }} fa-6x px-2 survey-box"></i>
-                    <p class="h6 my-2 text-uppercase fw-bold">{{ $item->nama_respon }}</p>
+                    <div class="d-flex flex-column">
+                        <i class="fa-regular fa-circle-dot py-2"></i>
+                        <i class="{{ $item->icon_respon }} fa-3x survey-box"></i>
+                        <p class="h2 my-2 text-uppercase fw-bold">{{ $item->nama_respon }}</p>
+                    </div>
                 </li>
                 @endforeach
             </ul>
