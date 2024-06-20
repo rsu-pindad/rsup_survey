@@ -1,43 +1,43 @@
 <?php
 
-use App\Livewire\Admin\Karyawan\Karyawan;
-use App\Livewire\Admin\Karyawan\KaryawanEdit;
-use App\Livewire\Admin\KaryawanProfile\KaryawanProfile;
-use App\Livewire\Admin\KaryawanProfile\KaryawanProfileEdit;
-use App\Livewire\Admin\Layanan\Layanan;
-use App\Livewire\Admin\Layanan\LayananEdit;
-use App\Livewire\Admin\LayananRespon\LayananRespon;
-use App\Livewire\Admin\LayananRespon\LayananResponEdit;
-use App\Livewire\Admin\Penjamin\Penjamin;
-use App\Livewire\Admin\Penjamin\PenjaminEdit;
-use App\Livewire\Admin\PenjaminLayanan\PenjaminLayanan;
-use App\Livewire\Admin\PenjaminLayanan\PenjaminLayananEdit;
-use App\Livewire\Admin\Respon\Respon;
-use App\Livewire\Admin\Respon\ResponEdit;
-use App\Livewire\Admin\Unit\UnitProfil\UnitProfil;
-use App\Livewire\Admin\Unit\UnitMultiLayanan\MultiLayanan;
-use App\Livewire\Admin\Unit\Unit;
-use App\Livewire\Admin\Unit\UnitEdit;
-use App\Livewire\Admin\RootsAdmin;
-use App\Livewire\Admin\SurveyPetugas;
-use App\Livewire\Auth\Login;
-use App\Livewire\Guest\Register;
-use App\Livewire\Sdm\Laporan;
-use App\Livewire\Self\UserSetting;
-use App\Livewire\SuperAdmin\RolePermission\Permission;
-use App\Livewire\SuperAdmin\RolePermission\PermissionEdit;
-use App\Livewire\SuperAdmin\RolePermission\Role;
-use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
-use App\Livewire\SuperAdmin\RolePermission\RoleManage;
-use App\Livewire\SuperAdmin\User\User;
-use App\Livewire\SuperAdmin\User\UserManage;
-use App\Livewire\SuperAdmin\Setting\AppSetting;
-use App\Livewire\Roots;
 use App\Livewire\Home;
+use App\Livewire\Roots;
+use App\Livewire\Auth\Login;
 use App\Livewire\HomeSurvey;
+use App\Livewire\Sdm\Laporan;
+use App\Livewire\Guest\Register;
+use App\Livewire\Admin\Unit\Unit;
 use App\Livewire\HomeSurveyMulti;
-use App\Livewire\SurveyPetugasPelayanan;
+use App\Livewire\Admin\RootsAdmin;
+use App\Livewire\Self\UserSetting;
+use App\Livewire\Admin\Respon\Respon;
+use App\Livewire\Admin\SurveyPetugas;
+use App\Livewire\Admin\Unit\UnitEdit;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\SuperAdmin\User\User;
+use App\Livewire\Admin\Layanan\Layanan;
+use App\Livewire\SurveyPetugasPelayanan;
+use App\Livewire\Admin\Karyawan\Karyawan;
+use App\Livewire\Admin\Penjamin\Penjamin;
+use App\Livewire\Admin\Respon\ResponEdit;
+use App\Livewire\Admin\Layanan\LayananEdit;
+use App\Livewire\SuperAdmin\User\UserManage;
+use App\Livewire\Admin\Karyawan\KaryawanEdit;
+use App\Livewire\Admin\Penjamin\PenjaminEdit;
+use App\Livewire\SuperAdmin\Setting\AppSetting;
+use App\Livewire\SuperAdmin\RolePermission\Role;
+use App\Livewire\Admin\Unit\UnitProfil\UnitProfil;
+use App\Livewire\Admin\LayananRespon\LayananRespon;
+use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
+use App\Livewire\SuperAdmin\RolePermission\Permission;
+use App\Livewire\SuperAdmin\RolePermission\RoleManage;
+use App\Livewire\Admin\KaryawanProfile\KaryawanProfile;
+use App\Livewire\Admin\LayananRespon\LayananResponEdit;
+use App\Livewire\Admin\PenjaminLayanan\PenjaminLayanan;
+use App\Livewire\Admin\Unit\UnitMultiLayanan\MultiLayanan;
+use App\Livewire\SuperAdmin\RolePermission\PermissionEdit;
+use App\Livewire\Admin\KaryawanProfile\KaryawanProfileEdit;
+use App\Livewire\Admin\PenjaminLayanan\PenjaminLayananEdit;
 
 /*
  * |--------------------------------------------------------------------------
@@ -118,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware('role:employee|super-admin')->group(function () {
-        Route::get('/petugas/{id}', SurveyPetugas::class)->name('root-survey-petugas');
+        Route::get('/petugas', SurveyPetugas::class)->name('root-survey-petugas');
         Route::get('/laporan', Laporan::class)->name('root-laporan');
         Route::get('/self', UserSetting::class)->name('root-self');
         // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
