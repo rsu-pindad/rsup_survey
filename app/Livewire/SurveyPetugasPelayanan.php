@@ -119,8 +119,8 @@ class SurveyPetugasPelayanan extends Component
                 ->find(session()->get('karyawan_id'));
             $penjamin = Penjamin::findOrFail(session()->get('penjamin_layanan_id'));
             $timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
-            $sheets = Sheets::spreadsheet(env('SPREADSHEET_ID', ''))
-                ->sheet(env('SPREADSHEET_NAME', ''))
+            $sheets = Sheets::spreadsheet(config('google.config.sheet_id'))
+                ->sheet(config('google.config.sheet_name'))
                 ->append(
                     [
                         [
