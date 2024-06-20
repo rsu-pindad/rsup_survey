@@ -17,6 +17,7 @@
                 aria-label="Toggle navigation">
                 <i class="fa-solid fa-circle-chevron-down"></i>
             </button>
+            @unlessrole('employee')
             <button 
                 class="navbar-toggler m-2" 
                 type="button" 
@@ -27,6 +28,7 @@
                 aria-label="Toggle navigation">
                 <i class="fa-solid fa-bars"></i>
             </button>
+            @endunlessrole
             <button 
                 class="navbar-toggler m-2" 
                 type="button" 
@@ -41,7 +43,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-md-0 mx-auto">
                     @cannot('view_petugas')
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page-survey" href="{{ route('root-survey-petugas', ['id' => Auth()->user()->id]) }}" wire:navigate="false">Survey</a>
+                        <a class="nav-link" aria-current="page-survey" href="{{ route('root-survey-petugas') }}" wire:navigate="false">Survey</a>
                     </li>
                     @endcannot
                     @hasexactroles('employee')
@@ -122,7 +124,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="{{ route('root-self') }}" wire:navigate="false">Pengaturan</a></li>
-                        <li><a class="dropdown-item" href="#">Notifikasi</a></li>
+                        {{-- <li><a class="dropdown-item" href="#">Notifikasi</a></li> --}}
                         @hasexactroles('super-admin')
                         <li><a class="dropdown-item" href="{{ route('root-setting-app') }}" wire:navigate="false">App Profile</a></li>
                         @endhasexactroles
