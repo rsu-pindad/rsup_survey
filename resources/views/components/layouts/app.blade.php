@@ -11,12 +11,6 @@
         @basset('vendor/jodit-4.0.1-dist/css/jodit.min.css')
         
         @stack('styles')
-        
-        @once
-            @push('styles')
-                @lagoonStyles
-            @endpush
-        @endonce
 
         @basset('vendor/popper-2.11.8-dist/umd/popper.min.js')
         @basset('vendor/bootstrap-5.3.3-dist/js/bootstrap.min.js')
@@ -44,11 +38,6 @@
         @yield('modals')
 
         @stack('custom-script')
-        @once
-            @push('custom-script')
-                @lagoonScripts({{ app()->getLocale() }})
-            @endpush
-        @endonce
 
         <x-livewire-alert::scripts />
         
