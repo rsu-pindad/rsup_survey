@@ -28,8 +28,8 @@ class GoogleSheetInsertMulti implements ShouldQueue
      */
     public function handle(): void
     {
-        Sheets::spreadsheet(env('SPREADSHEET_ID', ''))
-            ->sheet(env('SPREADSHEET_NAME', ''))
+        Sheets::spreadsheet(config('google.config.sheet_id'))
+            ->sheet(config('google.config.sheet_name'))
             ->append($this->items);
     }
 }

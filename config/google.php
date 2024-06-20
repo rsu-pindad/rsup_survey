@@ -70,5 +70,8 @@ return [
     | NOTE: If client id is specified here, it will get over written by the one above.
     |
     */
-    'config' => [],
+    'config' => [
+        'sheet_id' => env('SPREADSHEET_ID', ''),
+        'sheet_name' => env('SPREADSHEET_NAME', '')
+    ],
 ];

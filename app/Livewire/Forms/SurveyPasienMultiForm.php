@@ -58,8 +58,8 @@ class SurveyPasienMultiForm extends Form
     // private function saveSheet($items = [])
     // {
     //     try {
-    //         $sheets = Sheets::spreadsheet(env('SPREADSHEET_ID', ''))
-    //             ->sheet(env('SPREADSHEET_NAME', ''))
+    //         $sheets = Sheets::spreadsheet(config('google.config.sheet_id'))
+    //             ->sheet(config('google.config.sheet_name'))
     //             ->append($items);
     //         return $sheets->updates->updatedRows;
     //     } catch (\Throwable $th) {
