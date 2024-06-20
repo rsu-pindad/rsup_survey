@@ -47,6 +47,7 @@
                     <img 
                         src="{{ basset('photos/'.$mainLogo) }}" 
                         alt="logo" 
+                        style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;"
                         >
                         @persist('times')
                             <div class="py-2 text-body-secondary">
