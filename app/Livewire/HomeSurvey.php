@@ -2,31 +2,29 @@
 
 namespace App\Livewire;
 
-use App\Livewire\Forms\SurveyPasienForm as Form;
-use App\Models\AppSetting;
-use App\Models\KaryawanProfile;
-use App\Models\LayananRespon;
-use App\Models\Penjamin;
-use App\Models\Respon;
 use App\Models\Unit;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Attributes\Layout;
+use App\Models\Respon;
 use Livewire\Component;
+use App\Models\Penjamin;
+use App\Models\AppSetting;
+use App\Models\LayananRespon;
+use App\Models\KaryawanProfile;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\Cache;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 // use Spatie\Color\Rgba;
 // use Spatie\Color\Hex;
-use Livewire\Attributes\Validate;
+use App\Livewire\Forms\SurveyPasienForm as Form;
 
 class HomeSurvey extends Component
 {
     use LivewireAlert;
 
     public Form $form;
-
     public $hasQuestion = false;
-
-    public $namaRespon = '';
-
-    public $skorRespon = '';
+    public $namaRespon  = '';
+    public $skorRespon  = '';
 
     #[Validate('required', message: 'mohon masukan nama anda')]
     #[Validate('string', message: 'hanya huruf')]
@@ -65,12 +63,12 @@ class HomeSurvey extends Component
 
     public function cancelled()
     {
-        $this->namaRespon = '';
-        $this->skorRespon = '';
-        $this->namaPasien = '';
+        $this->namaRespon    = '';
+        $this->skorRespon    = '';
+        $this->namaPasien    = '';
         $this->teleponPasien = '';
-        $this->hasQuestion = false;
-        $this->hideRespon = false;
+        $this->hasQuestion   = false;
+        $this->hideRespon    = false;
     }
 
     public function confirmed()
@@ -79,13 +77,14 @@ class HomeSurvey extends Component
         if ($this->hasQuestion === true) {
             return $this->dispatch('modal-data-diri')->self();
         }
+
         return $this->confirm('apakah bersedia isi data diri ?', [
-            'icon' => 'question',
-            'onConfirmed' => 'confirmedDataDiri',
+            'icon'              => 'question',
+            'onConfirmed'       => 'confirmedDataDiri',
             'allowOutsideClick' => false,
             'confirmButtonText' => 'Isi',
-            'cancelButtonText' => 'Tidak',
-            'onDismissed' => 'cancelledDataDiri'
+            'cancelButtonText'  => 'Tidak',
+            'onDismissed'       => 'cancelledDataDiri'
         ]);
     }
 
@@ -103,17 +102,17 @@ class HomeSurvey extends Component
     public function preSave($id)
     {
         $this->hideRespon = true;
-        $respon = Respon::find($id);
-        $this->namaRespon = $respon->nama_respon;
-        $this->skorRespon = $respon->skor_respon;
+        $respon            = Respon::find($id);
+        $this->namaRespon  = $respon->nama_respon;
+        $this->skorRespon  = $respon->skor_respon;
         $this->hasQuestion = $respon->has_question;
         $this->confirm('Beri nilai ' . $this->namaRespon . ' ?', [
-            'icon' => 'question',
-            'onConfirmed' => 'confirmed',
+            'icon'              => 'question',
+            'onConfirmed'       => 'confirmed',
             'allowOutsideClick' => false,
             'confirmButtonText' => 'Nilai',
-            'cancelButtonText' => 'Batal',
-            'onDismissed' => 'cancelled'
+            'cancelButtonText'  => 'Batal',
+            'onDismissed'       => 'cancelled'
         ]);
     }
 
@@ -128,19 +127,20 @@ class HomeSurvey extends Component
         session()->put('teleponPasien', $this->teleponPasien);
         // dd(session()->get('skorRespon'));
         $store = $this->form->save();
-        if ($store < 1) {
+        if ($store !== true) {
             return $this->flash('error', 'gagal menilai layanan', [
-                'position' => 'bottom',
-                'toast' => false,
-                'text' => $store,
-                'timer' => '10000',
+                'position'         => 'bottom',
+                'toast'            => false,
+                'text'             => $store,
+                'timer'            => '10000',
                 'timerProgressBar' => true,
             ]);
         }
+
         return $this->flash('success', 'berhasil', [
-            'position' => 'center',
-            'toast' => false,
-            'text' => 'terimakasih telah mengikuti peniliaian survey kami',
+            'position'         => 'center',
+            'toast'            => false,
+            'text'             => 'terimakasih telah mengikuti peniliaian survey kami',
             'timerProgressBar' => true,
         ], '/');
     }
@@ -148,28 +148,52 @@ class HomeSurvey extends Component
     #[Layout('components.layouts.beranda')]
     public function render()
     {
-        $layananKaryawan = KaryawanProfile::with('parentLayanan')->where('user_id', session()->get('userId'))->first();
-        $respon = LayananRespon::distinct()
-            ->where('layanan_id', $layananKaryawan->layanan_id)
-            ->with([
-                'parentRespon' => function ($query) {
-                    $query->orderBy('urutan_respon', 'ASC');
-                },
-            ])
-            ->orderBy('layanan_id', 'DESC')
-            ->get();
+        // $layananKaryawan = KaryawanProfile::with('parentLayanan')->where('user_id', session()->get('userId'))->first();
+        $layananKaryawan = Cache::remember('karyawanProfile', 60, function () {
+            return KaryawanProfile::with(['parentLayanan','parentUnit'])->where('user_id', session()->get('userId'))->first();
+        });
+        $respon = Cache::remember('layananRespon', 60, function () use ($layananKaryawan) {
+            return LayananRespon::distinct()
+                       ->where('layanan_id', $layananKaryawan->layanan_id)
+                       ->with([
+                           'parentRespon' => function ($query) {
+                               $query->orderBy('urutan_respon', 'ASC');
+                           },
+                       ])
+                       ->orderBy('layanan_id', 'DESC')
+                       ->get();
+        });
+        // $respon = LayananRespon::distinct()
+        //               ->where('layanan_id', $layananKaryawan->layanan_id)
+        //               ->with([
+        //                   'parentRespon' => function ($query) {
+        //                       $query->orderBy('urutan_respon', 'ASC');
+        //                   },
+        //               ])
+        //               ->orderBy('layanan_id', 'DESC')
+        //               ->get();
         $collectionRespon = collect((object) $respon->pluck('parentRespon'));
-        $sorted = $collectionRespon->sortBy('urutan_respon');
-        $unit = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
-        $appSetting = AppSetting::get()->last();
-        $penjamin = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
+        $sorted           = $collectionRespon->sortBy('urutan_respon');
+        // $unit             = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
+        $unit = Cache::remember('unit', 60, function () use ($layananKaryawan) {
+            return Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
+        });
+        $appSetting = Cache::remember('appSetting', 60, function(){
+            return AppSetting::get()->last();
+        });
+        // $appSetting = AppSetting::get()->last();
+        $penjamin = Cache::remember('penjamin', 60, function(){
+            return Penjamin::find(session()->get('penjamin_layanan_id'));
+        });
+        // $penjamin   = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
+
         return view('livewire.home-survey')->with([
-            'petugas' => $layananKaryawan->nama_karyawanprofile,
-            'layanan' => $layananKaryawan->parentLayanan->nama_layanan,
+            'petugas'  => $layananKaryawan->nama_karyawanprofile,
+            'layanan'  => $layananKaryawan->parentLayanan->nama_layanan,
             'unitNama' => $layananKaryawan->parentUnit->nama_unit,
-            'subLogo' => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
-            'respons' => $sorted->values()->all(),
-            'penjamin' => $penjamin,
+            'subLogo'  => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
+            'respons'  => $sorted->values()->all(),
+            'penjamin' => $penjamin->nama_penjamin,
         ]);
     }
 }
