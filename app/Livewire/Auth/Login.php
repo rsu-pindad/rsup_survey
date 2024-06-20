@@ -39,6 +39,7 @@ class Login extends Component
     public function logout()
     {
         Auth::logout();
+        Cache::flush();
         session()->invalidate();
         session()->regenerateToken();
 

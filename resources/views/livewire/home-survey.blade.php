@@ -45,7 +45,7 @@
     </main>
 
     <footer class="mt-auto">
-        <p x-data x-timeout:1000="$el.innerText=$moment().format('LTS')" id="waktuSurvey" class="fs-3 fw-bold">
+        <p x-data x-timeout:1000="$el.innerText=$moment().format('LTS')" id="waktuSurvey" class="fs-3 fw-bold mb-0">
         </p>
     </footer>
 

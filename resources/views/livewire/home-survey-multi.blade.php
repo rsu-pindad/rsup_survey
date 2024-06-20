@@ -18,22 +18,22 @@
         </div>
     </header>
 
-    <main class="px-2">
+    <main class="px-3">
         <div class="d-flex flex-row justify-content-center">
             @if ($this->jumlahLayanan == session()->get('incrementNilai'))
-            @if($this->jumlahLayanan == 0)
-            <div wire:transition.out.opacity>
-                <p class="h4 text-uppercase fw-bold">
-                    tidak ada layanan, mohon aktifkan pada menu unit
-                </p>
-            </div>
-            @else
-            <div wire:transition.out.opacity>
-                <p class="h3 text-uppercase fw-bold">
-                    mohon tunggu nilai sedang di simpan
-                </p>
-            </div>
-            @endif
+                @if($this->jumlahLayanan == 0)
+                <div wire:transition.out.opacity>
+                    <p class="h4 text-uppercase fw-bold">
+                        tidak ada layanan, mohon aktifkan pada menu unit
+                    </p>
+                </div>
+                @else
+                <div wire:transition.out.opacity>
+                    <p class="h3 text-uppercase fw-bold">
+                        mohon tunggu nilai sedang di simpan
+                    </p>
+                </div>
+                @endif
             @else
             <ul class="list-group list-group-horizontal">
                 @foreach ($this->multiLayanan as $item)
@@ -70,21 +70,21 @@
             @endif
     </main>
 
-    <footer class="mt-3">
+    <footer class="mt-2">
         <div class="position-absolute bottom-0 start-0 p-2">
             <button wire:click="$dispatch('ulangi-survey')" class="btn btn-outline-primary">Ulangi</button>
         </div>
         <div class="position-absolute bottom-0 start-50 translate-middle-x">
-            <p x-data x-timeout:1000="$el.innerText=$moment().format('LTS')" id="waktuSurvey" class="fs-3 fw-bold">
+            <p x-data x-timeout:1000="$el.innerText=$moment().format('LTS')" id="waktuSurvey" class="fs-3 fw-bold mb-0">
             </p>
         </div>
-        {{-- <div class="position-absolute bottom-0 end-0"> --}}
-        {{-- @if ($this->jumlahLayanan == session()->get('incrementNilai'))
+        <div class="position-absolute bottom-0 end-0 p-2">
+        @if (session()->get('incrementNilai') > 0)
             <button 
                 wire:click="preStore"
                 class="btn btn-success">Selesai</button>
-            @endif --}}
-        {{-- </div> --}}
+            @endif
+        </div>
     </footer>
     <!-- Modal -->
     <div {{-- wire:key=uniqid() --}} wire:ignore.self class="modal fade" id="modalDataDiri" tabindex="-1" aria-labelledby="modalSurveyLabel" aria-hidden="true" data-enable-remember="{{ $rememberState }}">
