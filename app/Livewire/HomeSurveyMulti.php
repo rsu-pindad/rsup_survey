@@ -72,6 +72,7 @@ class HomeSurveyMulti extends Component
             'cancelled',
             'confirmedDataDiri',
             'confirmedReset',
+            'cancelledDataDiri'
         ];
     }
 
@@ -91,9 +92,7 @@ class HomeSurveyMulti extends Component
             return MultiLayanan::with('parentLayanan')->where('unit_id', session()->get('userUnitId'))->get();
         });
 
-        $this->penjamin = Cache::remember('penjamin', 60, function () {
-            return Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
-        });
+        $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
 
         $this->jumlahLayanan = count($this->multiLayanan);
     }
@@ -118,6 +117,7 @@ class HomeSurveyMulti extends Component
             'skorRespon'  => $this->skorRespon,
             'hasQuestion' => $this->hasQuestion,
         ]);
+        
         $this->incrementNilai += 1;
         // $incrementNilaiLokal = $this->incrementNilai;
         // session()->put('incrementNilai', $incrementNilaiLokal);
@@ -145,6 +145,11 @@ class HomeSurveyMulti extends Component
     public function confirmedDataDiri()
     {
         return $this->dispatch('modal-data-diri')->self();
+    }
+
+    public function cancelledDataDiri()
+    {
+        return $this->dispatch('store-jawaban')->self();
     }
 
     public function confirmedReset()
@@ -249,7 +254,16 @@ class HomeSurveyMulti extends Component
             return $this->dispatch('modal-data-diri')->self();
         }
 
-        return $this->dispatch('store-jawaban')->self();
+        return $this->confirm('apakah bersedia isi data diri ?', [
+            'icon'              => 'question',
+            'onConfirmed'       => 'confirmedDataDiri',
+            'allowOutsideClick' => false,
+            'confirmButtonText' => 'Isi',
+            'cancelButtonText'  => 'Tidak',
+            'onDismissed'       => 'cancelledDataDiri'
+        ]);
+
+        // return $this->dispatch('store-jawaban')->self();
     }
 
     #[On('store-jawaban')]

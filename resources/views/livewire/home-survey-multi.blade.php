@@ -139,19 +139,21 @@
                                         </button>
                                     </div>
                                     <div class="align-self-center p-2">
-                                        <button wire:click="$dispatch('ulangi-survey')" type="button" class="btn btn-outline-danger">Ulangi
+                                        <button wire:click="$dispatch('ulangi-survey')" type="button" class="btn btn-outline-danger">
+                                            Ulangi
                                         </button>
-                                    </div>
-                                    <div class="align-self-center p-2">
-                                        <span wire:loading wire:target="saveModal">Menyimpan</span>
                                     </div>
                                     @if(session()->get('mustQuestion') != true)
                                     <div class="align-self-center p-2">
-                                        <button wire:loading.remove type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" wire:click="cancelledDataDiri">
+                                        <button wire:click="cancelledDataDiri" type="button" class="btn btn-outline-secondary" >
                                             Batal
                                         </button>
                                     </div>
                                     @endif
+                                    <div class="align-self-center p-2">
+                                        <span wire:loading wire:target="saveModal">Menyimpan</span>
+                                        <span wire:loading wire:target="cancelledDataDiri">Menyimpan</span>
+                                    </div>
                                 </div>
                             </form>
                         </div>
