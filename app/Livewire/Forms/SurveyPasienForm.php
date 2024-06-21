@@ -39,7 +39,7 @@ class SurveyPasienForm extends Form
                 'PELAYANAN'             => $this->karyawan->parentLayanan->nama_layanan,
                 'NAMA_PASIEN'           => session()->get('namaPasien') ?? '-',
                 'TELEPON_PASIEN'        => session()->get('teleponPasien') ?? '-',
-                'PENJAMIN'              => $this->penjamin->nama_penjamin,
+                'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                 'NILAI_SURVEY_KEPUASAN' => session()->get('namaRespon'),
             ];
             // $writeSheet = $this->saveSheet($result);
