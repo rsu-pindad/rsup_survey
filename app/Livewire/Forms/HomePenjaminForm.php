@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Forms;
 
+use Livewire\Form;
 use App\Models\KaryawanProfile;
 use Livewire\Attributes\Validate;
-use Livewire\Form;
 
 class HomePenjaminForm extends Form
 {
@@ -23,7 +23,7 @@ class HomePenjaminForm extends Form
             if (session()->get('multiPenilaian') === true && session()->get('userLayananMulti') === true) {
                 // Multiple
                 return redirect()->route('isi-survey-pelayanan-multi');
-            }else{
+            } else {
                 // Non Multiple
                 return redirect()->route('isi-survey-pelayanan');
             }

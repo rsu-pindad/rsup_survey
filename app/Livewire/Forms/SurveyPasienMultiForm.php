@@ -38,9 +38,9 @@ class SurveyPasienMultiForm extends Form
                     'PEGAWAI'               => $this->karyawan->nama_karyawanprofile,
                     'UNIT'                  => $this->karyawan->parentUnit->nama_unit,
                     'PELAYANAN'             => $items['namaLayanan'],
-                    'NAMA_PASIEN'           => $items['hasQuestion'] === true ? $this->namaPasien : '',
-                    'TELEPON_PASIEN'        => $items['hasQuestion'] === true ? $this->teleponPasien : '',
-                    'PENJAMIN'              => $this->penjamin->nama_penjamin,
+                    'NAMA_PASIEN'           => $items['hasQuestion'] === true ? $this->namaPasien : session()->get('namaPasien'),
+                    'TELEPON_PASIEN'        => $items['hasQuestion'] === true ? $this->teleponPasien : session()->get('teleponPasien'),
+                    'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                     'NILAI_SURVEY_KEPUASAN' => $items['namaRespon'],
                 ];
             }
@@ -48,7 +48,6 @@ class SurveyPasienMultiForm extends Form
             $sheets = new GoogleSheetInsertMulti($result);
 
             dispatch($sheets);
-
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
