@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Forms;
 
-use Carbon\Carbon;
-use Livewire\Form;
-use App\Models\Penjamin;
 use App\Jobs\GoogleSheetInsert;
 use App\Models\KaryawanProfile;
+use App\Models\Penjamin;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Livewire\Form;
 
 // use Revolution\Google\Sheets\Facades\Sheets;
 
@@ -36,7 +36,7 @@ class SurveyPasienForm extends Form
                 'TGL_SURVEY'            => $this->timeformat,
                 'PEGAWAI'               => $this->karyawan->nama_karyawanprofile,
                 'UNIT'                  => $this->karyawan->parentUnit->nama_unit,
-                'PELAYANAN'             => $this->karyawan->parentLayanan->nama_layanan,
+                'PELAYANAN'             => session()->get('userLayananNama') ?? '-',
                 'NAMA_PASIEN'           => session()->get('namaPasien') ?? '-',
                 'TELEPON_PASIEN'        => session()->get('teleponPasien') ?? '-',
                 'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
