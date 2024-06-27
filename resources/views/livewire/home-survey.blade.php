@@ -7,7 +7,9 @@
             </a>
             <nav class="nav nav-masthead justify-content-center py-0 text-uppercase">
                 <p class="nav-link fs-5" style="animation: judul 10s infinite;">
-                    Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ \Illuminate\Support\Str::limit($petugas, 5, '..') }})</span><br><span>{{ $penjamin }}</span>
+                    Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ \Illuminate\Support\Str::limit($petugas, 5, '..') }})</span>
+                    <br/>
+                    <span>{{ $penjamin }}</span>
                 </p>
                 <a href="{{ route('roots-dashboard') }}" class="nav-link">
                     <span class="btn btn-info fs-4">

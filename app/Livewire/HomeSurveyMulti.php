@@ -2,23 +2,23 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
-use App\Models\Unit;
-use App\Models\Respon;
-use App\Models\Layanan;
-use Livewire\Component;
-use App\Models\Penjamin;
+use App\Livewire\Forms\SurveyPasienMultiForm as Form;
 use App\Models\AppSetting;
-use Livewire\Attributes\On;
-use App\Models\MultiLayanan;
-use App\Models\LayananRespon;
 use App\Models\KaryawanProfile;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
-use Livewire\Attributes\Renderless;
+use App\Models\Layanan;
+use App\Models\LayananRespon;
+use App\Models\MultiLayanan;
+use App\Models\Penjamin;
+use App\Models\Respon;
+use App\Models\Unit;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Livewire\Forms\SurveyPasienMultiForm as Form;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class HomeSurveyMulti extends Component
 {
@@ -85,18 +85,6 @@ class HomeSurveyMulti extends Component
         // session()->put('mustQuestion', false);
     }
 
-    #[On('refresh-layanan')]
-    public function rendering()
-    {
-        $this->multiLayanan = Cache::remember('multiLayanan', 60, function () {
-            return MultiLayanan::with('parentLayanan')->where('unit_id', session()->get('userUnitId'))->get();
-        });
-
-        $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
-
-        $this->jumlahLayanan = count($this->multiLayanan);
-    }
-
     public function cancelled()
     {
         $this->namaRespon  = '';
@@ -117,7 +105,7 @@ class HomeSurveyMulti extends Component
             'skorRespon'  => $this->skorRespon,
             'hasQuestion' => $this->hasQuestion,
         ]);
-        
+
         $this->incrementNilai += 1;
         // $incrementNilaiLokal = $this->incrementNilai;
         // session()->put('incrementNilai', $incrementNilaiLokal);
@@ -163,6 +151,27 @@ class HomeSurveyMulti extends Component
         $this->dispatch('ulangi-survey-diri');
 
         return $this->dispatch('refresh-layanan')->self();
+    }
+
+    public function saveModal()
+    {
+        $this->validate();
+        session()->put('namaPasien', $this->namaPasien);
+        session()->put('teleponPasien', $this->teleponPasien);
+
+        return $this->dispatch('store-jawaban')->self();
+    }
+
+    #[On('refresh-layanan')]
+    public function rendering()
+    {
+        $this->multiLayanan = Cache::remember('multiLayanan', 60, function () {
+            return MultiLayanan::with('parentLayanan')->where('unit_id', session()->get('userUnitId'))->get();
+        });
+
+        $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
+
+        $this->jumlahLayanan = count($this->multiLayanan);
     }
 
     #[On('info-survey')]
@@ -236,15 +245,6 @@ class HomeSurveyMulti extends Component
         ]);
     }
 
-    public function saveModal()
-    {
-        $this->validate();
-        session()->put('namaPasien', $this->namaPasien);
-        session()->put('teleponPasien', $this->teleponPasien);
-
-        return $this->dispatch('store-jawaban')->self();
-    }
-
     #[On('same-jumlah')]
     public function preStore()
     {
@@ -304,6 +304,7 @@ class HomeSurveyMulti extends Component
 
     // #[Renderless]
     #[Layout('components.layouts.beranda')]
+    #[Title('Multi Layanan')]
     public function render()
     {
         $layananKaryawan = Cache::remember('layananKaryawan', 60, function () {

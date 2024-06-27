@@ -2,20 +2,21 @@
 
 namespace App\Livewire;
 
-use App\Models\Unit;
-use App\Models\Respon;
-use Livewire\Component;
-use App\Models\Penjamin;
 use App\Models\AppSetting;
-use App\Models\LayananRespon;
 use App\Models\KaryawanProfile;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
+use App\Models\LayananRespon;
+use App\Models\Penjamin;
+use App\Models\Respon;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 // use Spatie\Color\Rgba;
 // use Spatie\Color\Hex;
 use App\Livewire\Forms\SurveyPasienForm as Form;
+use Livewire\Attributes\Title;
 
 class HomeSurvey extends Component
 {
@@ -101,7 +102,7 @@ class HomeSurvey extends Component
 
     public function preSave($id)
     {
-        $this->hideRespon = true;
+        $this->hideRespon  = true;
         $respon            = Respon::find($id);
         $this->namaRespon  = $respon->nama_respon;
         $this->skorRespon  = $respon->skor_respon;
@@ -146,15 +147,15 @@ class HomeSurvey extends Component
     }
 
     #[Layout('components.layouts.beranda')]
+    #[Title('Single Layanan')]
     public function render()
     {
         // $layananKaryawan = KaryawanProfile::with('parentLayanan')->where('user_id', session()->get('userId'))->first();
-        $layananKaryawan = Cache::remember('karyawanProfile', 60, function () {
-            return KaryawanProfile::with(['parentLayanan','parentUnit'])->where('user_id', session()->get('userId'))->first();
+        $layananKaryawan = Cache::remember('karyawanProfile', 120, function () {
+            return KaryawanProfile::with(['parentLayanan', 'parentUnit'])->where('user_id', session()->get('userId'))->first();
         });
-        $respon = Cache::remember('layananRespon', 60, function () use ($layananKaryawan) {
-            return LayananRespon::distinct()
-                       ->where('layanan_id', $layananKaryawan->layanan_id)
+        $respon = Cache::remember('layananRespon', 120, function () use ($layananKaryawan) {
+            return LayananRespon::where('layanan_id', $layananKaryawan->layanan_id)
                        ->with([
                            'parentRespon' => function ($query) {
                                $query->orderBy('urutan_respon', 'ASC');
@@ -175,17 +176,14 @@ class HomeSurvey extends Component
         $collectionRespon = collect((object) $respon->pluck('parentRespon'));
         $sorted           = $collectionRespon->sortBy('urutan_respon');
         // $unit             = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
-        $unit = Cache::remember('unit', 60, function () use ($layananKaryawan) {
+        $unit = Cache::remember('unit', 120, function () use ($layananKaryawan) {
             return Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
         });
-        $appSetting = Cache::remember('appSetting', 60, function(){
+        $appSetting = Cache::remember('appSetting', 120, function () {
             return AppSetting::get()->last();
         });
         // $appSetting = AppSetting::get()->last();
-        $penjamin = Cache::remember('penjamin', 60, function(){
-            return Penjamin::find(session()->get('penjamin_layanan_id'));
-        });
-        // $penjamin   = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
+        $penjamin = Penjamin::find(session()->get('penjamin_layanan_id'));
 
         return view('livewire.home-survey')->with([
             'petugas'  => $layananKaryawan->nama_karyawanprofile,

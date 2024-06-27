@@ -5,10 +5,10 @@ namespace App\Livewire\Forms;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
-use Illuminate\Support\Facades\Cache;
 
 class AuthForm extends Form
 {
@@ -22,13 +22,10 @@ class AuthForm extends Form
     #[Locked]
     public $remember;
 
-    #[Locked]
-    public $time;
-
     public function auth()
     {
         Carbon::setLocale('id');
-        $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
+        $time = Carbon::now()->setTimezone('Asia/Jakarta');
         if (Auth::viaRemember()) {
             return redirect()->intended('/');
         }
@@ -37,11 +34,14 @@ class AuthForm extends Form
             session()->put('userName', Auth::user()->name);
             session()->put('userId', Auth::user()->id);
 
-            $user = User::find(session()->get('userId'));
-            $user->last_login = $this->time;
+            $user             = User::find(Auth::user()->id);
+            $user->last_login = $time;
             $user->save();
+            Cache::flush();
+
             return true;
         }
+
         return false;
     }
 }

@@ -27,7 +27,7 @@ class SurveyPasienMultiForm extends Form
             $this->timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
             $this->namaPasien = session()->get('namaPasien') ?? '';
             $this->teleponPasien = session()->get('teleponPasien') ?? '';
-            $this->karyawan = Cache::remember('karyawanProfileMulti', 60, function () {
+            $this->karyawan = Cache::remember('karyawanProfileMulti', 120, function () {
                 return KaryawanProfile::with(['parentUnit', 'parentLayanan'])->find(session()->get('karyawan_id'));
             });
             $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'));
