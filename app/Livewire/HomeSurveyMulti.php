@@ -169,7 +169,9 @@ class HomeSurveyMulti extends Component
             return MultiLayanan::with('parentLayanan')->where('unit_id', session()->get('userUnitId'))->get();
         });
 
-        $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
+        // Bugs Disini
+        $penjamin_session = session()->get('penjamin_layanan_id');
+        $this->penjamin = Penjamin::find($penjamin_session)->get('nama_penjamin');
 
         $this->jumlahLayanan = count($this->multiLayanan);
     }

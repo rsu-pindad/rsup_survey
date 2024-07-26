@@ -19,25 +19,27 @@ class AuthForm extends Form
     #[Validate('required', message: 'mohon isi password')]
     public $password;
 
-    #[Locked]
     public $remember;
+    public $time;
 
     public function auth()
     {
         Carbon::setLocale('id');
-        $time = Carbon::now()->setTimezone('Asia/Jakarta');
+        Cache::flush();
+        $this->time       = Carbon::now()->setTimezone('Asia/Jakarta');
+        $this->timeformat = Carbon::parse($this->time);
         if (Auth::viaRemember()) {
             return redirect()->intended('/');
         }
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        $auths = Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember);
+        if ($auths === true) {
             session()->regenerate();
             session()->put('userName', Auth::user()->name);
-            session()->put('userId', Auth::user()->id);
+            session()->put('userId', Auth::id());
 
-            $user             = User::find(Auth::user()->id);
-            $user->last_login = $time;
+            $user             = User::find(Auth::id());
+            $user->last_login = $this->timeformat;
             $user->save();
-            Cache::flush();
 
             return true;
         }

@@ -1,43 +1,43 @@
 <?php
 
-use App\Livewire\Home;
-use App\Livewire\Roots;
-use App\Livewire\Auth\Login;
-use App\Livewire\HomeSurvey;
-use App\Livewire\Sdm\Laporan;
-use App\Livewire\Guest\Register;
-use App\Livewire\Admin\Unit\Unit;
-use App\Livewire\HomeSurveyMulti;
-use App\Livewire\Admin\RootsAdmin;
-use App\Livewire\Self\UserSetting;
-use App\Livewire\Admin\Respon\Respon;
-use App\Livewire\Admin\SurveyPetugas;
-use App\Livewire\Admin\Unit\UnitEdit;
-use Illuminate\Support\Facades\Route;
-use App\Livewire\SuperAdmin\User\User;
-use App\Livewire\Admin\Layanan\Layanan;
-use App\Livewire\SurveyPetugasPelayanan;
 use App\Livewire\Admin\Karyawan\Karyawan;
-use App\Livewire\Admin\Penjamin\Penjamin;
-use App\Livewire\Admin\Respon\ResponEdit;
-use App\Livewire\Admin\Layanan\LayananEdit;
-use App\Livewire\SuperAdmin\User\UserManage;
 use App\Livewire\Admin\Karyawan\KaryawanEdit;
-use App\Livewire\Admin\Penjamin\PenjaminEdit;
-use App\Livewire\SuperAdmin\Setting\AppSetting;
-use App\Livewire\SuperAdmin\RolePermission\Role;
-use App\Livewire\Admin\Unit\UnitProfil\UnitProfil;
-use App\Livewire\Admin\LayananRespon\LayananRespon;
-use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
-use App\Livewire\SuperAdmin\RolePermission\Permission;
-use App\Livewire\SuperAdmin\RolePermission\RoleManage;
 use App\Livewire\Admin\KaryawanProfile\KaryawanProfile;
-use App\Livewire\Admin\LayananRespon\LayananResponEdit;
-use App\Livewire\Admin\PenjaminLayanan\PenjaminLayanan;
-use App\Livewire\Admin\Unit\UnitMultiLayanan\MultiLayanan;
-use App\Livewire\SuperAdmin\RolePermission\PermissionEdit;
 use App\Livewire\Admin\KaryawanProfile\KaryawanProfileEdit;
+use App\Livewire\Admin\Layanan\Layanan;
+use App\Livewire\Admin\Layanan\LayananEdit;
+use App\Livewire\Admin\LayananRespon\LayananRespon;
+use App\Livewire\Admin\LayananRespon\LayananResponEdit;
+use App\Livewire\Admin\Penjamin\Penjamin;
+use App\Livewire\Admin\Penjamin\PenjaminEdit;
+use App\Livewire\Admin\PenjaminLayanan\PenjaminLayanan;
 use App\Livewire\Admin\PenjaminLayanan\PenjaminLayananEdit;
+use App\Livewire\Admin\Respon\Respon;
+use App\Livewire\Admin\Respon\ResponEdit;
+use App\Livewire\Admin\Unit\UnitMultiLayanan\MultiLayanan;
+use App\Livewire\Admin\Unit\UnitProfil\UnitProfil;
+use App\Livewire\Admin\Unit\Unit;
+use App\Livewire\Admin\Unit\UnitEdit;
+use App\Livewire\Admin\RootsAdmin;
+use App\Livewire\Admin\SurveyPetugas;
+use App\Livewire\Auth\Login;
+use App\Livewire\Guest\Register;
+use App\Livewire\Sdm\Laporan;
+use App\Livewire\Self\UserSetting;
+use App\Livewire\SuperAdmin\RolePermission\Permission;
+use App\Livewire\SuperAdmin\RolePermission\PermissionEdit;
+use App\Livewire\SuperAdmin\RolePermission\Role;
+use App\Livewire\SuperAdmin\RolePermission\RoleEdit;
+use App\Livewire\SuperAdmin\RolePermission\RoleManage;
+use App\Livewire\SuperAdmin\Setting\AppSetting;
+use App\Livewire\SuperAdmin\User\User;
+use App\Livewire\SuperAdmin\User\UserManage;
+use App\Livewire\Home;
+use App\Livewire\HomeSurvey;
+use App\Livewire\HomeSurveyMulti;
+use App\Livewire\Roots;
+use App\Livewire\SurveyPetugasPelayanan;
+use Illuminate\Support\Facades\Route;
 
 /*
  * |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/lihat', RootsAdmin::class)->name('lihat');
 
     Route::middleware('role:super-admin')->group(function () {
-        Route::group(['prefix' => 'setting'], function(){
+        Route::group(['prefix' => 'setting'], function () {
             Route::get('/', AppSetting::class)->name('root-setting-app');
         });
         Route::group(['prefix' => 'user'], function () {
@@ -88,7 +88,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', Unit::class)->name('root-unit');
             Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
             Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
-            Route::group(['prefix' => 'multi-layanan'], function(){
+            Route::group(['prefix' => 'multi-layanan'], function () {
                 Route::get('/{id}', MultiLayanan::class)->name('root-multi-layanan');
             });
         });
@@ -139,12 +139,12 @@ Route::middleware(['guest'])->group(function () {
 });
 
 // Route::get('/linked', function () {
-    // echo public_path();
-    // dd(Storage::disk('public_upload'));
-    // Storage::deleteDirectory('tmp');
-    // $targetFolder = $_SERVER['DOCUMENT_ROOT'].'/../storage/app/public';
-    // $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
-    // echo $targetFolder;
-    // echo '<br/>';
-    // echo $linkFolder;
+// echo public_path();
+// dd(Storage::disk('public_upload'));
+// Storage::deleteDirectory('tmp');
+// $targetFolder = $_SERVER['DOCUMENT_ROOT'].'/../storage/app/public';
+// $linkFolder = $_SERVER['DOCUMENT_ROOT'].'/storage';
+// echo $targetFolder;
+// echo '<br/>';
+// echo $linkFolder;
 // });

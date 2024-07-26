@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
 use App\Models\KaryawanProfile;
 use Livewire\Attributes\Validate;
+use Livewire\Form;
 
 class HomePenjaminForm extends Form
 {

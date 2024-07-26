@@ -183,7 +183,8 @@ class HomeSurvey extends Component
             return AppSetting::get()->last();
         });
         // $appSetting = AppSetting::get()->last();
-        $penjamin = Penjamin::find(session()->get('penjamin_layanan_id'));
+        $penjamin_session = session()->get('penjamin_layanan_id');
+        $penjamin         = Penjamin::find($penjamin_session)->get('nama_penjamin');
 
         return view('livewire.home-survey')->with([
             'petugas'  => $layananKaryawan->nama_karyawanprofile,
@@ -191,7 +192,7 @@ class HomeSurvey extends Component
             'unitNama' => $layananKaryawan->parentUnit->nama_unit,
             'subLogo'  => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
             'respons'  => $sorted->values()->all(),
-            'penjamin' => $penjamin->nama_penjamin,
+            'penjamin' => $penjamin,
         ]);
     }
 }

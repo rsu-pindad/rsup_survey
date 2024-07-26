@@ -8,6 +8,7 @@ use App\Models\KaryawanProfile;
 use App\Models\Layanan;
 use App\Models\PenjaminLayanan;
 use App\Models\Unit;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -35,9 +36,7 @@ class Home extends Component
     #[Title('Beranda')]
     public function render()
     {
-        $profile = Cache::remember('profile', 120, function () {
-            return KaryawanProfile::with(['parentUnit', 'parentLayanan'])->where('user_id', session()->get('userId'))->first();
-        });
+        $profile = KaryawanProfile::with(['parentUnit', 'parentLayanan'])->where('user_id', Auth::id())->first();
         if ($profile == null) {
             return <<<HTML
                 <div>
@@ -46,9 +45,7 @@ class Home extends Component
                 </div>
                 HTML;
         }
-        $layanan = Cache::remember('layanan', 120, function () use ($profile) {
-            return Layanan::find($profile->layanan_id);
-        });
+        $layanan = Layanan::find($profile->layanan_id);
         if ($layanan == null) {
             return <<<HTML
                 <div>
