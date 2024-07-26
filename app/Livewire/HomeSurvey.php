@@ -184,7 +184,7 @@ class HomeSurvey extends Component
         });
         // $appSetting = AppSetting::get()->last();
         $penjamin_session = session()->get('penjamin_layanan_id');
-        $penjamin         = Penjamin::find($penjamin_session)->get('nama_penjamin');
+        $penjamin         = Penjamin::find($penjamin_session)->nama_penjamin;
 
         return view('livewire.home-survey')->with([
             'petugas'  => $layananKaryawan->nama_karyawanprofile,

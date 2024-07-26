@@ -171,7 +171,7 @@ class HomeSurveyMulti extends Component
 
         // Bugs Disini
         $penjamin_session = session()->get('penjamin_layanan_id');
-        $this->penjamin = Penjamin::find($penjamin_session)->get('nama_penjamin');
+        $this->penjamin = Penjamin::find($penjamin_session)->nama_penjamin;
 
         $this->jumlahLayanan = count($this->multiLayanan);
     }
