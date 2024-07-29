@@ -16,6 +16,7 @@ use Livewire\Component;
 // use Spatie\Color\Rgba;
 // use Spatie\Color\Hex;
 use App\Livewire\Forms\SurveyPasienForm as Form;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Title;
 
 class HomeSurvey extends Component
@@ -27,17 +28,48 @@ class HomeSurvey extends Component
     public $namaRespon  = '';
     public $skorRespon  = '';
 
-    #[Validate('required', message: 'mohon masukan nama anda')]
-    #[Validate('string', message: 'hanya huruf')]
-    #[Validate('min:3', message: 'minimal 3 huruf')]
+    // #[Validate('required', message: 'mohon masukan nama anda')]
+    // #[Validate('string', message: 'hanya huruf')]
+    // #[Validate('min:3', message: 'minimal 3 huruf')]
     public $namaPasien = '';
 
-    #[Validate('required', message: 'mohon masukan nomor telepon')]
-    #[Validate('numeric', message: 'hanya angka')]
-    #[Validate('min:9', message: 'minimal 9 angka')]
+    // #[Validate('required', message: 'mohon masukan nomor telepon')]
+    // #[Validate('numeric', message: 'hanya angka')]
+    // #[Validate('min:9', message: 'minimal 9 angka')]
+    // #[Validate('max:13', message: 'maksimal 13 angka')]
     public $teleponPasien = '';
+    public $hideRespon    = false;
 
-    public $hideRespon = false;
+    public function rules()
+    {
+        return [
+            'namaPasien' => [
+                'required',
+                'regex:/(^[A-Za-z ]+$)+/',
+                'min:3',
+                'max:50'
+            ],
+            'teleponPasien' => [
+                'required',
+                'regex:/^(081|082|083|085|087|088|089|)+[0-9]/',
+                'min:9',
+                'max:13'
+            ]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'namaPasien.required'    => 'mohon masukan nama anda',
+            'namaPasien.regex'       => 'hanya huruf a-z A-Z dan "spasi"',
+            'namaPasien.min'         => 'minimal 3 huruf',
+            'teleponPasien.required' => 'mohon masukan nomor telepon anda',
+            'teleponPasien.regex'    => 'hanya angka 0-9, awali dengan 08',
+            'teleponPasien.min'      => 'minimal 9 angka',
+            'teleponPasien.max'      => 'maksimal 13 angka',
+        ];
+    }
 
     public function boot()
     {
@@ -141,7 +173,7 @@ class HomeSurvey extends Component
         return $this->flash('success', 'berhasil', [
             'position'         => 'center',
             'toast'            => false,
-            'text'             => 'terimakasih telah mengikuti peniliaian survey kami',
+            'text'             => 'terimakasih telah mengikuti penilaian survey kami',
             'timerProgressBar' => true,
         ], '/');
     }
