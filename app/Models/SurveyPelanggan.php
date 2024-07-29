@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SurveyPelanggan extends Model
 {
@@ -13,8 +14,6 @@ class SurveyPelanggan extends Model
     protected $table = 'survey_pelanggan';
 
     protected $fillable = [
-        'karyawan_id',
-        'penjamin_layanan_id',
         'nama_pelanggan',
         'handphone_pelanggan',
         'shift',
@@ -28,4 +27,18 @@ class SurveyPelanggan extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public $timestamps = true;
+
+    public function parentPenjamin(): BelongsTo
+    {
+        return $this->belongsTo(Penjamin::class, 'penjamin_id', 'id');
+    }
+
+    public function parentLayanan(): BelongsTo
+    {
+        return $this->belongsTo(Layanan::class, 'layanan_id', 'id');
+    }
+
+
 }
