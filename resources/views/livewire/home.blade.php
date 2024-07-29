@@ -139,7 +139,6 @@
         </div>
 
     </div>
-
 </div>
 @push('scripts')
 @basset('vendor/alpinejs/timeout.min.js')
