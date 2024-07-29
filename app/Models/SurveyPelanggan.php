@@ -14,10 +14,14 @@ class SurveyPelanggan extends Model
     protected $table = 'survey_pelanggan';
 
     protected $fillable = [
+        'karyawan_id',
+        'penjamin_id',
+        'layanan_id',
         'nama_pelanggan',
         'handphone_pelanggan',
         'shift',
         'nilai_skor',
+        'survey_masuk'
     ];
 
     protected $guarded = 'id';
