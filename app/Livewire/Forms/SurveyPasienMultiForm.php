@@ -56,11 +56,11 @@ class SurveyPasienMultiForm extends Form
                     'NILAI_SURVEY_KEPUASAN' => $items['namaRespon'],
                 ];
                 $resultsDb[] = [
-                    'karyawan_id'         => $this->karyawan->id,
-                    'penjamin_id'         => $this->penjamin->id,
+                    'karyawan_id'         => intval($this->karyawan->id),
+                    'penjamin_id'         => intval($this->penjamin->id),
                     'layanan_id'          => intval($items['idLayanan']),
-                    'nama_pelanggan'      => $this->namaPasien ?? session()->get('namaPasien'),
-                    'handphone_pelanggan' => $this->teleponPasien ?? session()->get('teleponPasien'),
+                    'nama_pelanggan'      => $this->namaPasien ?? `-`,
+                    'handphone_pelanggan' => $this->teleponPasien ?? `-`,
                     'shift'               => $shift,
                     'nilai_skor'          => $items['namaRespon'],
                     'survey_masuk'        => $this->timeformatDb

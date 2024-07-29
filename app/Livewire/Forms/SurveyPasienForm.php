@@ -62,11 +62,11 @@ class SurveyPasienForm extends Form
             dispatch($writeSheet)->onQueue('SingleGoogleInsert');
 
             $resultsDb = [
-                'karyawan_id'         => $this->karyawan->id,
-                'penjamin_id'         => $this->penjamin->id,
-                'layanan_id'          => $this->karyawan->parentLayanan->id,
-                'nama_pelanggan'      => session()->get('namaPasien') ?? '-',
-                'handphone_pelanggan' => session()->get('teleponPasien') ?? '-',
+                'karyawan_id'         => intval($this->karyawan->id),
+                'penjamin_id'         => intval($this->penjamin->id),
+                'layanan_id'          => intval($this->karyawan->parentLayanan->id),
+                'nama_pelanggan'      => session()->get('namaPasien') ?? `-`,
+                'handphone_pelanggan' => session()->get('teleponPasien') ?? `-`,
                 'shift'               => $shift,
                 'nilai_skor'          => session()->get('namaRespon'),
                 'survey_masuk'        => $this->timeformatDb
