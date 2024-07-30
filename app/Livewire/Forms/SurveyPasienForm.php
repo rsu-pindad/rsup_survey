@@ -74,7 +74,7 @@ class SurveyPasienForm extends Form
             // dd($resultsDb);
 
             $insertDb = new InsertSurveyPelangganSingle($resultsDb);
-            dispatchSync($insertDb)->onQueue('SingleDbInsert');
+            dispatch($insertDb)->onQueue('SingleDbInsert');
 
             // if ($writeSheet > 0) {
             session()->forget([
