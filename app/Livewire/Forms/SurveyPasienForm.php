@@ -71,7 +71,7 @@ class SurveyPasienForm extends Form
                 'nilai_skor'          => session()->get('namaRespon'),
                 'survey_masuk'        => $this->timeformatDb
             ];
-            // dd($resultsDb);
+            dd($resultsDb);
 
             $insertDb = new InsertSurveyPelangganSingle($resultsDb);
             dispatch($insertDb)->onQueue('SingleDbInsert');
