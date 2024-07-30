@@ -46,7 +46,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('survey_pelanggan');
+        // Schema::dropIfExists('survey_pelanggan');
         // Schema::table('survey_pelanggan', function (Blueprint $table) {
         //     // $table->addUnique('survey_pelanggan_handphone_pelanggan_unique');
         //     // $table->unique('handphone_pelanggan','survey_pelanggan');
