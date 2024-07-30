@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('shift', ['pagi','siang','malam']);
             $table->string('nilai_skor')->nullable();
             $table->dateTimeTz('survey_masuk', $precision = 0);
-            $table->foreign('karyawan_id')->references('id')->on('karyawan')
+            $table->foreign('karyawan_id')->references('id')->on('karyawanprofile')
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
@@ -46,7 +46,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::dropIfExists('survey_pelanggan');
+        Schema::dropIfExists('survey_pelanggan');
         // Schema::table('survey_pelanggan', function (Blueprint $table) {
         //     // $table->addUnique('survey_pelanggan_handphone_pelanggan_unique');
         //     // $table->unique('handphone_pelanggan','survey_pelanggan');
