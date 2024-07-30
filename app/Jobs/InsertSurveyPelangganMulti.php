@@ -7,8 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-// use App\Models\SurveyPelanggan;
-use Illuminate\Support\Facades\DB;
+use App\Models\SurveyPelanggan;
+// use Illuminate\Support\Facades\DB;
 
 class InsertSurveyPelangganMulti implements ShouldQueue
 {
