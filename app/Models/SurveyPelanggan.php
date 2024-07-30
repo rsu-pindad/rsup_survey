@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SurveyPelanggan extends Model
 {
@@ -44,5 +44,8 @@ class SurveyPelanggan extends Model
         return $this->belongsTo(Layanan::class, 'layanan_id', 'id');
     }
 
-
+    public function parentKaryawan(): BelongsTo
+    {
+        return $this->belongsTo(KaryawanProfile::class, 'karyawan_id', 'id');
+    }
 }

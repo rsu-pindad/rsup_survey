@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+// use App\Models\SurveyPelanggan;
 use Illuminate\Support\Facades\DB;
 
 class InsertSurveyPelangganMulti implements ShouldQueue
@@ -28,6 +29,7 @@ class InsertSurveyPelangganMulti implements ShouldQueue
      */
     public function handle(): void
     {
-        DB::table('survey_pelanggan')->insert($this->items);
+        // DB::table('survey_pelanggan')->insert($this->items);
+        SurveyPelanggan::create($this->items);
     }
 }

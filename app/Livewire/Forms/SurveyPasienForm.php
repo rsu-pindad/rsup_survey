@@ -30,7 +30,7 @@ class SurveyPasienForm extends Form
             // session()->get('namaRespon');
             $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
             $this->timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
-            $this->timeformatDb = Carbon::parse($this->time)->translatedFormat('Y-m-d H:i:s');
+            $this->timeformatDb = Carbon::parse($this->time)->translatedFormat("Y-m-d H:i:s");
             $this->karyawan = Cache::remember('karyawanProfileSingle', 60, function () {
                 return KaryawanProfile::with(['parentUnit', 'parentLayanan'])->find(session()->get('karyawan_id'));
             });
@@ -65,8 +65,8 @@ class SurveyPasienForm extends Form
                 'karyawan_id'         => intval($this->karyawan->id),
                 'penjamin_id'         => intval($this->penjamin->id),
                 'layanan_id'          => intval($this->karyawan->parentLayanan->id),
-                'nama_pelanggan'      => session()->get('namaPasien') ?? `-`,
-                'handphone_pelanggan' => session()->get('teleponPasien') ?? `-`,
+                'nama_pelanggan'      => session()->get('namaPasien') ?? null,
+                'handphone_pelanggan' => session()->get('teleponPasien') ?? null,
                 'shift'               => $shift,
                 'nilai_skor'          => session()->get('namaRespon'),
                 'survey_masuk'        => $this->timeformatDb

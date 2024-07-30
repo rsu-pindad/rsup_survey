@@ -43,7 +43,7 @@ class SurveyPasienMultiForm extends Form
                 $shift = 'malam';
             }
             $result         = [];
-            $resultsFinalDb      = [];
+            $resultsDb      = [];
             foreach (session()->get('jawabanPasien') as $keys => $items) {
                 $result[] = [
                     'TGL_SURVEY'            => $this->timeformat,
@@ -55,23 +55,25 @@ class SurveyPasienMultiForm extends Form
                     'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                     'NILAI_SURVEY_KEPUASAN' => $items['namaRespon'],
                 ];
-                $resultsDb[] = [
+                $resultsDb = [
                     'karyawan_id'         => intval($this->karyawan->id),
                     'penjamin_id'         => intval($this->penjamin->id),
                     'layanan_id'          => intval($items['idLayanan']),
-                    'nama_pelanggan'      => $this->namaPasien ?? `-`,
-                    'handphone_pelanggan' => $this->teleponPasien ?? `-`,
+                    'nama_pelanggan'      => $items['hasQuestion'] === true ? $this->namaPasien : null,
+                    'handphone_pelanggan' => $items['hasQuestion'] === true ? $this->teleponPasien : null,
                     'shift'               => $shift,
                     'nilai_skor'          => $items['namaRespon'],
                     'survey_masuk'        => $this->timeformatDb
                 ];
+                
+                $insertDb = new InsertSurveyPelangganMulti($resultsDb);
+                dispatch($insertDb)->onQueue('MultiDbInsert');
             }
-
+            
             $sheets = new GoogleSheetInsertMulti($result);
             dispatch($sheets)->onQueue('MultiGoogleInsert');
-
-            $insertDb = new InsertSurveyPelangganMulti($resultsDb);
-            dispatch($insertDb)->onQueue('MultiDbInsert');
+    
+            // dd($resultsDb);
 
             return true;
         } catch (\Throwable $th) {

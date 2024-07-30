@@ -2,13 +2,15 @@
 
 namespace App\Jobs;
 
+use App\Models\SurveyPelanggan;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+
+// use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Log;
 
 class InsertSurveyPelangganSingle implements ShouldQueue
 {
@@ -29,9 +31,10 @@ class InsertSurveyPelangganSingle implements ShouldQueue
      */
     public function handle(): void
     {
-        DB::table('survey_pelanggan')->insert([
-            $this->items
-        ]);
+        // DB::table('survey_pelanggan')->insert([
+        //     $this->items
+        // ]);
+        SurveyPelanggan::create($this->items);
     }
 
     public function failed(?Throwable $exception): void
