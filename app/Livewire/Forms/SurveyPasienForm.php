@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Jobs\GoogleSheetInsert;
+use App\Jobs\InsertSurveyPelangganSingle;
 use App\Models\KaryawanProfile;
 use App\Models\Penjamin;
 use Carbon\Carbon;
@@ -21,17 +22,28 @@ class SurveyPasienForm extends Form
     public function save()
     {
         try {
-            $result = [];
+            $result    = [];
+            $resultsDb = [];
+            $shift     = '';
             Carbon::setLocale('id');
             // session()->get('skorRespon');
             // session()->get('namaRespon');
             $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
             $this->timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
+            $this->timeformatDb = Carbon::parse($this->time)->translatedFormat("Y-m-d H:i:s");
             $this->karyawan = Cache::remember('karyawanProfileSingle', 60, function () {
                 return KaryawanProfile::with(['parentUnit', 'parentLayanan'])->find(session()->get('karyawan_id'));
             });
             $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'));
             // $result = [
+            $shiftHours = now()->hour;
+            if (($shiftHours >= 7) && ($shiftHours <= 15)) {
+                $shift = 'pagi';
+            } else if (($shiftHours >= 16) && ($shiftHours <= 23)) {
+                $shift = 'siang';
+            } else {
+                $shift = 'malam';
+            }
             $result[] = [
                 'TGL_SURVEY'            => $this->timeformat,
                 'PEGAWAI'               => $this->karyawan->nama_karyawanprofile,
@@ -42,9 +54,28 @@ class SurveyPasienForm extends Form
                 'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                 'NILAI_SURVEY_KEPUASAN' => session()->get('namaRespon'),
             ];
+            // ];
+
             // $writeSheet = $this->saveSheet($result);
+
             $writeSheet = new GoogleSheetInsert($result);
-            dispatch($writeSheet);
+            dispatch($writeSheet)->onQueue('SingleGoogleInsert');
+
+            $resultsDb = [
+                'karyawan_id'         => intval($this->karyawan->id),
+                'penjamin_id'         => intval($this->penjamin->id),
+                'layanan_id'          => intval($this->karyawan->parentLayanan->id),
+                'nama_pelanggan'      => session()->get('namaPasien') ?? null,
+                'handphone_pelanggan' => session()->get('teleponPasien') ?? null,
+                'shift'               => $shift,
+                'nilai_skor'          => session()->get('namaRespon'),
+                'survey_masuk'        => $this->timeformatDb
+            ];
+            // dd($resultsDb);
+
+            $insertDb = new InsertSurveyPelangganSingle($resultsDb);
+            dispatch($insertDb)->onQueue('SingleDbInsert');
+
             // if ($writeSheet > 0) {
             session()->forget([
                 'penjamin_layanan_id',
@@ -52,7 +83,8 @@ class SurveyPasienForm extends Form
                 'skorRespon',
                 'namaRespon',
                 'namaPasien',
-                'teleponPasien'
+                'teleponPasien',
+                'shift'
             ]);
             // }
 

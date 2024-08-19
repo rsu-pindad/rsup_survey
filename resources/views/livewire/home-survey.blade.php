@@ -89,7 +89,7 @@
                                                 <i class="fa-solid fa-phone"></i>
                                             </span>
                                             <div class="form-floating @error('teleponPasien') is-invalid @enderror">
-                                                <input wire:model="teleponPasien" type="tel" class="form-control @error('teleponPasien') is-invalid @enderror" id="teleponPasien" placeholder="Nomor telepon">
+                                                <input wire:model="teleponPasien" type="text" class="form-control @error('teleponPasien') is-invalid @enderror" id="teleponPasien" placeholder="Nomor telepon">
                                                 <label for="teleponPasien">Nomor Telepon</label>
                                             </div>
                                             <div class="invalid-feedback">

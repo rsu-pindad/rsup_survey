@@ -123,7 +123,7 @@
                                                 <i class="fa-solid fa-phone"></i>
                                             </span>
                                             <div class="form-floating @error('teleponPasien') is-invalid @enderror">
-                                                <input wire:model="teleponPasien" type="tel" class="form-control @error('teleponPasien') is-invalid @enderror" id="gawaiPasien" placeholder="Nama Anda">
+                                                <input wire:model="teleponPasien" type="text" class="form-control @error('teleponPasien') is-invalid @enderror" id="gawaiPasien" placeholder="Nama Anda">
                                                 <label for="gawaiPasien">Nomor Telepon</label>
                                             </div>
                                             <div class="invalid-feedback">
