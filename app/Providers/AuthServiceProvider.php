@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -24,7 +26,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::before(function ($user, $ability) {
-            return $user->hasRole('admin') ? true : null;
+            return $user->hasRole('super-admin') ? true : null;
+        });
+
+        Gate::define('viewPulse', function (User $user) {
+            return $user->hasRole('super-admin') ? true : null;
+        });
+
+        Auth::provider('cached', function ($app, array $config) {
+            return new CachedUserProvider($app['hash'], $config['model']);
         });
     }
 }

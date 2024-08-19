@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Http\RedirectResponse;
 
 class RegisterController extends BaseController
 {
@@ -42,5 +43,27 @@ class RegisterController extends BaseController
         } else {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        // auth()->user()->tokens()->delete();
+        // return $this->redirectRoute('login');
+        $user = Auth::guard('sanctum')->user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+        try {
+            // Revoke all tokens for the authenticated user
+            // $user->tokens()->delete();
+            $user->currentAccessToken()->delete();
+        } catch (\Exception $e) {
+            // Log the exception for investigation
+            Log::error('Token revocation failed: ' . $e->getMessage());
+            // return response()->json(['error' => 'Unable to revoke tokens'], 500);
+        }
+        // return $this->redirectRoute('login');
+        return response()->json(['message' => 'Tokens revoked successfully']);
+        // return redirect()->route('login');
     }
 }

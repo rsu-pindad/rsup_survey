@@ -16,32 +16,35 @@ class KaryawanProfileSeeder extends Seeder
     public function run(): void
     {
         $time = \Carbon\Carbon::now()->setTimezone('Asia/Jakarta');
-
+        // KaryawanProfile::truncate();
         try {
-            KaryawanProfile::truncate();
-            for ($x = 0; $x <= 100; $x++) {
+            for ($x = 0; $x <= 10; $x++) {
                 $randomUser = DB::table('users')
                     ->inRandomOrder()
                     ->first();
-                DB::beginTransaction();
                 $randomKaryawan = DB::table('karyawan')
-                    // ->where('taken', 0)
+                    ->where('taken', 0)
                     ->inRandomOrder()
                     ->first();
+                $randomUnit = DB::table('unit')
+                    ->inRandomOrder()
+                    ->first();
+                $randomLayanan = DB::table('layanan')
+                    ->inRandomOrder()
+                    ->first();
+                DB::beginTransaction();
                 $affectedRandomKaryawan = DB::table('karyawan')
                     ->where('id', $randomKaryawan->id)
                     ->update([
                         'taken' => 1,
                         'updated_at' => $time,
                     ]);
-                $randomUnit = DB::table('unit')
-                    ->inRandomOrder()
-                    ->first();
                 $randomKaryawanProfile = DB::table('karyawanprofile')
                     ->insert([
                         'user_id' => $randomUser->id,
                         'karyawan_id' => $randomKaryawan->id,
                         'unit_id' => $randomUnit->id,
+                        'layanan_id' => $randomLayanan->id,
                         'nama_karyawanprofile' => fake()->word(),
                         'created_at' => $time,
                         'updated_at' => $time,
@@ -49,7 +52,7 @@ class KaryawanProfileSeeder extends Seeder
                 DB::commit();
             }
         } catch (\Throwable $th) {
-            Log::debug($th->getMessage());
+            // Log::info($th);
             DB::rollback();
         }
     }

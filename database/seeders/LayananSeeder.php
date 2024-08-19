@@ -14,7 +14,7 @@ class LayananSeeder extends Seeder
     public function run(): void
     {
         Layanan::factory()
-            ->count(100)
+            ->count(5)
             ->create();
     }
 }

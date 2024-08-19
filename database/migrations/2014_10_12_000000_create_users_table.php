@@ -20,6 +20,8 @@ return new class extends Migration
             $table->enum('roles', ['admin','editor','employee','customer']);
             // $table->string('roles');
             $table->rememberToken();
+            $table->timestamp('last_login')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

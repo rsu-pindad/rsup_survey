@@ -4,8 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Karyawan;
-use App\Models\Unit;
 
 class KaryawanProfileResource extends JsonResource
 {
@@ -19,8 +17,9 @@ class KaryawanProfileResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'NPP' => Karyawan::find($this->karyawan_id)->npp_karyawan,
-            'Unit' => Unit::find($this->unit_id)->nama_unit,
+            'NPP' => $this->parentKaryawan->npp_karyawan,
+            'Unit' => $this->parentUnit->nama_unit,
+            'Layanan' => $this->parentLayanan->nama_layanan,
             'Nama' => $this->nama_karyawanprofile,
         ];
     }

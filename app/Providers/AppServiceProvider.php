@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+// use PowerComponents\LivewirePowerGrid\Button;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // if(env('APP_ENV', 'production') == 'production') {
+        //     \URL::forceScheme('https');
+        // }
+        // Button::macro('icon', function (string $name) {
+        //     $this->dynamicProperties['icon'] = $name;
+        //     return $this;
+        // });
+        // Pulse::user(fn ($user) => [
+        //     'name' => $user->name,
+        // ]);
     }
 }

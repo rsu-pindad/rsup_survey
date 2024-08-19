@@ -18,7 +18,10 @@ class ResponFactory extends Factory
     {
         return [
             'nama_respon' => fake()->word(),
-            'skor_respon' => fake()->randomDigit()
+            'icon_respon' => fake()->word(),
+            'tag_warna_respon' => fake()->safeHexColor(),
+            'skor_respon' => fake()->randomDigit(1, 9),
+            'urutan_respon' => fake()->randomDigit(1,100),
         ];
     }
 }

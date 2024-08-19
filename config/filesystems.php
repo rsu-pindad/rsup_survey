@@ -56,6 +56,20 @@ return [
             'throw' => false,
         ],
 
+        'public_upload' => [
+            'driver' => 'local',
+            // 'root' => public_path().'/photos',
+            // 'root' => public_path(),
+            'root' => $_SERVER['DOCUMENT_ROOT'].'/public',
+            'visibility' => 'public',
+        ],
+
+        // 'public_upload_tmp' => [
+        //     'drive' => 'local',
+        //     'root' => public_path().'/tmp',
+        //     'visibility' => 'public',
+        // ],
+
     ],
 
     /*

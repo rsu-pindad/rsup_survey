@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LayananRespon extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'layanan_respon';
 
@@ -27,14 +27,13 @@ class LayananRespon extends Model
         'deleted_at',
     ];
 
-    public function parent_layanan() : BelongsTo
+    public function parentLayanan(): BelongsTo
     {
         return $this->belongsTo(Layanan::class, 'layanan_id', 'id');
     }
 
-    public function parent_respon() : BelongsTo
+    public function parentRespon(): BelongsTo
     {
         return $this->belongsTo(Respon::class, 'respon_id', 'id');
     }
-
 }

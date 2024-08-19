@@ -4,8 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Layanan;
-use App\Models\Respon;
 
 class LayananResponResource extends JsonResource
 {
@@ -19,9 +17,9 @@ class LayananResponResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'nama_layanan' => Layanan::find($this->layanan_id)->nama_layanan,
-            'nama_respon' => Respon::find($this->respon_id)->nama_respon,
-            'skor_respon' => Respon::find($this->respon_id)->skor_respon,
+            'nama_layanan' => $this->parent_layanan->nama_layanan,
+            'nama_respon' => $this->parent_respon->nama_respon,
+            'skor_respon' => $this->parent_respon->skor_respon,
         ];
     }
 }
