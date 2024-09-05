@@ -2,7 +2,7 @@
 
 namespace App\Livewire\PowerGrid;
 
-use App\Livewire\Attributes\Locked;
+use Livewire\Attributes\Locked;
 use App\Models\Respon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
