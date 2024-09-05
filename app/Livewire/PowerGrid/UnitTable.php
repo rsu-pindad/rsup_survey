@@ -3,7 +3,7 @@
 namespace App\Livewire\PowerGrid;
 
 use App\Models\Unit;
-use App\Livewire\Attributes\Locked;
+use Livewire\Attributes\Locked;
 use Illuminate\Database\Eloquent\Builder;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use PowerComponents\LivewirePowerGrid\Button;

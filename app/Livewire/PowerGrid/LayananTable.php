@@ -2,11 +2,10 @@
 
 namespace App\Livewire\PowerGrid;
 
-use App\Livewire\Attributes\Locked;
+use Livewire\Attributes\Locked;
 use App\Models\Layanan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Illuminate\View\View;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;

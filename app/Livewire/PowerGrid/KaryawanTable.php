@@ -17,6 +17,7 @@ use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use Livewire\Attributes\Locked;
 
 final class KaryawanTable extends PowerGridComponent
 {

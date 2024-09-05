@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     // protected $guard_name = 'api';
 
-    public function pivotsKaryawaProfile(): BelongsToMany
+    public function pivotsKaryawanProfile(): BelongsToMany
     {
         return $this->belongsToMany(LayananRespon::class, 'karyawanprofile', 'user_id', 'id');
     }
@@ -62,7 +62,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::deleting(function ($user) {
-            $user->pivotsKaryawaProfile()->detach();
+            $user->pivotsKaryawanProfile()->detach();
         });
     }
 }
