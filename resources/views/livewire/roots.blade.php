@@ -33,8 +33,7 @@
                         <img 
                             class="img-fluid" 
                             src="{{ basset('photos/'.$mainLogo) }}" 
-                            alt="logo" 
-                            style="border-radius:12px;box-shadow: 8px 8px 0px 0px lightgreen;">
+                            alt="logo">
                     </div>
                 </div>
             </div>

@@ -44,25 +44,26 @@ class AppSettingForm extends Form
 
     public function setSetting(AppSetting $app)
     {
-        $this->app = $app;
-        $this->id = $app->id;
+        $this->app              = $app;
+        $this->id               = $app->id;
         $this->initialDomainImg = $app->initial_domain_logo;
         $this->initialHeaderImg = $app->initial_header_logo;
-        $this->initialBodyImg = $app->initial_body_logo;
-        $this->initialAlamat = $app->initial_alamat_text;
-        $this->initialMotto = $app->initial_moto_text;
+        $this->initialBodyImg   = $app->initial_body_logo;
+        $this->initialAlamat    = $app->initial_alamat_text;
+        $this->initialMotto     = $app->initial_moto_text;
     }
 
     public function store()
     {
         try {
-            $setting = AppSetting::firstOrNew(['id' => $this->id]);
+            $setting                      = AppSetting::firstOrNew(['id' => $this->id]);
             $setting->initial_domain_logo = $this->initialDomainImg;
             $setting->initial_header_logo = $this->initialHeaderImg;
-            $setting->initial_body_logo = $this->initialBodyImg;
+            $setting->initial_body_logo   = $this->initialBodyImg;
             $setting->initial_alamat_text = $this->initialAlamat;
-            $setting->initial_motto_text = $this->initialMotto;
+            $setting->initial_motto_text  = $this->initialMotto;
             $setting->save();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();

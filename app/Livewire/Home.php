@@ -2,17 +2,17 @@
 
 namespace App\Livewire;
 
-use App\Models\Unit;
-use App\Models\Layanan;
-use Livewire\Component;
+use App\Livewire\Forms\HomePenjaminForm as Form;
 use App\Models\AppSetting;
 use App\Models\KaryawanProfile;
+use App\Models\Layanan;
 use App\Models\PenjaminLayanan;
-use Livewire\Attributes\Layout;
+use App\Models\Unit;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use App\Livewire\Forms\HomePenjaminForm as Form;
-
-// use Intervention\Image\Laravel\Facades\Image;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
 class Home extends Component
 {
@@ -33,11 +33,10 @@ class Home extends Component
     }
 
     #[Layout('components.layouts.beranda')]
+    #[Title('Beranda')]
     public function render()
     {
-        $profile = Cache::remember('profile', 60, function () {
-            return KaryawanProfile::with(['parentUnit','parentLayanan'])->where('user_id', session()->get('userId'))->first();
-        });
+        $profile = KaryawanProfile::with(['parentUnit', 'parentLayanan'])->where('user_id', Auth::id())->first();
         if ($profile == null) {
             return <<<HTML
                 <div>
@@ -46,9 +45,7 @@ class Home extends Component
                 </div>
                 HTML;
         }
-        $layanan = Cache::remember('layanan', 60, function () use ($profile) {
-            return Layanan::find($profile->layanan_id);
-        });
+        $layanan = Layanan::find($profile->layanan_id);
         if ($layanan == null) {
             return <<<HTML
                 <div>
@@ -62,15 +59,16 @@ class Home extends Component
         //                ->where('layanan_id', $layanan->id)
         //                ->get('penjamin_id');
         // });
-        $unit = Cache::remember('unitProfile', 60, function () use ($profile) {
+        $unit = Cache::remember('unitProfile', 120, function () use ($profile) {
             return Unit::with('unitProfil')->find($profile->parentUnit->id);
         });
-        $appSetting = Cache::remember('appSetting', 60, function () {
+        $appSetting = Cache::remember('appSetting', 120, function () {
             return AppSetting::get()->last();
         });
         session()->put('multiPenilaian', $profile->parentUnit->multi_penilaian);
         session()->put('userUnitId', $profile->parentUnit->id);
         session()->put('userLayananId', $profile->parentLayanan->id);
+        session()->put('userLayananNama', $profile->parentLayanan->nama_layanan);
         session()->put('userLayananMulti', $profile->parentLayanan->multi_layanan);
 
         return view('livewire.home')->with([
@@ -78,11 +76,7 @@ class Home extends Component
             'layanan'    => $profile->parentLayanan->nama_layanan,
             'unitNama'   => $profile->parentUnit->nama_unit,
             'unitAlamat' => $unit->unitProfil->unit_alamat ?? $appSetting->initial_alamat_text,
-            'penjamin'   => Cache::remember('penjaminLayanan', 60, function () use ($layanan) {
-                return PenjaminLayanan::distinct()
-                           ->where('layanan_id', $layanan->id)
-                           ->get('penjamin_id');
-            }),
+            'penjamin'   => PenjaminLayanan::where('layanan_id', $layanan->id)->get('penjamin_id'),
             'mainLogo'   => $unit->unitProfil->unit_main_logo ?? 'settings/' . $appSetting->initial_body_logo,
             'subLogo'    => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
             'unitMoto'   => $unit->unitProfil->unit_motto ?? $appSetting->initial_moto_text,

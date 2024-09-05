@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Auth;
 
-use Livewire\Component;
-use App\Models\AppSetting;
-use Livewire\Attributes\Title;
-use Livewire\Attributes\Layout;
 use App\Livewire\Forms\AuthForm;
+use App\Models\AppSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.auth')]
 class Login extends Component
@@ -28,7 +28,7 @@ class Login extends Component
         $this->form->reset('password');
 
         return $this->alert('warning', 'Gagal', [
-            'position'         => 'top',
+            'position'         => 'bottom',
             'timer'            => 3000,
             'toast'            => true,
             'text'             => 'email atau password salah !',
@@ -39,6 +39,7 @@ class Login extends Component
     public function logout()
     {
         Auth::logout();
+        Cache::flush();
         session()->invalidate();
         session()->regenerateToken();
 
@@ -50,7 +51,7 @@ class Login extends Component
     #[Title('Masuk')]
     public function render()
     {
-        $appSetting = Cache::remember('appSetting', 60, function () {
+        $appSetting = Cache::remember('appSetting', 120, function () {
             return AppSetting::get()->last();
         });
 

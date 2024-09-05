@@ -23,7 +23,7 @@ class HomePenjaminForm extends Form
             if (session()->get('multiPenilaian') === true && session()->get('userLayananMulti') === true) {
                 // Multiple
                 return redirect()->route('isi-survey-pelayanan-multi');
-            }else{
+            } else {
                 // Non Multiple
                 return redirect()->route('isi-survey-pelayanan');
             }

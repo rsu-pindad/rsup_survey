@@ -7,7 +7,9 @@
             </a>
             <nav class="nav nav-masthead justify-content-center py-0 text-uppercase">
                 <p class="nav-link fs-5" style="animation: judul 10s infinite;">
-                    Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ \Illuminate\Support\Str::limit($petugas, 5, '..') }})</span><br><span>{{ $penjamin }}</span>
+                    Survey Layanan <span class="fw-bold">{{ $layanan }} ({{ \Illuminate\Support\Str::limit($petugas, 5, '..') }})</span>
+                    <br/>
+                    <span>{{ $penjamin }}</span>
                 </p>
                 <a href="{{ route('roots-dashboard') }}" class="nav-link">
                     <span class="btn btn-info fs-4">
@@ -45,7 +47,7 @@
     </main>
 
     <footer class="mt-auto">
-        <p x-data x-timeout:1000="$el.innerText=$moment().format('LTS')" id="waktuSurvey" class="fs-3 fw-bold">
+        <p x-data x-timeout:1000="$el.innerText=$moment().format('LTS')" id="waktuSurvey" class="fs-3 fw-bold mb-0">
         </p>
     </footer>
 
@@ -87,7 +89,7 @@
                                                 <i class="fa-solid fa-phone"></i>
                                             </span>
                                             <div class="form-floating @error('teleponPasien') is-invalid @enderror">
-                                                <input wire:model="teleponPasien" type="tel" class="form-control @error('teleponPasien') is-invalid @enderror" id="teleponPasien" placeholder="Nomor telepon">
+                                                <input wire:model="teleponPasien" type="text" class="form-control @error('teleponPasien') is-invalid @enderror" id="teleponPasien" placeholder="Nomor telepon">
                                                 <label for="teleponPasien">Nomor Telepon</label>
                                             </div>
                                             <div class="invalid-feedback">

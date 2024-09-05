@@ -2,20 +2,20 @@
 
 namespace App\Livewire\PowerGrid;
 
-use App\Livewire\Attributes\Locked;
 use App\Models\Unit;
+use Livewire\Attributes\Locked;
 use Illuminate\Database\Eloquent\Builder;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use PowerComponents\LivewirePowerGrid\Facades\Rule;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
-use PowerComponents\LivewirePowerGrid\Exportable;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\Exportable;
+use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
 final class UnitTable extends PowerGridComponent
 {
@@ -52,7 +52,7 @@ final class UnitTable extends PowerGridComponent
         $this->showCheckBox();
         $this->persist(
             tableItems: ['columns', 'sort'],
-            prefix: auth()->user()->id
+            prefix: Auth()->id()
         );
 
         return [

@@ -2,23 +2,23 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
-use App\Models\Unit;
-use App\Models\Respon;
-use App\Models\Layanan;
-use Livewire\Component;
-use App\Models\Penjamin;
+use App\Livewire\Forms\SurveyPasienMultiForm as Form;
 use App\Models\AppSetting;
-use Livewire\Attributes\On;
-use App\Models\MultiLayanan;
-use App\Models\LayananRespon;
 use App\Models\KaryawanProfile;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
-use Livewire\Attributes\Renderless;
+use App\Models\Layanan;
+use App\Models\LayananRespon;
+use App\Models\MultiLayanan;
+use App\Models\Penjamin;
+use App\Models\Respon;
+use App\Models\Unit;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Livewire\Forms\SurveyPasienMultiForm as Form;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class HomeSurveyMulti extends Component
 {
@@ -32,14 +32,15 @@ class HomeSurveyMulti extends Component
     public $jumlahLayanan  = 0;
     public $incrementNilai = 0;
 
-    #[Validate('required', message: 'mohon isi nama anda')]
-    #[Validate('min:3', message: 'minimal 3 huruf')]
-    #[Validate('max:50', message: 'maksimal 50 huruf')]
+    // #[Validate('required', message: 'mohon isi nama anda')]
+    // #[Validate('min:3', message: 'minimal 3 huruf')]
+    // #[Validate('max:50', message: 'maksimal 50 huruf')]
     public $namaPasien;
 
-    #[Validate('required', message: 'mohon isi nomor telepon')]
-    #[Validate('numeric')]
-    #[Validate('min:9', message: 'minimal 9 angka')]
+    // #[Validate('required', message: 'mohon isi nomor telepon')]
+    // #[Validate('numeric', message: 'hanya angka')]
+    // #[Validate('min:9', message: 'minimal 9 angka')]
+    // #[Validate('max:13', message: 'maksimal 13 angka')]
     public $teleponPasien;
 
     #[Locked]
@@ -47,6 +48,9 @@ class HomeSurveyMulti extends Component
 
     #[Locked]
     public $namaLayanan = '';
+
+    #[Locked]
+    public $idLayanan = '';
 
     #[Locked]
     public $skorRespon = '';
@@ -65,6 +69,37 @@ class HomeSurveyMulti extends Component
 
     public $time;
 
+    public function rules()
+    {
+        return [
+            'namaPasien' => [
+                'required',
+                'regex:/(^[A-Za-z ]+$)+/',
+                'min:3',
+                'max:50'
+            ],
+            'teleponPasien' => [
+                'required',
+                'regex:/^(081|082|083|085|087|088|089|)+[0-9]/',
+                'min:9',
+                'max:13'
+            ]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'namaPasien.required'    => 'mohon masukan nama anda',
+            'namaPasien.regex'       => 'hanya huruf a-z A-Z dan "spasi"',
+            'namaPasien.min'         => 'minimal 3 huruf',
+            'teleponPasien.required' => 'mohon masukan nomor telepon anda',
+            'teleponPasien.regex'    => 'hanya angka 0-9, awali dengan 08',
+            'teleponPasien.min'      => 'minimal 9 angka',
+            'teleponPasien.max'      => 'maksimal 13 angka',
+        ];
+    }
+
     public function getListeners()
     {
         return [
@@ -72,6 +107,7 @@ class HomeSurveyMulti extends Component
             'cancelled',
             'confirmedDataDiri',
             'confirmedReset',
+            'cancelledDataDiri'
         ];
     }
 
@@ -84,25 +120,12 @@ class HomeSurveyMulti extends Component
         // session()->put('mustQuestion', false);
     }
 
-    #[On('refresh-layanan')]
-    public function rendering()
-    {
-        $this->multiLayanan = Cache::remember('multiLayanan', 60, function () {
-            return MultiLayanan::with('parentLayanan')->where('unit_id', session()->get('userUnitId'))->get();
-        });
-
-        $this->penjamin = Cache::remember('penjamin', 60, function () {
-            return Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
-        });
-
-        $this->jumlahLayanan = count($this->multiLayanan);
-    }
-
     public function cancelled()
     {
         $this->namaRespon  = '';
         $this->skorRespon  = '';
         $this->namaLayanan = '';
+        $this->idLayanan = '';
         $this->hasQuestion = false;
     }
 
@@ -114,10 +137,12 @@ class HomeSurveyMulti extends Component
         }
         session()->push('jawabanPasien', [
             'namaLayanan' => $this->namaLayanan,
+            'idLayanan' => $this->idLayanan,
             'namaRespon'  => $this->namaRespon,
             'skorRespon'  => $this->skorRespon,
             'hasQuestion' => $this->hasQuestion,
         ]);
+
         $this->incrementNilai += 1;
         // $incrementNilaiLokal = $this->incrementNilai;
         // session()->put('incrementNilai', $incrementNilaiLokal);
@@ -147,6 +172,11 @@ class HomeSurveyMulti extends Component
         return $this->dispatch('modal-data-diri')->self();
     }
 
+    public function cancelledDataDiri()
+    {
+        return $this->dispatch('store-jawaban')->self();
+    }
+
     public function confirmedReset()
     {
         $this->incrementNilai    = 0;
@@ -158,6 +188,29 @@ class HomeSurveyMulti extends Component
         $this->dispatch('ulangi-survey-diri');
 
         return $this->dispatch('refresh-layanan')->self();
+    }
+
+    public function saveModal()
+    {
+        $this->validate();
+        session()->put('namaPasien', $this->namaPasien);
+        session()->put('teleponPasien', $this->teleponPasien);
+
+        return $this->dispatch('store-jawaban')->self();
+    }
+
+    #[On('refresh-layanan')]
+    public function rendering()
+    {
+        $this->multiLayanan = Cache::remember('multiLayanan', 60, function () {
+            return MultiLayanan::with('parentLayanan')->where('unit_id', session()->get('userUnitId'))->get();
+        });
+
+        // Bugs Disini
+        $penjamin_session = session()->get('penjamin_layanan_id');
+        $this->penjamin = Penjamin::find($penjamin_session)->nama_penjamin;
+
+        $this->jumlahLayanan = count($this->multiLayanan);
     }
 
     #[On('info-survey')]
@@ -220,6 +273,7 @@ class HomeSurveyMulti extends Component
         $this->hasQuestion = $respon->has_question;
         // dd($this->hasQuestion);
         $this->namaLayanan = Layanan::find($this->selectedLayananId)->nama_layanan;
+        $this->idLayanan = Layanan::find($this->selectedLayananId)->id;
 
         return $this->confirm('Beri nilai ' . $this->namaRespon . ' ?', [
             'icon'              => 'question',
@@ -231,15 +285,6 @@ class HomeSurveyMulti extends Component
         ]);
     }
 
-    public function saveModal()
-    {
-        $this->validate();
-        session()->put('namaPasien', $this->namaPasien);
-        session()->put('teleponPasien', $this->teleponPasien);
-
-        return $this->dispatch('store-jawaban')->self();
-    }
-
     #[On('same-jumlah')]
     public function preStore()
     {
@@ -249,7 +294,16 @@ class HomeSurveyMulti extends Component
             return $this->dispatch('modal-data-diri')->self();
         }
 
-        return $this->dispatch('store-jawaban')->self();
+        return $this->confirm('apakah bersedia isi data diri ?', [
+            'icon'              => 'question',
+            'onConfirmed'       => 'confirmedDataDiri',
+            'allowOutsideClick' => false,
+            'confirmButtonText' => 'Isi',
+            'cancelButtonText'  => 'Tidak',
+            'onDismissed'       => 'cancelledDataDiri'
+        ]);
+
+        // return $this->dispatch('store-jawaban')->self();
     }
 
     #[On('store-jawaban')]
@@ -276,7 +330,8 @@ class HomeSurveyMulti extends Component
             'idLayanan',
             'shift',
             'skorRespon',
-            'namaRespon'
+            'namaRespon',
+            'shift'
         ]);
 
         return $this->flash('success', 'berhasil', [
@@ -290,6 +345,7 @@ class HomeSurveyMulti extends Component
 
     // #[Renderless]
     #[Layout('components.layouts.beranda')]
+    #[Title('Multi Layanan')]
     public function render()
     {
         $layananKaryawan = Cache::remember('layananKaryawan', 60, function () {
