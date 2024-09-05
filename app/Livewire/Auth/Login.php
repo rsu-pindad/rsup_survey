@@ -28,7 +28,7 @@ class Login extends Component
         $this->form->reset('password');
 
         return $this->alert('warning', 'Gagal', [
-            'position'         => 'top',
+            'position'         => 'bottom',
             'timer'            => 3000,
             'toast'            => true,
             'text'             => 'email atau password salah !',

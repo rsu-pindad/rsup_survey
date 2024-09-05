@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Number;
+use Illuminate\Support\Carbon;
 // use PowerComponents\LivewirePowerGrid\Button;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +32,8 @@ class AppServiceProvider extends ServiceProvider
         // Pulse::user(fn ($user) => [
         //     'name' => $user->name,
         // ]);
+        config(['app.locale' => 'id']);
+        Number::useLocale('id');
+        Carbon::setLocale('id');
     }
 }

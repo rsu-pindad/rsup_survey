@@ -32,14 +32,15 @@ class HomeSurveyMulti extends Component
     public $jumlahLayanan  = 0;
     public $incrementNilai = 0;
 
-    #[Validate('required', message: 'mohon isi nama anda')]
-    #[Validate('min:3', message: 'minimal 3 huruf')]
-    #[Validate('max:50', message: 'maksimal 50 huruf')]
+    // #[Validate('required', message: 'mohon isi nama anda')]
+    // #[Validate('min:3', message: 'minimal 3 huruf')]
+    // #[Validate('max:50', message: 'maksimal 50 huruf')]
     public $namaPasien;
 
-    #[Validate('required', message: 'mohon isi nomor telepon')]
-    #[Validate('numeric')]
-    #[Validate('min:9', message: 'minimal 9 angka')]
+    // #[Validate('required', message: 'mohon isi nomor telepon')]
+    // #[Validate('numeric', message: 'hanya angka')]
+    // #[Validate('min:9', message: 'minimal 9 angka')]
+    // #[Validate('max:13', message: 'maksimal 13 angka')]
     public $teleponPasien;
 
     #[Locked]
@@ -47,6 +48,9 @@ class HomeSurveyMulti extends Component
 
     #[Locked]
     public $namaLayanan = '';
+
+    #[Locked]
+    public $idLayanan = '';
 
     #[Locked]
     public $skorRespon = '';
@@ -64,6 +68,37 @@ class HomeSurveyMulti extends Component
     public $multiLayanan = [];
 
     public $time;
+
+    public function rules()
+    {
+        return [
+            'namaPasien' => [
+                'required',
+                'regex:/(^[A-Za-z ]+$)+/',
+                'min:3',
+                'max:50'
+            ],
+            'teleponPasien' => [
+                'required',
+                'regex:/^(081|082|083|085|087|088|089|)+[0-9]/',
+                'min:9',
+                'max:13'
+            ]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'namaPasien.required'    => 'mohon masukan nama anda',
+            'namaPasien.regex'       => 'hanya huruf a-z A-Z dan "spasi"',
+            'namaPasien.min'         => 'minimal 3 huruf',
+            'teleponPasien.required' => 'mohon masukan nomor telepon anda',
+            'teleponPasien.regex'    => 'hanya angka 0-9, awali dengan 08',
+            'teleponPasien.min'      => 'minimal 9 angka',
+            'teleponPasien.max'      => 'maksimal 13 angka',
+        ];
+    }
 
     public function getListeners()
     {
@@ -90,6 +125,7 @@ class HomeSurveyMulti extends Component
         $this->namaRespon  = '';
         $this->skorRespon  = '';
         $this->namaLayanan = '';
+        $this->idLayanan = '';
         $this->hasQuestion = false;
     }
 
@@ -101,6 +137,7 @@ class HomeSurveyMulti extends Component
         }
         session()->push('jawabanPasien', [
             'namaLayanan' => $this->namaLayanan,
+            'idLayanan' => $this->idLayanan,
             'namaRespon'  => $this->namaRespon,
             'skorRespon'  => $this->skorRespon,
             'hasQuestion' => $this->hasQuestion,
@@ -169,7 +206,9 @@ class HomeSurveyMulti extends Component
             return MultiLayanan::with('parentLayanan')->where('unit_id', session()->get('userUnitId'))->get();
         });
 
-        $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'))->nama_penjamin;
+        // Bugs Disini
+        $penjamin_session = session()->get('penjamin_layanan_id');
+        $this->penjamin = Penjamin::find($penjamin_session)->nama_penjamin;
 
         $this->jumlahLayanan = count($this->multiLayanan);
     }
@@ -234,6 +273,7 @@ class HomeSurveyMulti extends Component
         $this->hasQuestion = $respon->has_question;
         // dd($this->hasQuestion);
         $this->namaLayanan = Layanan::find($this->selectedLayananId)->nama_layanan;
+        $this->idLayanan = Layanan::find($this->selectedLayananId)->id;
 
         return $this->confirm('Beri nilai ' . $this->namaRespon . ' ?', [
             'icon'              => 'question',
@@ -290,7 +330,8 @@ class HomeSurveyMulti extends Component
             'idLayanan',
             'shift',
             'skorRespon',
-            'namaRespon'
+            'namaRespon',
+            'shift'
         ]);
 
         return $this->flash('success', 'berhasil', [
