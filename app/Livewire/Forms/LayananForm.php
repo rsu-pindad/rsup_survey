@@ -3,7 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Layanan;
-use Livewire\Attribures\Locked;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -18,23 +18,25 @@ class LayananForm extends Form
     public $namaLayanan;
 
     public $multiLayanan = false;
+    public $layanan;
 
-    public function setLayanan(Layanan $layanan)
+    public function setLayanan(Layanan $l)
     {
-        $this->layanan = $layanan;
-        $this->id = $layanan->id;
-        $this->namaLayanan = $layanan->nama_layanan;
-        $this->multiLayanan = $layanan->multi_layanan;
+        $this->layanan      = $l;
+        $this->id           = $l->id;
+        $this->namaLayanan  = $l->nama_layanan;
+        $this->multiLayanan = $l->multi_layanan;
     }
 
     public function store()
     {
         try {
-            $layanan = new Layanan;
-            $layanan->nama_layanan = $this->namaLayanan;
+            $layanan                = new Layanan;
+            $layanan->nama_layanan  = $this->namaLayanan;
             $layanan->multi_layanan = $this->multiLayanan;
             $layanan->save();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -44,10 +46,11 @@ class LayananForm extends Form
     public function update()
     {
         try {
-            $layanan = Layanan::find($this->id);
-            $layanan->nama_layanan = $this->namaLayanan;
+            $layanan                = Layanan::find($this->id);
+            $layanan->nama_layanan  = $this->namaLayanan;
             $layanan->multi_layanan = $this->multiLayanan;
             $layanan->save();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();

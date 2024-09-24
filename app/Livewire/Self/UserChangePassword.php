@@ -24,14 +24,14 @@ class UserChangePassword extends Component
         if ($update) {
             return $this->flash('success', 'berhasil', [
                 'position' => 'center',
-                'toast' => true,
-                'text' => 'password berhasil diperbarui',
+                'toast'    => true,
+                'text'     => 'password berhasil diperbarui',
             ], route('root-self'));
         } else {
             return $this->alert('warning', 'gagal', [
                 'position' => 'center',
-                'toast' => true,
-                'text' => 'password lama salah',
+                'toast'    => true,
+                'text'     => 'password lama salah',
             ]);
         }
     }

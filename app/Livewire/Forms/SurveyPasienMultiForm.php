@@ -8,13 +8,14 @@ use Carbon\Carbon;
 use Livewire\Form;
 // use Revolution\Google\Sheets\Facades\Sheets;
 use App\Jobs\GoogleSheetInsertMulti;
-use Illuminate\Support\Facades\Cache;
 use App\Jobs\InsertSurveyPelangganMulti;
+use Illuminate\Support\Facades\Cache;
 
 class SurveyPasienMultiForm extends Form
 {
     public $time;
     public $timeformat;
+    public $timeformatDb;
     public $namaPasien;
     public $teleponPasien;
     public $karyawan;
@@ -33,8 +34,8 @@ class SurveyPasienMultiForm extends Form
                 return KaryawanProfile::with(['parentUnit', 'parentLayanan'])->find(session()->get('karyawan_id'));
             });
             $this->penjamin = Penjamin::find(session()->get('penjamin_layanan_id'));
-            $shiftHours = now()->hour;
-            $shift = '';
+            $shiftHours     = now()->hour;
+            $shift          = '';
             if (($shiftHours >= 7) && ($shiftHours <= 15)) {
                 $shift = 'pagi';
             } else if (($shiftHours >= 16) && ($shiftHours <= 23)) {
@@ -42,8 +43,8 @@ class SurveyPasienMultiForm extends Form
             } else {
                 $shift = 'malam';
             }
-            $result         = [];
-            $resultsDb      = [];
+            $result    = [];
+            $resultsDb = [];
             foreach (session()->get('jawabanPasien') as $keys => $items) {
                 $result[] = [
                     'TGL_SURVEY'            => $this->timeformat,
@@ -63,16 +64,16 @@ class SurveyPasienMultiForm extends Form
                     'handphone_pelanggan' => $items['hasQuestion'] === true ? $this->teleponPasien : null,
                     'shift'               => $shift,
                     'nilai_skor'          => $items['namaRespon'],
-                    'survey_masuk'        => $this->timeformatDb
+                    'survey_masuk'        => $this->timeformatDb,
                 ];
-                
+
                 $insertDb = new InsertSurveyPelangganMulti($resultsDb);
                 dispatch($insertDb)->onQueue('MultiDbInsert');
             }
-            
+
             $sheets = new GoogleSheetInsertMulti($result);
             dispatch($sheets)->onQueue('MultiGoogleInsert');
-    
+
             // dd($resultsDb);
 
             return true;

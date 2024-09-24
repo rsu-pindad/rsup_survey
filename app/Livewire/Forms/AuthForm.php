@@ -21,6 +21,7 @@ class AuthForm extends Form
 
     public $remember;
     public $time;
+    public $timeformat;
 
     public function auth()
     {

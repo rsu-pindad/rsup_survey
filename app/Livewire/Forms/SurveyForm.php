@@ -32,6 +32,7 @@ class SurveyForm extends Form
             session()->put('handphone_pelanggan', $this->phone);
             session()->put('shift', 1);
             session()->put('nilai_skor', 0);
+
             return true;
         } catch (\Throwable $th) {
             // Log::info($th);

@@ -18,22 +18,25 @@ class LayananResponForm extends Form
     #[Validate('required', message: 'pilih nama respon')]
     public $idRespon;
 
-    public function setLayananRespon(LayananRespon $layananRepson)
+    public $layananRepson;
+
+    public function setLayananRespon(LayananRespon $lr)
     {
-        $this->layananRepson = $layananRepson;
-        $this->id = $layananRepson->id;
-        $this->idLayanan = $layananRepson->layanan_id;
-        $this->idRespon = $layananRepson->respon_id;
+        $this->layananRepson = $lr;
+        $this->id            = $lr->id;
+        $this->idLayanan     = $lr->layanan_id;
+        $this->idRespon      = $lr->respon_id;
     }
 
     public function store()
     {
         try {
-            $layananRepson = new LayananRespon;
+            $layananRepson             = new LayananRespon;
             $layananRepson->layanan_id = $this->idLayanan;
-            $layananRepson->respon_id = $this->idRespon;
+            $layananRepson->respon_id  = $this->idRespon;
             $layananRepson->save();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -43,10 +46,11 @@ class LayananResponForm extends Form
     public function update()
     {
         try {
-            $layananRepson = LayananRespon::find($this->id);
+            $layananRepson             = LayananRespon::find($this->id);
             $layananRepson->layanan_id = $this->idLayanan;
-            $layananRepson->respon_id = $this->idRespon;
+            $layananRepson->respon_id  = $this->idRespon;
             $layananRepson->save();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();

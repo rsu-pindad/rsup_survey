@@ -13,7 +13,7 @@ class UserProfileForm extends Form
 {
     #[Locked]
     public $id;
-    
+
     #[Locked]
     public $userId;
 
@@ -32,30 +32,32 @@ class UserProfileForm extends Form
     #[Validate('required')]
     public $userEmail;
 
+    public $profileKaryawan;
+    public $user;
+
     public function setProfile($id)
     {
-        $karyawanProfile = KaryawanProfile::with(['parentKaryawan'])->find($id);
+        $karyawanProfile       = KaryawanProfile::with(['parentKaryawan'])->find($id);
         $this->profileKaryawan = $karyawanProfile;
-        $this->id = $karyawanProfile->id;
-        $this->nppKaryawan = $karyawanProfile->parentKaryawan->npp_karyawan;
-        $this->unitKaryawan = $karyawanProfile->parentUnit->nama_unit;
+        $this->id              = $karyawanProfile->id;
+        $this->nppKaryawan     = $karyawanProfile->parentKaryawan->npp_karyawan;
+        $this->unitKaryawan    = $karyawanProfile->parentUnit->nama_unit;
         $this->layananKaryawan = $karyawanProfile->parentLayanan->nama_layanan;
-        $this->namaKaryawan = $karyawanProfile->nama_karyawanprofile;
+        $this->namaKaryawan    = $karyawanProfile->nama_karyawanprofile;
     }
 
     public function setUser($id)
     {
-        $user = User::find($id);
-        $this->user = $user;
-        $this->userId = $user->id;
-        $this->userEmail = $user->email;
+        $this->user      = User::find($id);
+        $this->userId    = $this->user->id;
+        $this->userEmail = $this->user->email;
     }
 
     public function updateUser()
     {
         $this->validateOnly('userEmail');
         try {
-            $user = User::find($this->userId);
+            $user        = User::find($this->userId);
             $user->email = $this->userEmail;
             $user->save();
 
@@ -74,11 +76,11 @@ class UserProfileForm extends Form
         $this->validateOnly('namaKaryawan');
         try {
             $statement = DB::transaction(function () {
-                $karyawanProfile = KaryawanProfile::find($this->id);
+                $karyawanProfile                       = KaryawanProfile::find($this->id);
                 $karyawanProfile->nama_karyawanprofile = $this->namaKaryawan;
                 $karyawanProfile->save();
 
-                $user = User::find(session()->get('userId'));
+                $user       = User::find(session()->get('userId'));
                 $user->name = $this->namaKaryawan;
                 $user->save();
             });

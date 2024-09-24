@@ -3,11 +3,11 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Karyawan;
-use App\Models\User;
 use App\Models\KaryawanProfile;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Livewire\Attribures\Locked;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -32,17 +32,19 @@ class KaryawanProfileEditForm extends Form
     public $namaKaryawan;
 
     public $idKaryawanOld;
+    public $karyawanProfile;
+    public $nows;
 
     public function setKaryawanProfile(KaryawanProfile $karyawanProfile)
     {
         $this->karyawanProfile = $karyawanProfile;
-        $this->id = $karyawanProfile->id;
-        $this->idUser = $karyawanProfile->user_id;
-        $this->idKaryawan = $karyawanProfile->karyawan_id;
-        $this->idKaryawanOld = $karyawanProfile->karyawan_id;
-        $this->idUnit = $karyawanProfile->unit_id;
-        $this->idLayanan = $karyawanProfile->layanan_id;
-        $this->namaKaryawan = $karyawanProfile->nama_karyawanprofile;
+        $this->id              = $karyawanProfile->id;
+        $this->idUser          = $karyawanProfile->user_id;
+        $this->idKaryawan      = $karyawanProfile->karyawan_id;
+        $this->idKaryawanOld   = $karyawanProfile->karyawan_id;
+        $this->idUnit          = $karyawanProfile->unit_id;
+        $this->idLayanan       = $karyawanProfile->layanan_id;
+        $this->namaKaryawan    = $karyawanProfile->nama_karyawanprofile;
         // $this->emailKaryawan = User::find($this->idUser)->email;
     }
 
@@ -50,24 +52,25 @@ class KaryawanProfileEditForm extends Form
     {
         $this->validate();
         try {
-            $nows = Carbon::now()->setTimezone('Asia/Jakarta');
+            $this->nows = Carbon::now()->setTimezone('Asia/Jakarta');
             $statement = DB::transaction(function () {
-                $karyawan = Karyawan::find($this->idKaryawan);
-                $karyawan->taken = 0;
-                $karyawan->active = 1;
-                $karyawan->updated_at = $nows;
+                $karyawan             = Karyawan::find($this->idKaryawan);
+                $karyawan->taken      = 0;
+                $karyawan->active     = 1;
+                $karyawan->updated_at = $this->nows;
                 $karyawan->save();
-                $karyawanProfile = new KaryawanProfile;
-                $karyawanProfile->user_id = $this->idUser;
-                $karyawanProfile->karyawan_id = $this->idKaryawan;
-                $karyawanProfile->unit_id = $this->idUnit;
-                $karyawanProfile->layanan_id = $this->idLayanan;
+                $karyawanProfile                       = new KaryawanProfile;
+                $karyawanProfile->user_id              = $this->idUser;
+                $karyawanProfile->karyawan_id          = $this->idKaryawan;
+                $karyawanProfile->unit_id              = $this->idUnit;
+                $karyawanProfile->layanan_id           = $this->idLayanan;
                 $karyawanProfile->nama_karyawanprofile = $this->namaKaryawan;
                 $karyawanProfile->save();
             }, 5);
             // dd($karyawanProfile);
             if ($statement) {
                 $this->reset();
+
                 return true;
             } else {
                 return false;
@@ -81,19 +84,19 @@ class KaryawanProfileEditForm extends Form
     {
         // $this->validateOnly('idKaryawan');
         try {
-            $nows = Carbon::now()->setTimezone('Asia/Jakarta');
+            $this->nows = Carbon::now()->setTimezone('Asia/Jakarta');
             $statement = DB::transaction(function () {
                 if ($this->idKaryawanOld != $this->idKaryawan) {
-                    $karyawanOld = Karyawan::find($this->idKaryawanOld);
-                    $karyawanOld->taken = 0;
-                    $karyawanOld->active = 1;
-                    $karyawanOld->updated_at = $nows;
+                    $karyawanOld             = Karyawan::find($this->idKaryawanOld);
+                    $karyawanOld->taken      = 0;
+                    $karyawanOld->active     = 1;
+                    $karyawanOld->updated_at = $this->nows;
                     $karyawanOld->save();
 
-                    $karyawan = Karyawan::find($this->idKaryawan);
-                    $karyawan->taken = 1;
-                    $karyawan->active = 1;
-                    $karyawan->updated_at = $nows;
+                    $karyawan             = Karyawan::find($this->idKaryawan);
+                    $karyawan->taken      = 1;
+                    $karyawan->active     = 1;
+                    $karyawan->updated_at = $this->nows;
                     $karyawan->save();
                 }
 
@@ -101,14 +104,16 @@ class KaryawanProfileEditForm extends Form
                 if ($this->idKaryawanOld != $this->idKaryawan) {
                     $karyawanProfile->karyawan_id = $this->idKaryawan;
                 }
-                $karyawanProfile->unit_id = $this->idUnit;
-                $karyawanProfile->layanan_id = $this->idLayanan;
+                $karyawanProfile->unit_id              = $this->idUnit;
+                $karyawanProfile->layanan_id           = $this->idLayanan;
                 $karyawanProfile->nama_karyawanprofile = $this->namaKaryawan;
                 $karyawanProfile->save();
+
                 return;
             }, 5);
             if ($statement == null) {
                 $this->reset();
+
                 return true;
             } else {
                 return false;
