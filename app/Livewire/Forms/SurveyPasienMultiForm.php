@@ -25,10 +25,10 @@ class SurveyPasienMultiForm extends Form
     public function save()
     {
         try {
-            Carbon::setLocale('id');
-            $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
-            $this->tglformat = Carbon::parse($this->time)->translatedFormat('d/m/Y');
-            $this->timeformat = Carbon::parse($this->time)->translatedFormat('H:i');
+            // Carbon::setLocale('id');
+            $this->time = Carbon::now()->locale('id_ID')->setTimezone('Asia/Jakarta');
+            $this->tglformat = Carbon::parse($this->time)->format('Y;m;d');
+            $this->timeformat = Carbon::parse($this->time)->format('H:i');
             $this->timeformatDb = Carbon::parse($this->time)->translatedFormat('Y-m-d H:i:s');
             $this->namaPasien = session()->get('namaPasien') ?? '';
             $this->teleponPasien = session()->get('teleponPasien') ?? '';
@@ -49,12 +49,12 @@ class SurveyPasienMultiForm extends Form
             $resultsDb = [];
             foreach (session()->get('jawabanPasien') as $keys => $items) {
                 $result[] = [
-                    'TGL_SURVEY'            => $this->tglformat,
+                    'TGL_SURVEY'            => '=DATE(' . $this->tglformat . ')',
                     'PEGAWAI'               => $this->karyawan->nama_karyawanprofile,
                     'UNIT'                  => $this->karyawan->parentUnit->nama_unit,
                     'PELAYANAN'             => $items['namaLayanan'],
                     'NAMA_PASIEN'           => $items['hasQuestion'] === true ? $this->namaPasien : session()->get('namaPasien'),
-                    'TELEPON_PASIEN'        => $items['hasQuestion'] === true ? '+62'.$this->teleponPasien : session()->get('teleponPasien'),
+                    'TELEPON_PASIEN'        => $items['hasQuestion'] === true ? "'" . $this->teleponPasien : "'" . session()->get('teleponPasien'),
                     'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                     'NILAI_SURVEY_KEPUASAN' => $items['namaRespon'],
                     'JAM_SURVEY'            => $this->timeformat,
