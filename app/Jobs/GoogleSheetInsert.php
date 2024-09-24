@@ -3,10 +3,10 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 class GoogleSheetInsert implements ShouldQueue
@@ -30,6 +30,8 @@ class GoogleSheetInsert implements ShouldQueue
     {
         Sheets::spreadsheet(config('google.config.sheet_id'))
             ->sheet(config('google.config.sheet_name'))
-            ->append($this->items);
+            // ->valueRenderOption('FORMATTED_VALUE')
+            // ->dateTimeRenderOption('SERIAL_NUMBER')
+            ->append($this->items, 'USER_ENTERED', 'INSERT_ROWS');
     }
 }

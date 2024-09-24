@@ -21,18 +21,18 @@ class RoleSeeder extends Seeder
             ['name' => $name],
             ['name' => $name]
         );
-        // Role::updateOrCreate(
-        //     ['name' => 'employee'],
-        //     ['name' => 'employee']
-        // );
-        // Role::updateOrCreate(
-        //     ['name' => 'sdm'],
-        //     ['name' => 'sdm']
-        // );
-        // Role::updateOrCreate(
-        //     ['name' => 'direksi'],
-        //     ['name' => 'direksi']
-        // );
+        Role::updateOrCreate(
+            ['name' => 'employee'],
+            ['name' => 'employee']
+        );
+        Role::updateOrCreate(
+            ['name' => 'sdm'],
+            ['name' => 'sdm']
+        );
+        Role::updateOrCreate(
+            ['name' => 'direksi'],
+            ['name' => 'direksi']
+        );
 
     }
 }

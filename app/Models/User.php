@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -55,6 +56,11 @@ class User extends Authenticatable
     public function pivotsKaryawanProfile(): BelongsToMany
     {
         return $this->belongsToMany(LayananRespon::class, 'karyawanprofile', 'user_id', 'id');
+    }
+
+    public function parentKaryawanProfile() : HasOne
+    {
+        return $this->hasOne(KaryawanProfile::class, 'user_id', 'id');
     }
 
     protected static function boot()

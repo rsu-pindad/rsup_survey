@@ -35,6 +35,7 @@ use App\Livewire\SuperAdmin\User\UserManage;
 use App\Livewire\Home;
 use App\Livewire\HomeSurvey;
 use App\Livewire\HomeSurveyMulti;
+use App\Livewire\LockerStudio;
 use App\Livewire\Roots;
 use App\Livewire\SurveyPetugasPelayanan;
 use Illuminate\Support\Facades\Route;
@@ -119,6 +120,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('role:employee|super-admin')->group(function () {
         Route::get('/petugas', SurveyPetugas::class)->name('root-survey-petugas');
+        Route::get('/locker-studio', LockerStudio::class)->name('root-survey-locker-studio');
         Route::get('/laporan', Laporan::class)->name('root-laporan');
         Route::get('/self', UserSetting::class)->name('root-self');
         // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');

@@ -30,6 +30,6 @@ class GoogleSheetInsertMulti implements ShouldQueue
     {
         Sheets::spreadsheet(config('google.config.sheet_id'))
             ->sheet(config('google.config.sheet_name'))
-            ->append($this->items);
+            ->append($this->items, 'USER_ENTERED', 'INSERT_ROWS');
     }
 }
