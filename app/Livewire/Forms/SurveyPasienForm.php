@@ -54,7 +54,7 @@ class SurveyPasienForm extends Form
                 'UNIT'                  => $this->karyawan->parentUnit->nama_unit,
                 'PELAYANAN'             => session()->get('userLayananNama') ?? '-',
                 'NAMA_PASIEN'           => session()->get('namaPasien') ?? '-',
-                'TELEPON_PASIEN'        => session()->get('teleponPasien') ?? '-',
+                'TELEPON_PASIEN'        => '+62' . session()->get('teleponPasien') ?? '-',
                 'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                 'NILAI_SURVEY_KEPUASAN' => session()->get('namaRespon'),
                 'JAM_SURVEY'            => $this->timeformat,
