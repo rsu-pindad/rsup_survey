@@ -6,8 +6,8 @@ use App\Jobs\GoogleSheetInsert;
 use App\Jobs\InsertSurveyPelangganSingle;
 use App\Models\KaryawanProfile;
 use App\Models\Penjamin;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Carbon;
 use Livewire\Form;
 
 // use Revolution\Google\Sheets\Facades\Sheets;
@@ -15,6 +15,7 @@ use Livewire\Form;
 class SurveyPasienForm extends Form
 {
     public $time;
+    public $tglformat;
     public $timeformat;
     public $timeformatDb;
     public $karyawan;
@@ -30,7 +31,9 @@ class SurveyPasienForm extends Form
             // session()->get('skorRespon');
             // session()->get('namaRespon');
             $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
-            $this->timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
+            // $this->timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
+            $this->tglformat = Carbon::parse($this->time)->translatedFormat('d/m/Y');
+            $this->timeformat = Carbon::parse($this->time)->translatedFormat('H:i');
             $this->timeformatDb = Carbon::parse($this->time)->translatedFormat('Y-m-d H:i:s');
             $this->karyawan = Cache::remember('karyawanProfileSingle', 60, function () {
                 return KaryawanProfile::with(['parentUnit', 'parentLayanan'])->find(session()->get('karyawan_id'));
@@ -46,7 +49,7 @@ class SurveyPasienForm extends Form
                 $shift = 'malam';
             }
             $result[] = [
-                'TGL_SURVEY'            => $this->timeformat,
+                'TGL_SURVEY'            => $this->tglformat,
                 'PEGAWAI'               => $this->karyawan->nama_karyawanprofile,
                 'UNIT'                  => $this->karyawan->parentUnit->nama_unit,
                 'PELAYANAN'             => session()->get('userLayananNama') ?? '-',
@@ -54,6 +57,7 @@ class SurveyPasienForm extends Form
                 'TELEPON_PASIEN'        => session()->get('teleponPasien') ?? '-',
                 'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                 'NILAI_SURVEY_KEPUASAN' => session()->get('namaRespon'),
+                'JAM_SURVEY'            => $this->timeformat,
             ];
             // ];
 

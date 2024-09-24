@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Cache;
 class SurveyPasienMultiForm extends Form
 {
     public $time;
+    public $tglformat;
     public $timeformat;
     public $timeformatDb;
     public $namaPasien;
@@ -26,7 +27,8 @@ class SurveyPasienMultiForm extends Form
         try {
             Carbon::setLocale('id');
             $this->time = Carbon::now()->setTimezone('Asia/Jakarta');
-            $this->timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
+            $this->tglformat = Carbon::parse($this->time)->translatedFormat('d/m/Y');
+            $this->timeformat = Carbon::parse($this->time)->translatedFormat('H:i');
             $this->timeformatDb = Carbon::parse($this->time)->translatedFormat('Y-m-d H:i:s');
             $this->namaPasien = session()->get('namaPasien') ?? '';
             $this->teleponPasien = session()->get('teleponPasien') ?? '';
@@ -47,7 +49,7 @@ class SurveyPasienMultiForm extends Form
             $resultsDb = [];
             foreach (session()->get('jawabanPasien') as $keys => $items) {
                 $result[] = [
-                    'TGL_SURVEY'            => $this->timeformat,
+                    'TGL_SURVEY'            => $this->tglformat,
                     'PEGAWAI'               => $this->karyawan->nama_karyawanprofile,
                     'UNIT'                  => $this->karyawan->parentUnit->nama_unit,
                     'PELAYANAN'             => $items['namaLayanan'],
@@ -55,6 +57,7 @@ class SurveyPasienMultiForm extends Form
                     'TELEPON_PASIEN'        => $items['hasQuestion'] === true ? $this->teleponPasien : session()->get('teleponPasien'),
                     'PENJAMIN'              => $this->penjamin->nama_penjamin ?? 'Invalid',
                     'NILAI_SURVEY_KEPUASAN' => $items['namaRespon'],
+                    'JAM_SURVEY'            => $this->timeformat,
                 ];
                 $resultsDb = [
                     'karyawan_id'         => intval($this->karyawan->id),
