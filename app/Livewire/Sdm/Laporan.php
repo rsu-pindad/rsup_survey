@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Sdm;
 
-use Livewire\Component;
 use App\Models\Respon;
+use Livewire\Component;
 
 class Laporan extends Component
 {
@@ -13,11 +13,11 @@ class Laporan extends Component
 
         return view('livewire.sdm.laporan')->with([
             'library' => 'chartjs',
-            'title' => 'Respon Title',
+            'title'   => 'Respon Title',
             'builder' => $responTable,
-            'poll' => 2,
-            'width' => 500,
-            'height' => 250,
+            'poll'    => 2,
+            'width'   => 500,
+            'height'  => 250,
         ]);
     }
 }

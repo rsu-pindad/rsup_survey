@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class RoleLayananResponSeeder extends Seeder
 {

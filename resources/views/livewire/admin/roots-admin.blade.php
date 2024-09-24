@@ -45,6 +45,11 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page-survey" href="{{ route('root-survey-petugas') }}" wire:navigate="false">Survey</a>
                     </li>
+                    @hasexactroles('monitor')
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page-locker-studio" href="{{ route('root-survey-locker-studio') }}" wire:navigate="false">Locker Studio</a>
+                    </li>
+                    @endhasexactroles
                     @endcannot
                     @hasexactroles('employee')
                     @can('view_laporan')

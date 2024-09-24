@@ -18,22 +18,25 @@ class PenjaminLayananForm extends Form
     #[Validate('required', message: 'pilih nama layanan')]
     public $idLayanan;
 
-    public function setPenjaminLayanan(PenjaminLayanan $penjaminLayanan)
+    public $penjaminLayanan;
+
+    public function setPenjaminLayanan(PenjaminLayanan $pl)
     {
-        $this->penjaminLayanan = $penjaminLayanan;
-        $this->id = $penjaminLayanan->id;
-        $this->idPenjamin = $penjaminLayanan->penjamin_id;
-        $this->idLayanan = $penjaminLayanan->layanan_id;
+        $this->penjaminLayanan = $pl;
+        $this->id              = $pl->id;
+        $this->idPenjamin      = $pl->penjamin_id;
+        $this->idLayanan       = $pl->layanan_id;
     }
 
     public function store()
     {
         try {
-            $penjaminLayanan = new PenjaminLayanan;
+            $penjaminLayanan              = new PenjaminLayanan;
             $penjaminLayanan->penjamin_id = $this->idPenjamin;
-            $penjaminLayanan->layanan_id = $this->idLayanan;
+            $penjaminLayanan->layanan_id  = $this->idLayanan;
             $penjaminLayanan->save();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -43,10 +46,11 @@ class PenjaminLayananForm extends Form
     public function update()
     {
         try {
-            $penjaminLayanan = PenjaminLayanan::find($this->id);
+            $penjaminLayanan              = PenjaminLayanan::find($this->id);
             $penjaminLayanan->penjamin_id = $this->idPenjamin;
-            $penjaminLayanan->layanan_id = $this->idLayanan;
+            $penjaminLayanan->layanan_id  = $this->idLayanan;
             $penjaminLayanan->save();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();

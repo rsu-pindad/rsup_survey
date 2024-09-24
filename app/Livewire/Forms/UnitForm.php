@@ -17,24 +17,26 @@ class UnitForm extends Form
     #[Validate('max:50', message: 'maksimal karakter 50')]
     public $namaUnit;
 
+    public $unit;
     public $multiPenilaian = false;
 
-    public function setUnit(Unit $unit)
+    public function setUnit(Unit $u)
     {
-        $this->unit = $unit;
-        $this->id = $unit->id;
-        $this->namaUnit = $unit->nama_unit;
-        $this->multiPenilaian = $unit->multi_penilaian;
+        $this->unit           = $u;
+        $this->id             = $u->id;
+        $this->namaUnit       = $u->nama_unit;
+        $this->multiPenilaian = $u->multi_penilaian;
     }
 
     public function store()
     {
         try {
-            $unit = new Unit;
-            $unit->nama_unit = $this->namaUnit;
+            $unit                  = new Unit;
+            $unit->nama_unit       = $this->namaUnit;
             $unit->multi_penilaian = $this->multiPenilaian;
             $unit->save();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -44,13 +46,14 @@ class UnitForm extends Form
     public function update()
     {
         try {
-            $unit = Unit::find($this->id);
-            $unit->nama_unit = $this->namaUnit;
+            $unit                  = Unit::find($this->id);
+            $unit->nama_unit       = $this->namaUnit;
             $unit->multi_penilaian = $this->multiPenilaian;
-            if($this->multiPenilaian == false){
+            if ($this->multiPenilaian == false) {
                 $unit->pivotsMultiLayanan()->detach();
             }
             $unit->save();
+
             return $unit;
         } catch (\Throwable $th) {
             return $th->getMessage();

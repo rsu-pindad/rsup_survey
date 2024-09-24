@@ -32,7 +32,7 @@ return [
                 'pt_BR' => [
                     'locale'     => 'pt',
                     'dateFormat' => 'd/m/Y H:i',
-                    'enableTime' => true,
+                    'enableTime' => false,
                     'time_24hr'  => true,
                 ],
             ],
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'filter' => 'outside',
+    'filter' => 'inline',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'persist_driver' => 'cookies',
+    'persist_driver' => 'session',
 
     /*
     |--------------------------------------------------------------------------

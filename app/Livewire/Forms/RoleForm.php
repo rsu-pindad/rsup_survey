@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Spatie\Permission\Models\Role;
@@ -16,21 +17,24 @@ class RoleForm extends Form
     #[Validate('max:30', message: 'maksimal 30 huruf')]
     public $namaRole;
 
-    public function setRole(Role $role)
+    public $role;
+
+    public function setRole(Role $r)
     {
-        $this->role = $role;
-        $this->id = $role->id;
-        $this->namaRole = $role->name;
+        $this->role     = $r;
+        $this->id       = $r->id;
+        $this->namaRole = $r->name;
     }
 
     public function store()
     {
         $this->validate();
         try {
-            $role = new Role;
+            $role       = new Role;
             $role->name = $this->namaRole;
             $role->save();
             $this->reset();
+
             return $role;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -41,10 +45,11 @@ class RoleForm extends Form
     {
         $this->validate();
         try {
-            $role = Role::find($this->id);
+            $role       = Role::find($this->id);
             $role->name = $this->namaRole;
             $role->save();
             $this->reset();
+
             return $role;
         } catch (\Throwable $th) {
             return $th->getMessage();

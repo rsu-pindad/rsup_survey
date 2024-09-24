@@ -13,18 +13,14 @@ class ResponForm extends Form
 
     #[Locked]
     public $id;
-    
-    public $namaRespon = '';
 
-    public $iconRespon = '';
-
-    public $skorRespon = '';
-
-    public $urutanRespon = '';
-
+    public $namaRespon     = '';
+    public $iconRespon     = '';
+    public $skorRespon     = '';
+    public $urutanRespon   = '';
     public $tagWarnaRespon = '';
-
-    public $hasQuestion = false;
+    public $hasQuestion    = false;
+    public $respons;
 
     // public function boot()
     // {
@@ -75,61 +71,62 @@ class ResponForm extends Form
         return [
             'namaRespon' => [
                 'required' => 'masukan nama respon',
-                'unique' => 'nama respon sudah terpakai',
-                'min' => 'minimal 4 karakter',
-                'max' => 'maksimal 50 karakter',
+                'unique'   => 'nama respon sudah terpakai',
+                'min'      => 'minimal 4 karakter',
+                'max'      => 'maksimal 50 karakter',
             ],
             'iconRespon' => [
                 'required' => 'masukan icon respon',
-                'unique' => 'icon respon sudah terpakai',
-                'min' => 'minimal 6 karakter',
-                'max' => 'maksimal 32 karakter',
+                'unique'   => 'icon respon sudah terpakai',
+                'min'      => 'minimal 6 karakter',
+                'max'      => 'maksimal 32 karakter',
             ],
             'skorRespon' => [
                 'required' => 'masukan skor respon',
-                'unique' => 'skor respon sudah terpakai',
-                'min' => 'minimal angka 0',
-                'max' => 'maksimal angka 9',
+                'unique'   => 'skor respon sudah terpakai',
+                'min'      => 'minimal angka 0',
+                'max'      => 'maksimal angka 9',
             ],
             'urutanRespon' => [
                 'required' => 'masukan urutan respon',
-                'unique' => 'urutan respon sudah terpakai',
-                'min' => 'minimal 1 angka',
-                'max' => 'maksimal 10 angka',
+                'unique'   => 'urutan respon sudah terpakai',
+                'min'      => 'minimal 1 angka',
+                'max'      => 'maksimal 10 angka',
             ],
             'tagWarnaRespon' => [
-                'required' => 'masukan tag warna respon',
-                'unique' => 'tag warna respon sudah terpakai',
+                'required'  => 'masukan tag warna respon',
+                'unique'    => 'tag warna respon sudah terpakai',
                 'hex_color' => 'format warna hex',
             ],
         ];
     }
 
-    public function setRespon(?Respon $respons)
+    public function setRespon(?Respon $r)
     {
-        $this->respons = $respons;
-        $this->id = $respons->id;
-        $this->namaRespon = $respons->nama_respon;
-        $this->iconRespon = $respons->icon_respon;
-        $this->tagWarnaRespon = $respons->tag_warna_respon;
-        $this->hasQuestion = $respons->has_question ?? false;
-        $this->skorRespon = $respons->skor_respon;
-        $this->urutanRespon = $respons->urutan_respon;
+        $this->respons        = $r;
+        $this->id             = $r->id;
+        $this->namaRespon     = $r->nama_respon;
+        $this->iconRespon     = $r->icon_respon;
+        $this->tagWarnaRespon = $r->tag_warna_respon;
+        $this->hasQuestion    = $r->has_question ?? false;
+        $this->skorRespon     = $r->skor_respon;
+        $this->urutanRespon   = $r->urutan_respon;
     }
 
     public function store()
     {
         // dd($this->all());
         try {
-            $respon = new Respon;
-            $respon->nama_respon = $this->namaRespon;
-            $respon->icon_respon = $this->iconRespon;
+            $respon                   = new Respon;
+            $respon->nama_respon      = $this->namaRespon;
+            $respon->icon_respon      = $this->iconRespon;
             $respon->tag_warna_respon = $this->tagWarnaRespon;
-            $respon->has_question = $this->hasQuestion ?? false;
-            $respon->skor_respon = $this->skorRespon;
-            $respon->urutan_respon = $this->urutanRespon;
+            $respon->has_question     = $this->hasQuestion ?? false;
+            $respon->skor_respon      = $this->skorRespon;
+            $respon->urutan_respon    = $this->urutanRespon;
             $respon->save();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -141,15 +138,16 @@ class ResponForm extends Form
         try {
             // $this->validate();
             // dd($this->namaRespon);
-            $respon = Respon::find($this->id);
-            $respon->nama_respon = $this->namaRespon;
-            $respon->icon_respon = $this->iconRespon;
+            $respon                   = Respon::find($this->id);
+            $respon->nama_respon      = $this->namaRespon;
+            $respon->icon_respon      = $this->iconRespon;
             $respon->tag_warna_respon = $this->tagWarnaRespon;
-            $respon->has_question = $this->hasQuestion;
-            $respon->skor_respon = $this->skorRespon;
-            $respon->urutan_respon = $this->urutanRespon;
+            $respon->has_question     = $this->hasQuestion;
+            $respon->skor_respon      = $this->skorRespon;
+            $respon->urutan_respon    = $this->urutanRespon;
             $respon->save();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             // report($th);
