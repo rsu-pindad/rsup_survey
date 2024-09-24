@@ -5,8 +5,10 @@ namespace App\Jobs;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 class GoogleSheetInsert implements ShouldQueue
@@ -21,6 +23,11 @@ class GoogleSheetInsert implements ShouldQueue
     public function __construct($items)
     {
         $this->items = $items;
+    }
+
+    public function middleware(): array
+    {
+        return [new WithoutOverlapping(Auth::id())];
     }
 
     /**
