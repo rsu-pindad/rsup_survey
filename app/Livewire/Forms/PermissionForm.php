@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Spatie\Permission\Models\Permission;
@@ -16,21 +17,24 @@ class PermissionForm extends Form
     #[Validate('max:30', message: 'maksimal 30 huruf')]
     public $namaPermisi;
 
-    public function setPermission(Permission $permission)
+    public $permission;
+
+    public function setPermission(Permission $p)
     {
-        $this->permission = $permission;
-        $this->id = $permission->id;
-        $this->namaPermisi = $permission->name;
+        $this->permission  = $p;
+        $this->id          = $p->id;
+        $this->namaPermisi = $p->name;
     }
 
     public function store()
     {
         $this->validate();
         try {
-            $permission = new Permission;
+            $permission       = new Permission;
             $permission->name = $this->namaPermisi;
             $permission->save();
             $this->reset();
+
             return $permission;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -41,10 +45,11 @@ class PermissionForm extends Form
     {
         $this->validate();
         try {
-            $permission = Permission::find($this->id);
+            $permission       = Permission::find($this->id);
             $permission->name = $this->namaPermisi;
             $permission->save();
             $this->reset();
+
             return $permission;
         } catch (\Throwable $th) {
             return $th->getMessage();

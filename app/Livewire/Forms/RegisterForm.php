@@ -40,35 +40,37 @@ class RegisterForm extends Form
                 ['name' => 'employee']
             );
             $statement = DB::transaction(function () use ($findKaryawan) {
-                $user = new User;
-                $user->name = $this->namaKaryawan;
-                $user->email = $this->email;
+                $user           = new User;
+                $user->name     = $this->namaKaryawan;
+                $user->email    = $this->email;
                 $user->password = bcrypt($this->password);
                 $user->assignRole('employee');
                 $user->save();
 
-                $karyawan = Karyawan::find($findKaryawan->id);
-                $karyawan->taken = 1;
+                $karyawan         = Karyawan::find($findKaryawan->id);
+                $karyawan->taken  = 1;
                 $karyawan->active = 1;
                 $karyawan->save();
 
-                $karyawanProfile = new KaryawanProfile;
-                $karyawanProfile->user_id = $user->id;
-                $karyawanProfile->karyawan_id = $karyawan->id;
-                $karyawanProfile->unit_id = $this->idUnit;
-                $karyawanProfile->layanan_id = $this->idLayanan;
+                $karyawanProfile                       = new KaryawanProfile;
+                $karyawanProfile->user_id              = $user->id;
+                $karyawanProfile->karyawan_id          = $karyawan->id;
+                $karyawanProfile->unit_id              = $this->idUnit;
+                $karyawanProfile->layanan_id           = $this->idLayanan;
                 $karyawanProfile->nama_karyawanprofile = $this->namaKaryawan;
                 $karyawanProfile->save();
             }, 3);
             $this->reset('password');
+
             return $result = [
-                'status' => true,
+                'status'  => true,
                 'message' => 'daftar berhasil, silahkan login',
             ];
         } catch (\Throwable $th) {
             $this->reset('password');
+
             return $result = [
-                'status' => false,
+                'status'  => false,
                 'message' => $th->getMessage(),
             ];
         }

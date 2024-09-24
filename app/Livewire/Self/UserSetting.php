@@ -16,10 +16,10 @@ class UserSetting extends Component
 
     public function mount()
     {
-        $userId = session()->get('userId');
+        $userId     = session()->get('userId');
         $karyawanId = KaryawanProfile::where('user_id', $userId)->first();
         $this->profileForm->setProfile($karyawanId->id);
-        $this->profileForm->setUser($userId );
+        $this->profileForm->setUser($userId);
     }
 
     public function edit()
@@ -28,32 +28,32 @@ class UserSetting extends Component
         if ($update) {
             return $this->flash('success', 'berhasil', [
                 'position' => 'center',
-                'toast' => true,
-                'text' => 'profile berhasil diperbarui',
+                'toast'    => true,
+                'text'     => 'profile berhasil diperbarui',
             ], route('root-self'));
         } else {
             return $this->alert('warning', 'gagal', [
                 'position' => 'center',
-                'toast' => true,
-                'text' => $update,
+                'toast'    => true,
+                'text'     => $update,
             ]);
         }
     }
-    
+
     public function editUser()
     {
         $update = $this->profileForm->updateUser();
         if ($update) {
             return $this->flash('success', 'berhasil', [
                 'position' => 'center',
-                'toast' => true,
-                'text' => 'profile email berhasil diperbarui',
+                'toast'    => true,
+                'text'     => 'profile email berhasil diperbarui',
             ], route('root-self'));
         } else {
             return $this->alert('warning', 'gagal', [
                 'position' => 'center',
-                'toast' => true,
-                'text' => $update,
+                'toast'    => true,
+                'text'     => $update,
             ]);
         }
     }
@@ -61,6 +61,7 @@ class UserSetting extends Component
     public function render()
     {
         $user = User::findOrFail(session()->get('userId'));
+
         return view('livewire.self.user-setting')->with([
             'self' => $user,
         ]);

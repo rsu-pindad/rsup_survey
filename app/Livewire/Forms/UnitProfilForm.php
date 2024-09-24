@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 // use Intervention\Image\Laravel\Facades\Image;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager as Image;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Livewire\WithFileUploads;
@@ -46,14 +47,14 @@ class UnitProfilForm extends Form
 
     public function setUnit($id)
     {
-        $unit = Unit::findOrFail($id);
-        $this->unitId = $unit->id;
-        $this->unitNama = $unit->nama_unit;
-        $unitProfil = UnitProfil::where('unit_id', $this->unitId)->first();
+        $unit                  = Unit::findOrFail($id);
+        $this->unitId          = $unit->id;
+        $this->unitNama        = $unit->nama_unit;
+        $unitProfil            = UnitProfil::where('unit_id', $this->unitId)->first();
         $this->unitMainLogoOld = $unitProfil->unit_main_logo ?? '';
-        $this->unitSubLogoOld = $unitProfil->unit_sub_logo ?? '';
-        $this->unitAlamat = $unitProfil->unit_alamat ?? '';
-        $this->unitMotto = $unitProfil->unit_motto ?? '';
+        $this->unitSubLogoOld  = $unitProfil->unit_sub_logo ?? '';
+        $this->unitAlamat      = $unitProfil->unit_alamat ?? '';
+        $this->unitMotto       = $unitProfil->unit_motto ?? '';
     }
 
     public function store()
@@ -61,31 +62,31 @@ class UnitProfilForm extends Form
         try {
             $this->validate();
             $mainRandomName = Str::random(20);
-            $subRandomName = Str::random(20);
-            $mainName = $mainRandomName . '.' . $this->unitMainLogo[0]['extension'];
-            $subName = $subRandomName . '.' . $this->unitSubLogo[0]['extension'];
+            $subRandomName  = Str::random(20);
+            $mainName       = $mainRandomName . '.' . $this->unitMainLogo[0]['extension'];
+            $subName        = $subRandomName . '.' . $this->unitSubLogo[0]['extension'];
             // Simpan photo pada folder public photos
             // if (env('APP_ENV') == 'local') {
-                // Storage::putFileAs('public/basset/photos', new File($this->unitMainLogo[0]['path']), $mainName);
-                // Storage::putFileAs('public/basset/photos', new File($this->unitSubLogo[0]['path']), $subName);
+            // Storage::putFileAs('public/basset/photos', new File($this->unitMainLogo[0]['path']), $mainName);
+            // Storage::putFileAs('public/basset/photos', new File($this->unitSubLogo[0]['path']), $subName);
 
-                $dir = 'storage/basset/photos/';
-                // $imgLogoMain = Image::read($this->unitMainLogo[0]['path']);
-                $mainDriver = new Image(new Driver());
-                $imgLogoMain = $mainDriver->read($this->unitMainLogo[0]['path']);
-                $imgLogoMain->scale(280, 220);
-                if (!is_dir($dir)) {
-                    // mkdir($dir, 0775, true);
-                    // Storage::disk('local')->makeDirectory('public/basset/photos');
-                    Storage::makeDirectory('public/basset/photos');
-                }
-                $imgLogoMain->save($dir . $mainName);
+            $dir = 'storage/basset/photos/';
+            // $imgLogoMain = Image::read($this->unitMainLogo[0]['path']);
+            $mainDriver  = new Image(new Driver());
+            $imgLogoMain = $mainDriver->read($this->unitMainLogo[0]['path']);
+            $imgLogoMain->scale(280, 220);
+            if (!is_dir($dir)) {
+                // mkdir($dir, 0775, true);
+                // Storage::disk('local')->makeDirectory('public/basset/photos');
+                Storage::makeDirectory('public/basset/photos');
+            }
+            $imgLogoMain->save($dir . $mainName);
 
-                $subDriver = new Image(new Driver());
-                $imgLogoSub = $subDriver->read($this->unitSubLogo[0]['path']);
-                $imgLogoSub->scale(160, 60);
-                $imgLogoSub->save($dir . $subName);
-            // } 
+            $subDriver  = new Image(new Driver());
+            $imgLogoSub = $subDriver->read($this->unitSubLogo[0]['path']);
+            $imgLogoSub->scale(160, 60);
+            $imgLogoSub->save($dir . $subName);
+            // }
             // else {
             //     // Storage::disk('public_upload')->putFileAs('photos', new File($this->unitMainLogo[0]['path']), $mainName);
             //     // Storage::disk('public_upload')->putFileAs('photos', new File($this->unitSubLogo[0]['path']), $subName);
@@ -109,20 +110,20 @@ class UnitProfilForm extends Form
                 ],
                 [
                     'unit_main_logo' => $mainName ?? $this->unitMainLogoOld,
-                    'unit_sub_logo' => $subName ?? $this->unitSubLogoOld,
-                    'unit_alamat' => $this->unitAlamat,
-                    'unit_motto' => $this->unitMotto,
+                    'unit_sub_logo'  => $subName ?? $this->unitSubLogoOld,
+                    'unit_alamat'    => $this->unitAlamat,
+                    'unit_motto'     => $this->unitMotto,
                 ]
             );
             // if (env('APP_ENV') == 'local') {
-                if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
-                    $pathMain = 'public/basset/photos/' . $this->unitMainLogoOld;
-                    Storage::delete($pathMain);
-                }
-                if ($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null) {
-                    $pathSub = 'public/basset/photos/' . $this->unitSubLogoOld;
-                    Storage::delete($pathSub);
-                }
+            if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
+                $pathMain = 'public/basset/photos/' . $this->unitMainLogoOld;
+                Storage::delete($pathMain);
+            }
+            if ($this->unitSubLogoOld != '' || $this->unitSubLogoOld != null) {
+                $pathSub = 'public/basset/photos/' . $this->unitSubLogoOld;
+                Storage::delete($pathSub);
+            }
             // } else {
             //     if ($this->unitMainLogoOld != '' || $this->unitMainLogoOld != null) {
             //         $pathMain = '/photos/' . $this->unitMainLogoOld;
@@ -137,6 +138,7 @@ class UnitProfilForm extends Form
             // Delete Files pada folder tmp;
             Storage::delete('/tmp/' . $this->unitMainLogo[0]['tmpFilename']);
             Storage::delete('/tmp/' . $this->unitSubLogo[0]['tmpFilename']);
+
             // File::delete($this->unitMainLogo[0]['tmpFilename']);
             // File::delete($this->unitSubLogo[0]['tmpFilename']);
             return true;

@@ -32,7 +32,7 @@ class SurveyPetugasPelayanan extends Component
     {
         Carbon::setLocale('id');
         // $time = \Carbon\Carbon::now()->shiftTimezone('Asia/Jakarta');
-        $time = Carbon::now()->setTimezone('Asia/Jakarta');
+        $time       = Carbon::now()->setTimezone('Asia/Jakarta');
         $this->time = $time;
     }
 
@@ -57,29 +57,30 @@ class SurveyPetugasPelayanan extends Component
         if ($store != 1) {
             return $this->flash('error', 'Gagal Menilai Layanan', [
                 'position' => 'center',
-                'toast' => true,
-                'text' => $store,
+                'toast'    => true,
+                'text'     => $store,
             ]);
         }
+
         return $this->flash('success', 'Berhasil Menilai Layanan', [
             'position' => 'center',
-            'toast' => false,
-            'timer' => 3000,
+            'toast'    => false,
+            'timer'    => 3000,
         ], '/');
     }
 
     public function preSave($skor)
     {
-        $skor = Respon::findOrfail($skor);
+        $skor              = Respon::findOrfail($skor);
         $this->nama_respon = $skor->nama_respon;
         $this->skor_respon = $skor->skor_respon;
         $this->confirm('Beri nilai ' . $this->nama_respon . ' ?', [
-            'icon' => 'question',
-            'onConfirmed' => 'confirmed',
+            'icon'              => 'question',
+            'onConfirmed'       => 'confirmed',
             'allowOutsideClick' => false,
             'confirmButtonText' => 'Nilai',
-            'cancelButtonText' => 'Batal',
-            'onDismissed' => 'cancelled'
+            'cancelButtonText'  => 'Batal',
+            'onDismissed'       => 'cancelled'
         ]);
     }
 
@@ -101,10 +102,9 @@ class SurveyPetugasPelayanan extends Component
             $writeSheet = $this->saveSheet($responSkor, $responNama);
             // $this->sendWhatsapp();
             if ($writeSheet == 1) {
-                session()->forget([
-                    'penjamin_layanan_id', 'nama_pelanggan', 'handphone_pelanggan'
-                ]);
+                session()->forget(['penjamin_layanan_id', 'nama_pelanggan', 'handphone_pelanggan']);
             }
+
             return $writeSheet;
             // }
         } catch (\Throwable $th) {
@@ -116,24 +116,25 @@ class SurveyPetugasPelayanan extends Component
     {
         try {
             $karyawan = KaryawanProfile::with(['parentUnit', 'parentLayanan'])
-                ->find(session()->get('karyawan_id'));
-            $penjamin = Penjamin::findOrFail(session()->get('penjamin_layanan_id'));
+                            ->find(session()->get('karyawan_id'));
+            $penjamin   = Penjamin::findOrFail(session()->get('penjamin_layanan_id'));
             $timeformat = Carbon::parse($this->time)->translatedFormat('d F Y H:i');
-            $sheets = Sheets::spreadsheet(config('google.config.sheet_id'))
-                ->sheet(config('google.config.sheet_name'))
-                ->append(
-                    [
-                        [
-                            'TGL_SURVEY' => $timeformat,
-                            'PEGAWAI' => $karyawan->nama_karyawanprofile,
-                            'UNIT' => $karyawan->parentUnit->nama_unit,
-                            'PELAYANAN' => $karyawan->parentLayanan->nama_layanan,
-                            'NAMA_PASIEN' => session()->get('nama_pelanggan'),
-                            'PENJAMIN' => $penjamin->nama_penjamin,
-                            'NILAI_SURVEY_KEPUASAN' => $responNama,
-                        ]
-                    ]
-                );
+            $sheets     = Sheets::spreadsheet(config('google.config.sheet_id'))
+                              ->sheet(config('google.config.sheet_name'))
+                              ->append(
+                                  [
+                                      [
+                                          'TGL_SURVEY'            => $timeformat,
+                                          'PEGAWAI'               => $karyawan->nama_karyawanprofile,
+                                          'UNIT'                  => $karyawan->parentUnit->nama_unit,
+                                          'PELAYANAN'             => $karyawan->parentLayanan->nama_layanan,
+                                          'NAMA_PASIEN'           => session()->get('nama_pelanggan'),
+                                          'PENJAMIN'              => $penjamin->nama_penjamin,
+                                          'NILAI_SURVEY_KEPUASAN' => $responNama,
+                                      ]
+                                  ]
+                              );
+
             return $sheets->updates->updatedRows;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -157,9 +158,9 @@ class SurveyPetugasPelayanan extends Component
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS => array(
-                    'target' => session()->get('handphone_pelanggan'),
-                    'message' => $msg,
-                    'countryCode' => '62',  // optional
+                    'target'      => session()->get('handphone_pelanggan'),
+                    'message'     => $msg,
+                    'countryCode' => '62',                   // optional
                 ),
                 CURLOPT_HTTPHEADER => array(
                     'Authorization: ' . env('FONNTE_TOKEN')  // change TOKEN to your actual token
@@ -175,6 +176,7 @@ class SurveyPetugasPelayanan extends Component
             if (isset($error_msg)) {
                 echo $error_msg;
             }
+
             return $response;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -186,31 +188,32 @@ class SurveyPetugasPelayanan extends Component
         $layananKaryawan = KaryawanProfile::with('parentLayanan')->where('user_id', session()->get('userId'))->first();
 
         $respon = LayananRespon::distinct()
-            ->where('layanan_id', $layananKaryawan->layanan_id)
-            ->with([
-                // 'parentLayanan' => function ($query) use ($layananKaryawan) {
-                //     $query->find($layananKaryawan->layanan_id);
-                // },
-                'parentRespon' => function ($query) {
-                    $query->orderBy('urutan_respon', 'ASC');
-                },
-            ])
-            ->orderBy('layanan_id', 'DESC')
-            ->get();
+                      ->where('layanan_id', $layananKaryawan->layanan_id)
+                      ->with([
+                          // 'parentLayanan' => function ($query) use ($layananKaryawan) {
+                          //     $query->find($layananKaryawan->layanan_id);
+                          // },
+                          'parentRespon' => function ($query) {
+                              $query->orderBy('urutan_respon', 'ASC');
+                          },
+                      ])
+                      ->orderBy('layanan_id', 'DESC')
+                      ->get();
         // $response = (object) $respon->pluck('parentRespon');
 
         // $collectionRespon = collect((object) $response);
         $collectionRespon = collect((object) $respon->pluck('parentRespon'));
-        $sorted = $collectionRespon->sortBy('urutan_respon');
-        $unit = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
-        $appSetting = AppSetting::get()->last();
+        $sorted           = $collectionRespon->sortBy('urutan_respon');
+        $unit             = Unit::with('unitProfil')->find($layananKaryawan->parentUnit->id);
+        $appSetting       = AppSetting::get()->last();
+
         return view('livewire.survey-petugas-pelayanan')->with([
-            'petugas' => session()->get('userName'),
-            'layanan' => $layananKaryawan->parentLayanan->nama_layanan,
-            'unitNama' => $layananKaryawan->parentUnit->nama_unit,
+            'petugas'    => session()->get('userName'),
+            'layanan'    => $layananKaryawan->parentLayanan->nama_layanan,
+            'unitNama'   => $layananKaryawan->parentUnit->nama_unit,
             'unitAlamat' => $unit->unitProfil->unit_alamat ?? $appSetting->initial_alamat_text,
-            'subLogo' => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
-            'respons' => $sorted->values()->all(),
+            'subLogo'    => $unit->unitProfil->unit_sub_logo ?? 'settings/' . $appSetting->initial_header_logo,
+            'respons'    => $sorted->values()->all(),
         ]);
     }
 }

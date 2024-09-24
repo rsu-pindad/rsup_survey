@@ -46,12 +46,12 @@ class RegisterAdd extends Component
         //     return $th->getMessage();
         // }
         $this->confirm('Anda yakin telah mengisi data dengan benar ?', [
-            'icon' => 'question',
-            'onConfirmed' => 'confirmed',
+            'icon'              => 'question',
+            'onConfirmed'       => 'confirmed',
             'allowOutsideClick' => false,
             'confirmButtonText' => 'Iya',
-            'cancelButtonText' => 'Batal',
-            'onDismissed' => 'cancelled'
+            'cancelButtonText'  => 'Batal',
+            'onDismissed'       => 'cancelled'
         ]);
     }
 
@@ -65,11 +65,12 @@ class RegisterAdd extends Component
                     'position' => 'center',
                 ], route('login'));
             }
+
             return $this->alert('warning', 'Gagal', [
-                'position' => 'center',
-                'timer' => 2000,
-                'toast' => true,
-                'text' => $store['message'],
+                'position'         => 'center',
+                'timer'            => 2000,
+                'toast'            => true,
+                'text'             => $store['message'],
                 'timerProgressBar' => true,
             ]);
         } catch (\Throwable $th) {
@@ -80,7 +81,7 @@ class RegisterAdd extends Component
     public function render()
     {
         return view('livewire.guest.register-add')->with([
-            'unit' => Unit::get(),
+            'unit'    => Unit::get(),
             'layanan' => Layanan::get(),
         ]);
     }

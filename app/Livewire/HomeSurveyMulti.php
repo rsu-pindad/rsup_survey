@@ -15,8 +15,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -125,7 +127,7 @@ class HomeSurveyMulti extends Component
         $this->namaRespon  = '';
         $this->skorRespon  = '';
         $this->namaLayanan = '';
-        $this->idLayanan = '';
+        $this->idLayanan   = '';
         $this->hasQuestion = false;
     }
 
@@ -137,7 +139,7 @@ class HomeSurveyMulti extends Component
         }
         session()->push('jawabanPasien', [
             'namaLayanan' => $this->namaLayanan,
-            'idLayanan' => $this->idLayanan,
+            'idLayanan'   => $this->idLayanan,
             'namaRespon'  => $this->namaRespon,
             'skorRespon'  => $this->skorRespon,
             'hasQuestion' => $this->hasQuestion,
@@ -208,7 +210,7 @@ class HomeSurveyMulti extends Component
 
         // Bugs Disini
         $penjamin_session = session()->get('penjamin_layanan_id');
-        $this->penjamin = Penjamin::find($penjamin_session)->nama_penjamin;
+        $this->penjamin   = Penjamin::find($penjamin_session)->nama_penjamin;
 
         $this->jumlahLayanan = count($this->multiLayanan);
     }
@@ -273,7 +275,7 @@ class HomeSurveyMulti extends Component
         $this->hasQuestion = $respon->has_question;
         // dd($this->hasQuestion);
         $this->namaLayanan = Layanan::find($this->selectedLayananId)->nama_layanan;
-        $this->idLayanan = Layanan::find($this->selectedLayananId)->id;
+        $this->idLayanan   = Layanan::find($this->selectedLayananId)->id;
 
         return $this->confirm('Beri nilai ' . $this->namaRespon . ' ?', [
             'icon'              => 'question',

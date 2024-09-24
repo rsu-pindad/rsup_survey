@@ -17,20 +17,23 @@ class PenjaminForm extends Form
     #[Validate('max:50', message: 'maksimal karakter 50')]
     public $namaPenjamin;
 
-    public function setPenjamin(Penjamin $penjamin)
+    public $penjamin;
+
+    public function setPenjamin(Penjamin $p)
     {
-        $this->penjamin = $penjamin;
-        $this->id = $penjamin->id;
-        $this->namaPenjamin = $penjamin->nama_penjamin;
+        $this->penjamin     = $p;
+        $this->id           = $p->id;
+        $this->namaPenjamin = $p->nama_penjamin;
     }
 
     public function store()
     {
         try {
-            $penjamin = new Penjamin;
+            $penjamin                = new Penjamin;
             $penjamin->nama_penjamin = $this->namaPenjamin;
             $penjamin->save();
             $this->reset();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -40,9 +43,10 @@ class PenjaminForm extends Form
     public function update()
     {
         try {
-            $penjamin = Penjamin::find($this->id);
+            $penjamin                = Penjamin::find($this->id);
             $penjamin->nama_penjamin = $this->namaPenjamin;
             $penjamin->save();
+
             return true;
         } catch (\Throwable $th) {
             return $th->getMessage();

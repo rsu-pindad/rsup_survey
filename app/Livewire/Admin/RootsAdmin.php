@@ -3,8 +3,8 @@
 namespace App\Livewire\Admin;
 
 use App\Models\AppSetting;
-use Livewire\Component;
 use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
 
 class RootsAdmin extends Component
 {
