@@ -118,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::middleware('role:employee|super-admin')->group(function () {
+    Route::middleware('role:employee|super-admin|monitor')->group(function () {
         Route::get('/petugas', SurveyPetugas::class)->name('root-survey-petugas');
         Route::get('/locker-studio', LockerStudio::class)->name('root-survey-locker-studio');
         Route::get('/laporan', Laporan::class)->name('root-laporan');
