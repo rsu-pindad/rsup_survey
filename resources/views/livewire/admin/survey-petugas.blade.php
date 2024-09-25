@@ -7,7 +7,7 @@
           <h4>Tabel Survey Masuk</h4>
         </div>
         <div class="card-body">
-          <livewire:powergrid.admin.survey-tabel />
+          <livewire:PowerGrid.Admin.SurveyTabel />
         </div>
       </div>
     </div>
