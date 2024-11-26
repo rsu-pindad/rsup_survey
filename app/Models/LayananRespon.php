@@ -17,8 +17,6 @@ class LayananRespon extends Model
         'respon_id',
     ];
 
-    protected $guarded = 'id';
-
     protected $hidden = [
         'layanan_id',
         'respon_id',

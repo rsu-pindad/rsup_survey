@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\Models\User;
 
 class PermissionSeeder extends Seeder
 {
@@ -23,12 +23,12 @@ class PermissionSeeder extends Seeder
         );
 
         $permissionRandom = Permission::find($permission->id);
-        $idRole = fake()->randomDigit(1);
-        $role = Role::find(1);
+        $idRole           = fake()->randomDigit(1);
+        $role             = Role::find(1);
         $role->givePermissionTo($permissionRandom);
 
         $idUser = fake()->randomDigit(1);
-        $user = User::find(1);
+        $user   = User::find(1);
         $user->assignRole($role->id);
     }
 }

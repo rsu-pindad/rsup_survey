@@ -4,13 +4,13 @@ namespace App\Livewire\Admin\Unit;
 
 use App\Livewire\Forms\UnitForm as Form;
 use App\Models\Unit;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class UnitEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

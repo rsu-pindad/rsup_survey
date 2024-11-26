@@ -3,12 +3,12 @@
 namespace App\Livewire\Self;
 
 use App\Livewire\Forms\UserProfileChangePasswordForm as FormPassword;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class UserChangePassword extends Component
 {
-    use LivewireAlert;
+    
 
     public FormPassword $form;
 

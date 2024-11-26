@@ -6,7 +6,7 @@ use App\Livewire\Forms\AuthForm;
 use App\Models\AppSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -14,7 +14,7 @@ use Livewire\Component;
 #[Layout('components.layouts.auth')]
 class Login extends Component
 {
-    use LivewireAlert;
+    
 
     public AuthForm $form;
 
@@ -43,9 +43,10 @@ class Login extends Component
         session()->invalidate();
         session()->regenerateToken();
 
-        return $this->flash('info', 'selamat tinggal', [
-            'position' => 'top',
-        ], route('login'));
+        // return $this->flash('info', 'selamat tinggal', [
+        //     'position' => 'top',
+        // ], route('login'));
+        return to_route('login');
     }
 
     #[Title('Masuk')]

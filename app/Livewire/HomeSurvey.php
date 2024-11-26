@@ -9,7 +9,7 @@ use App\Models\Penjamin;
 use App\Models\Respon;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Cache;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -21,7 +21,7 @@ use Livewire\Attributes\Title;
 
 class HomeSurvey extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
     public $hasQuestion = false;

@@ -18,8 +18,6 @@ class Layanan extends Model
         'nama_layanan'
     ];
 
-    protected $guarded = 'id';
-
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -27,7 +25,7 @@ class Layanan extends Model
     ];
 
     protected $casts = [
-        'nama_layanan' => 'string',
+        'nama_layanan'  => 'string',
         'multi_layanan' => 'boolean',
     ];
 

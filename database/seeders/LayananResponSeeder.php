@@ -6,7 +6,7 @@ use App\Models\LayananRespon;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class LayananResponSeeder extends Seeder
 {
@@ -23,19 +23,19 @@ class LayananResponSeeder extends Seeder
             // Penjamin::truncate();
             for ($x = 0; $x <= 20; $x++) {
                 $randomLayanan = DB::table('layanan')
-                    ->inRandomOrder()
-                    ->first();
+                                     ->inRandomOrder()
+                                     ->first();
                 $randomRespon = DB::table('respon')
-                    ->inRandomOrder()
-                    ->first();
+                                    ->inRandomOrder()
+                                    ->first();
                 DB::beginTransaction();
                 $layananRespon = DB::table('layanan_respon')
-                    ->insert([
-                        'layanan_id' => $randomLayanan->id,
-                        'respon_id' => $randomRespon->id,
-                        'created_at' => $time,
-                        'updated_at' => $time,
-                    ]);
+                                     ->insert([
+                                         'layanan_id' => $randomLayanan->id,
+                                         'respon_id'  => $randomRespon->id,
+                                         'created_at' => $time,
+                                         'updated_at' => $time,
+                                     ]);
                 DB::commit();
             }
         } catch (\Throwable $th) {

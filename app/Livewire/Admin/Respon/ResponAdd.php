@@ -3,12 +3,12 @@
 namespace App\Livewire\Admin\Respon;
 
 use App\Livewire\Forms\ResponForm as Form;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class ResponAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

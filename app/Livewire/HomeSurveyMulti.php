@@ -13,7 +13,6 @@ use App\Models\Respon;
 use App\Models\Unit;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
@@ -24,8 +23,6 @@ use Livewire\Component;
 
 class HomeSurveyMulti extends Component
 {
-    use LivewireAlert;
-
     public Form $form;
     public $rememberState  = false;
     public $setLayanan     = false;

@@ -26,7 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         // 'roles',
-        'last_login'
+        'last_login',
     ];
 
     /**
@@ -49,7 +49,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected array $guard_name = ['api', 'web'];
+    // protected array $guard_name = ['api', 'web'];
 
     // protected $guard_name = 'api';
 
@@ -58,7 +58,7 @@ class User extends Authenticatable
         return $this->belongsToMany(LayananRespon::class, 'karyawanprofile', 'user_id', 'id');
     }
 
-    public function parentKaryawanProfile() : HasOne
+    public function parentKaryawanProfile(): HasOne
     {
         return $this->hasOne(KaryawanProfile::class, 'user_id', 'id');
     }

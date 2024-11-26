@@ -5,7 +5,7 @@ namespace App\Livewire\PowerGrid;
 use App\Models\Karyawan;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\Rule;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;

@@ -4,12 +4,12 @@ namespace App\Livewire\Admin\Unit;
 
 use App\Livewire\Forms\UnitForm as Form;
 use App\Models\Unit;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class UnitAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

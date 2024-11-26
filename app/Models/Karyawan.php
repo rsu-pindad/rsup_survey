@@ -19,7 +19,7 @@ class Karyawan extends Model
     ];
 
     protected $casts = [
-        'taken' => 'boolean',
+        'taken'  => 'boolean',
         'active' => 'boolean',
     ];
 

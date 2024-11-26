@@ -19,8 +19,6 @@ class PenjaminLayanan extends Model
         'layanan_id',
     ];
 
-    protected $guarded = 'id';
-
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -29,7 +27,7 @@ class PenjaminLayanan extends Model
 
     protected $casts = [
         'penjamin_id' => 'string',
-        'layanan_id' => 'string'
+        'layanan_id'  => 'string'
     ];
 
     public function parentPenjamin(): BelongsTo

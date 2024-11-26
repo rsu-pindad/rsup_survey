@@ -3,13 +3,13 @@
 namespace App\Livewire\Admin\Unit\UnitProfil;
 
 use App\Livewire\Forms\UnitProfilForm as Form;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class UnitProfil extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

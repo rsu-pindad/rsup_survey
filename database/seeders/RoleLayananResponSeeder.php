@@ -5,10 +5,10 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\DB;
 
 class RoleLayananResponSeeder extends Seeder
 {
@@ -41,14 +41,14 @@ class RoleLayananResponSeeder extends Seeder
             Permission::create(['name' => $permission]);
         }
         $user = User::create([
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name'              => fake()->name(),
+            'email'             => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => bcrypt('12345'),  // password
+            'password'          => bcrypt('12345'),  // password
             // 'roles' => 'admin',
             'remember_token' => Str::random(10),
         ]);
-        $role = Role::create(['name' => 'admin']);
+        $role        = Role::create(['name' => 'admin']);
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);

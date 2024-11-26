@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Karyawan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Karyawan;
 
 class KaryawanSeeder extends Seeder
 {

@@ -5,12 +5,12 @@ namespace App\Livewire\Admin\PenjaminLayanan;
 use App\Livewire\Forms\PenjaminLayananForm as Form;
 use App\Models\Layanan;
 use App\Models\Penjamin;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class PenjaminLayananAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

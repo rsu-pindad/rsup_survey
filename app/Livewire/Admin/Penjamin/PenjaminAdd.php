@@ -3,12 +3,12 @@
 namespace App\Livewire\Admin\Penjamin;
 
 use App\Livewire\Forms\PenjaminForm as Form;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class PenjaminAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

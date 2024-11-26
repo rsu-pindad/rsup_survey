@@ -10,14 +10,14 @@ use App\Models\Respon;
 use App\Models\SurveyPelanggan;
 use App\Models\Unit;
 use Carbon\Carbon;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Revolution\Google\Sheets\Facades\Sheets;
 
 class SurveyPetugasPelayanan extends Component
 {
-    use LivewireAlert;
+    
 
     #[Validate('required')]
     public $skor_respon;

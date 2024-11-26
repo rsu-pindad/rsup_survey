@@ -25,19 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // if(env('APP_ENV', 'production') == 'production') {
-        //     \URL::forceScheme('https');
-        // }
-        // Button::macro('icon', function (string $name) {
-        //     $this->dynamicProperties['icon'] = $name;
-        //     return $this;
-        // });
-        // Pulse::user(fn ($user) => [
-        //     'name' => $user->name,
-        // ]);
-        // config(['app.locale' => 'id']);
-        // Number::useLocale('id');
-        // Carbon::setLocale('id');
         setlocale(LC_ALL, 'id_ID', 'id_ID.UTF-8');
         Cache::flush();
         Session::flush();

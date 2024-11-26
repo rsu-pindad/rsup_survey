@@ -5,12 +5,12 @@ namespace App\Livewire\Admin\Karyawan;
 use Livewire\Component;
 use App\Livewire\Forms\KaryawanEditForm as Form;
 use App\Models\Karyawan;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attribures\Locked;
 
 class KaryawanEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

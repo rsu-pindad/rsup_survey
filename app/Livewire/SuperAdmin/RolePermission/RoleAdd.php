@@ -4,12 +4,12 @@ namespace App\Livewire\SuperAdmin\RolePermission;
 
 use Livewire\Component;
 use App\Livewire\Forms\RoleForm as Form;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Spatie\Permission\Models\Role;
 
 class RoleAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 class UnitProfil extends Model
 {
@@ -25,9 +25,8 @@ class UnitProfil extends Model
         'updated_at'
     ];
 
-    public function parentUnit() : BelongsTo
+    public function parentUnit(): BelongsTo
     {
-        return $this->belongsTo(Unit::class ,'unit_id', 'id');
+        return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
-
 }

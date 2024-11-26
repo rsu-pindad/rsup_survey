@@ -3,12 +3,12 @@
 namespace App\Livewire\Guest;
 
 use App\Models\Karyawan;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class Register extends Component
 {
-    use LivewireAlert;
+    
 
     public Karyawan $karyawan;
     public $show        = false;

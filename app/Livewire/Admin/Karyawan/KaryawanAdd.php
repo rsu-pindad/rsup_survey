@@ -5,11 +5,11 @@ namespace App\Livewire\Admin\Karyawan;
 use Livewire\Component;
 use App\Models\Karyawan;
 use App\Livewire\Forms\KaryawanEditForm as Form;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 
 class KaryawanAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

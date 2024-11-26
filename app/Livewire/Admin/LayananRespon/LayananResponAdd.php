@@ -5,12 +5,12 @@ namespace App\Livewire\Admin\LayananRespon;
 use App\Livewire\Forms\LayananResponForm as Form;
 use App\Models\Layanan;
 use App\Models\Respon;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class LayananResponAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

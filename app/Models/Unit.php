@@ -32,7 +32,7 @@ class Unit extends Model
     ];
 
     protected $casts = [
-        'nama_unit' => 'string',
+        'nama_unit'       => 'string',
         'multi_penilaian' => 'boolean'
     ];
 
@@ -46,7 +46,7 @@ class Unit extends Model
         return $this->hasOne(UnitProfil::class, 'unit_id');
     }
 
-    public function unitMultiLayanan() : BelongsToMany
+    public function unitMultiLayanan(): BelongsToMany
     {
         return $this->belongsToMany(Layanan::class, 'unit_multi_layanan', 'unit_id', 'layanan_id');
     }
@@ -56,7 +56,7 @@ class Unit extends Model
         return $this->belongsToMany(Layanan::class);
     }
 
-    public function pivotsMultiLayanan() : BelongsToMany
+    public function pivotsMultiLayanan(): BelongsToMany
     {
         // Relasi Tabel, 'Foreign key pada relasi tabel', 'key local pada model'
         return $this->belongsToMany(MultiLayanan::class, 'unit_multi_layanan', 'unit_id', 'id');

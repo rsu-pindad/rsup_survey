@@ -9,11 +9,11 @@ use App\Models\Unit;
 use App\Models\Layanan;
 use App\Models\KaryawanProfile;
 use App\Livewire\Forms\KaryawanProfileEditForm as Form;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 
 class KaryawanProfileAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

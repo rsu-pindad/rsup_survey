@@ -33,6 +33,5 @@ class RoleSeeder extends Seeder
             ['name' => 'direksi'],
             ['name' => 'direksi']
         );
-
     }
 }

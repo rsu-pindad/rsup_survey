@@ -24,8 +24,6 @@ class SurveyPelanggan extends Model
         'survey_masuk'
     ];
 
-    protected $guarded = 'id';
-
     protected $hidden = [
         'created_at',
         'updated_at',

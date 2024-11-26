@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\PenjaminLayanan;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\PenjaminLayanan;
-use DB;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PenjaminLayananSeeder extends Seeder
 {
@@ -21,19 +21,19 @@ class PenjaminLayananSeeder extends Seeder
             // PenjaminLayanan::truncate();
             for ($x = 0; $x <= 100; $x++) {
                 $randomLayanan = DB::table('layanan')
-                    ->inRandomOrder()
-                    ->first();
+                                     ->inRandomOrder()
+                                     ->first();
                 $randomPenjamin = DB::table('penjamin')
-                    ->inRandomOrder()
-                    ->first();
+                                      ->inRandomOrder()
+                                      ->first();
                 DB::beginTransaction();
                 $penjaminLayanan = DB::table('penjamin_layanan')
-                    ->insert([
-                        'layanan_id' => $randomLayanan->id,
-                        'penjamin_id' => $randomPenjamin->id,
-                        'created_at' => $time,
-                        'updated_at' => $time,
-                    ]);
+                                       ->insert([
+                                           'layanan_id'  => $randomLayanan->id,
+                                           'penjamin_id' => $randomPenjamin->id,
+                                           'created_at'  => $time,
+                                           'updated_at'  => $time,
+                                       ]);
                 DB::commit();
             }
         } catch (\Throwable $th) {

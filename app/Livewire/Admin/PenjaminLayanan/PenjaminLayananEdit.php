@@ -6,13 +6,13 @@ use App\Livewire\Forms\PenjaminLayananForm as Form;
 use App\Models\Layanan;
 use App\Models\Penjamin;
 use App\Models\PenjaminLayanan;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class PenjaminLayananEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

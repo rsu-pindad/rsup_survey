@@ -4,13 +4,13 @@ namespace App\Livewire\Admin\Respon;
 
 use App\Livewire\Forms\ResponForm as Form;
 use App\Models\Respon;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class ResponEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

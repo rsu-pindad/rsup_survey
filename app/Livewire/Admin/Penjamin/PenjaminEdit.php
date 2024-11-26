@@ -4,13 +4,13 @@ namespace App\Livewire\Admin\Penjamin;
 
 use App\Livewire\Forms\PenjaminForm as Form;
 use App\Models\Penjamin;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class PenjaminEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

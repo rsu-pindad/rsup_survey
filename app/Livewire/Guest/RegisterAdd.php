@@ -5,12 +5,12 @@ namespace App\Livewire\Guest;
 use App\Livewire\Forms\RegisterForm as Form;
 use App\Models\Layanan;
 use App\Models\Unit;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class RegisterAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

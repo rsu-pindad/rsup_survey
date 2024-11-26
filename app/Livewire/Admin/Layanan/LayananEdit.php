@@ -4,13 +4,13 @@ namespace App\Livewire\Admin\Layanan;
 
 use App\Livewire\Forms\LayananForm as Form;
 use App\Models\Layanan;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attribures\Locked;
 use Livewire\Component;
 
 class LayananEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

@@ -8,13 +8,13 @@ use App\Models\KaryawanProfile;
 use App\Models\Layanan;
 use App\Models\Unit;
 use App\Models\User;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attribures\Locked;
 use Livewire\Component;
 
 class KaryawanProfileEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

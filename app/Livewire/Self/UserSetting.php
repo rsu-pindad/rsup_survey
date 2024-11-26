@@ -5,12 +5,12 @@ namespace App\Livewire\Self;
 use App\Livewire\Forms\UserProfileForm as ProfileForm;
 use App\Models\KaryawanProfile;
 use App\Models\User;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class UserSetting extends Component
 {
-    use LivewireAlert;
+    
 
     public ProfileForm $profileForm;
 

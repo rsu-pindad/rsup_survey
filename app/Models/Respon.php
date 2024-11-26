@@ -23,8 +23,6 @@ class Respon extends Model
         'urutan_respon'
     ];
 
-    protected $guarded = 'id';
-
     protected $hidden = [
         'created_at',
         'updated_at',
@@ -32,7 +30,7 @@ class Respon extends Model
     ];
 
     protected $casts = [
-        'nama_respon' => 'string',
+        'nama_respon'  => 'string',
         'has_question' => 'boolean'
     ];
 

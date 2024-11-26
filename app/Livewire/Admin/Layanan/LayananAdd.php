@@ -3,12 +3,12 @@
 namespace App\Livewire\Admin\Layanan;
 
 use App\Livewire\Forms\LayananForm as Form;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Component;
 
 class LayananAdd extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

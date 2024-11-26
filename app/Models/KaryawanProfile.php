@@ -28,8 +28,6 @@ class KaryawanProfile extends Model
         'updated_at'
     ];
 
-    protected $guarded = 'id';
-
     protected $casts = [
         'nama_karyawan_profile' => 'string',
     ];

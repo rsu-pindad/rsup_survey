@@ -6,13 +6,13 @@ use App\Livewire\Forms\LayananResponForm as Form;
 use App\Models\Layanan;
 use App\Models\LayananRespon;
 use App\Models\Respon;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class LayananResponEdit extends Component
 {
-    use LivewireAlert;
+    
 
     public Form $form;
 

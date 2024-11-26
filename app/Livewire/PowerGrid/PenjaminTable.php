@@ -5,7 +5,7 @@ namespace App\Livewire\PowerGrid;
 use Livewire\Attributes\Locked;
 use App\Models\Penjamin;
 use Illuminate\Database\Eloquent\Builder;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
