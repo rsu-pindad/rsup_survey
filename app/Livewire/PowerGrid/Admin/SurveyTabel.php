@@ -72,8 +72,12 @@ final class SurveyTabel extends PowerGridComponent
     public function datasource(): Builder
     {
         $idKaryawan = Auth::user()->parentKaryawanProfile->karyawan_id;
+        // dd($karyawanId->id);
+        // dd(Auth::user()->getRoleNames('employee'));
         if (Auth::user()->hasRole('employee')) {
-            return SurveyPelanggan::query()->where('karyawan_id', $idKaryawan);
+            $karyawanId = KaryawanProfile::where('karyawan_id', $idKaryawan)->first();
+
+            return SurveyPelanggan::query()->where('karyawan_id', $karyawanId->id)->orderBy('survey_masuk', 'DESC');
         } else {
             return SurveyPelanggan::query();
         }
@@ -157,7 +161,8 @@ final class SurveyTabel extends PowerGridComponent
                     ->optionLabel('shift'),
                 Filter::enumSelect('nilai_skor', 'nilai_skor')
                     ->dataSource(Nilai::cases())
-                    ->optionLabel('nilai_skor')
+                    ->optionLabel('nilai_skor'),
+                // Filter::datepicker('survey_masuk', 'survey_masuk'),
             ];
         } else {
             return [
@@ -186,6 +191,7 @@ final class SurveyTabel extends PowerGridComponent
                 Filter::enumSelect('nilai_skor', 'nilai_skor')
                     ->dataSource(Nilai::cases())
                     ->optionLabel('nilai_skor'),
+                // Filter::datepicker('survey_masuk', 'survey_masuk'),
                 // Filter::inputText('survey_masuk')
                 //     ->operators(['contains', 'is_not'])
                 //     ->placeholder('cari tanggal survey'),

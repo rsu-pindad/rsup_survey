@@ -10,8 +10,11 @@ class SurveyPetugas extends Component
 {
     public function render()
     {
+        // dd(Auth::user()->parentKaryawanProfile()->value('id'));
         // dd(Auth::user()->parentKaryawanProfile->karyawan_id);
-        // $data = SurveyPelanggan::with(['parentPenjamin', 'parentLayanan'])->where('karyawan_id', session()->get('karyawan_id'))->get();
+        // $data = SurveyPelanggan::with(['parentPenjamin', 'parentLayanan'])->where('karyawan_id', Auth::user()->parentKaryawanProfile()->value('id'))->get();
+
+        // return view('livewire.admin.survey-petugas')->with(['data' => $data]);
         return view('livewire.admin.survey-petugas');
     }
 }
