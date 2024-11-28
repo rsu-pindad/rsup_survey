@@ -38,12 +38,12 @@
                            class="w-full"
                            rounded />
         @else --}}
-          <x-wireui-button right-icon="arrow-path"
-                           label="Reset Form"
-                           secondary
-                           wire:click="resetSurvey()"
-                           class="w-full"
-                           rounded />
+        <x-wireui-button right-icon="arrow-path"
+                         label="Reset Form"
+                         secondary
+                         wire:click="resetSurvey()"
+                         class="w-full"
+                         rounded />
         {{-- @endif --}}
       </div>
       <div class="grow">
