@@ -25,6 +25,7 @@ class SinglePasienForm extends Form
         return [
             'namaPasien'  => 'required',
             'nomorPasien' => 'required',
+            // 'nomorPasien' => 'phone',
         ];
     }
 
@@ -33,7 +34,7 @@ class SinglePasienForm extends Form
         return [
             'namaPasien.required'  => 'Mohon isi nama.',
             'nomorPasien.required' => 'Mohon isi nomor handphone.',
-            'nomorPasien.phone'    => 'Mohon isi nomor handphone dengan benar.',
+            // 'nomorPasien.phone'    => 'Mohon isi nomor handphone dengan benar.',
         ];
     }
 
@@ -41,7 +42,7 @@ class SinglePasienForm extends Form
     {
         return [
             'namaPasien'  => 'string',
-            'nomorPasien' => 'phone:ID,ID',
+            'nomorPasien' => 'phone:id,ID',
         ];
     }
 
@@ -69,7 +70,6 @@ class SinglePasienForm extends Form
         }
         try {
             $resultGoogle[] = [
-                // 'PEGAWAI'               => $this->karyawan->nama_karyawanprofile,
                 'TGL_SURVEY'            => '=DATE(' . $this->timeFormat . ')',
                 'PEGAWAI'               => Auth::user()->parentKaryawanProfile()->value('nama_karyawanprofile'),
                 'UNIT'                  => Unit::find(Auth::user()->parentKaryawanProfile()->value('unit_id'))->nama_unit,
@@ -80,7 +80,6 @@ class SinglePasienForm extends Form
                 'NILAI_SURVEY_KEPUASAN' => Str::upper($this->responData->nama_respon),
                 'JAM_SURVEY'            => $this->surveyFormat,
             ];
-            // dd($resultGoogle);
             $writeSheet = new GoogleSheetInsert($resultGoogle);
             dispatch($writeSheet)->onQueue('GoogleInsert');
             $this->reset();

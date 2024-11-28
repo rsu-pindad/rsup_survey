@@ -20,8 +20,8 @@
                          label="Nomor Handphone"
                          icon="phone"
                          {{-- prefix="+62" --}}
-                         :mask="['#### #### ###', '#### #### ####']"
-                         placeholder="Nomor handphone"
+                         :mask="['+62##########', '+62###########']"
+                         placeholder="+62xxxxxxxxxx"
                          with-validation-colors
                          rounded
                          padding="p-4" />
