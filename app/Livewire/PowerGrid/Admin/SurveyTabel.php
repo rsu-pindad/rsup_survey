@@ -108,7 +108,7 @@ final class SurveyTabel extends PowerGridComponent
                    ->add('handphone_pelanggan')
                    ->add('shift')
                    ->add('nilai_skor')
-                   ->add('survey_masuk_format_bulan', fn(SurveyPelanggan $model) => Carbon::parse($model->survey_masuk)->format('d/m/Y'));
+                   ->add('survey_masuk_format_bulan', fn(SurveyPelanggan $model) => Carbon::parse($model->survey_masuk)->format('d/m/Y H:i:s'));
         //    ->add('survey_masuk_format_jam', fn(SurveyPelanggan $model)   => Carbon::parse($model->survey_masuk)->format('H:i'));
     }
 
