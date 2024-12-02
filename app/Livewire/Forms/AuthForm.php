@@ -4,19 +4,30 @@ namespace App\Livewire\Forms;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class AuthForm extends Form
 {
-    #[Validate('required', message: 'mohon isi alamat email')]
-    #[Validate('email', message: 'email tidak valid')]
     public $email;
-
-    #[Validate('required', message: 'mohon isi password')]
     public $password;
-
     public $remember;
+
+    public function rules()
+    {
+        return [
+            'email'    => 'required|email',
+            'password' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required'    => 'mohon masukan email',
+            'email.email'       => 'mohon masukan email dengan benar',
+            'password.required' => 'mohon masukan password',
+        ];
+    }
 
     public function auth()
     {
@@ -38,8 +49,11 @@ class AuthForm extends Form
                     'last_login' => Carbon::now()->setTimezone('Asia/Jakarta')->toDateTimeString()
                 ]);
 
-                return true;
+                return $auths;
             }
+            $this->reset('password');
+
+            return $auths;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
