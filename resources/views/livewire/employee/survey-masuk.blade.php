@@ -54,11 +54,7 @@ $penjaminLayanan = computed(function () {
             '#' . substr(uniqid(), -6),
         );
     }
-    $pieCharts
-        ->withDataLabels()
-        ->setAnimated(true)
-        ->setDataLabelsEnabled(true)
-        ->asDonut();
+    $pieCharts->withDataLabels()->setAnimated(true)->setDataLabelsEnabled(true)->asDonut();
     return $pieCharts;
 });
 
