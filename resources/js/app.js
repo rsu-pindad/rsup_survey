@@ -7,10 +7,10 @@ import '@preline/dropdown';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import moment from '@victoryoalli/alpinejs-moment';
 import timeout from '@victoryoalli/alpinejs-timeout';
-import { createIcons, Menu, ArrowRight, Globe, Instagram, Twitter, Facebook, Youtube, UserPen, LogOut } from '../../node_modules/lucide';
+import { createIcons, Menu, ArrowRight, Globe, Instagram, Twitter, Facebook, Youtube, UserPen, LogOut, FileChartColumn } from '../../node_modules/lucide';
 // import spacetime from '../../node_modules/spacetime';
 import { directive } from '@wireui/alpinejs-hold-directive';
-
+// import ApexCharts from 'apexcharts';
 createIcons({
     icons: {
         Menu,
@@ -21,12 +21,14 @@ createIcons({
         Facebook,
         Youtube,
         UserPen,
-        LogOut
+        LogOut,
+        FileChartColumn
     }
 });
 
 // window.spacetime = spacetime;
 window.Livewire = Livewire;
+// window.ApexCharts = ApexCharts;
 window.Alpine = Alpine;
 Alpine.directive('hold', directive)
 Alpine.plugin(moment);

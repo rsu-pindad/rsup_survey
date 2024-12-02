@@ -122,15 +122,18 @@ Route::middleware(['auth'])->group(function () {
     //         });
     //     });
 
-    //     Route::middleware('role:employee|super-admin|monitor')->group(function () {
-    //         Route::get('/petugas', SurveyPetugas::class)->name('root-survey-petugas');
-    //         Route::get('/locker-studio', LockerStudio::class)->name('root-survey-locker-studio');
-    //         Route::get('/laporan', Laporan::class)->name('root-laporan');
-    //         Route::get('/self', UserSetting::class)->name('root-self');
-    //         // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
-    //         Route::get('/survey', HomeSurvey::class)->name('isi-survey-pelayanan');
-    //         Route::get('/multi-survey', HomeSurveyMulti::class)->name('isi-survey-pelayanan-multi');
-    //     });
+    Route::middleware('role:employee|super-admin|monitor')->group(function () {
+        Volt::route('/survey-masuk', 'employee.survey-masuk')->name('survey-masuk');
+        // Volt::route('/profile-petugas', 'employee.profile-petugas')->name('profile-petugas');
+
+        //         Route::get('/petugas', SurveyPetugas::class)->name('root-survey-petugas');
+        //         Route::get('/locker-studio', LockerStudio::class)->name('root-survey-locker-studio');
+        //         Route::get('/laporan', Laporan::class)->name('root-laporan');
+        //         Route::get('/self', UserSetting::class)->name('root-self');
+        //         // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
+        //         Route::get('/survey', HomeSurvey::class)->name('isi-survey-pelayanan');
+        //         Route::get('/multi-survey', HomeSurveyMulti::class)->name('isi-survey-pelayanan-multi');
+    });
 });
 
 Route::middleware(['guest'])->group(function () {

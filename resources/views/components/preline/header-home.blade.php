@@ -40,7 +40,8 @@
           </div>
           <div class="space-y-0.5 p-1.5">
             <a class="flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-               href="#">
+               href="{{ route('survey-masuk') }}"
+               wire:navigate="false">
               <i data-lucide="user-pen"
                  class="size-4 shrink-0"></i>
               Profil

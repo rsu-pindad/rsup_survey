@@ -1,15 +1,19 @@
 <?php
 
 use App\Livewire\Forms\AuthForm;
-use function Livewire\Volt\{state, layout, title, form, action};
+use function Livewire\Volt\{state, layout, title, form, action, mount};
 
 layout('components.layouts.guest');
+state(['credential']);
+mount(function () {
+    $this->credential = '';
+});
 title('Halaman Masuk');
 form(AuthForm::class);
 
 $masuk = function () {
-    $credential = $this->form->auth();
-    if ($credential) {
+    $this->credential = $this->form->auth();
+    if ($this->credential) {
         return to_route('home-idle');
         // $isMultiLayanan = Auth::user()->parentKaryawanProfile()->value('layanan_id');
         // if ($isMultiLayanan) {
@@ -17,6 +21,7 @@ $masuk = function () {
         // }
         // return to_route('home-single');
     }
+    return $this->credential;
 };
 ?>
 
@@ -38,7 +43,7 @@ $masuk = function () {
           <input id="hs-cover-with-gradient-form-email-1"
                  wire:model="form.email"
                  type="email"
-                 class="border-gray/20 bg-gray/10 text-gray placeholder:text-gray focus:border-gray/30 focus:ring-gray/30 block w-full rounded-lg py-3 pe-4 ps-11 text-lg sm:p-4 sm:ps-11"
+                 class="border-gray/20 bg-gray/10 text-gray placeholder:text-gray focus:border-gray/30 focus:ring-gray/30 block w-full rounded-full py-3 pe-4 ps-11 text-lg sm:p-4 sm:ps-11"
                  placeholder="Masukan email">
           <div class="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-4">
             <svg class="size-4 shrink-0 text-gray-400"
@@ -60,11 +65,11 @@ $masuk = function () {
             </svg>
           </div>
         </div>
-        <p class="mt-2 text-md font-semibold text-red-600">
-          @error('form.email')
+        @error('form.email')
+          <p class="text-md mt-2 font-semibold text-red-600">
             {{ $message }}
-          @enderror
-        </p>
+          </p>
+        @enderror
       </div>
 
       <div>
@@ -74,7 +79,7 @@ $masuk = function () {
           <input id="hs-cover-with-gradient-form-name-1"
                  wire:model="form.password"
                  type="password"
-                 class="border-gray/20 bg-gray/10 text-gray placeholder:text-gray focus:border-gray/30 focus:ring-gray/30 block w-full rounded-lg py-3 pe-4 ps-11 text-lg sm:p-4 sm:ps-11"
+                 class="border-gray/20 bg-gray/10 text-gray placeholder:text-gray focus:border-gray/30 focus:ring-gray/30 block w-full rounded-full py-3 pe-4 ps-11 text-lg sm:p-4 sm:ps-11"
                  placeholder="Masukan password">
           <div class="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-4">
             <svg class="size-4 shrink-0 text-gray-400"
@@ -97,18 +102,18 @@ $masuk = function () {
             </svg>
           </div>
         </div>
-        <p class="mt-2 text-md font-semibold text-red-600">
-          @error('form.password')
+        @error('form.password')
+          <p class="text-md mt-2 font-semibold text-red-600">
             {{ $message }}
-          @enderror
-        </p>
+          </p>
+        @enderror
       </div>
 
       <div class="grid">
         <div class="group"
              wire:loading.remove>
           <button type="submit"
-                  class="bg-gray/10 hover:bg-gray/20 focus:bg-gray/20 border-3 inline-flex items-center justify-center gap-x-4 rounded-lg border bg-gradient-to-l from-yellow-400 to-green-600 px-4 py-2 text-xl font-semibold uppercase text-neutral-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                  class="bg-gray/10 hover:bg-gray/20 focus:bg-gray/20 border-3 inline-flex items-center justify-center gap-x-4 rounded-full border bg-gradient-to-l from-yellow-400 to-green-600 px-6 py-3 text-xl font-semibold uppercase text-neutral-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
             Masuk
             <svg class="size-5 shrink-0"
                  xmlns="http://www.w3.org/2000/svg"
@@ -131,6 +136,7 @@ $masuk = function () {
           </button>
         </div>
       </div>
+
       <div class="grid"
            wire:loading
            wire:loading.target="masuk">
@@ -140,6 +146,45 @@ $masuk = function () {
           <span class="sr-only">Loading...</span>
         </div>
       </div>
+
     </div>
   </form>
+
+  @if ($this->credential === false)
+    <!-- Toast -->
+    <div class="absolute bottom-5 start-1/2 -translate-x-1/2">
+      <div class="max-w-xs rounded-xl bg-red-500 text-sm text-white shadow-lg"
+           role="alert"
+           tabindex="-1"
+           aria-labelledby="hs-toast-solid-color-red-label">
+        <div id="hs-toast-solid-color-red-label"
+             class="flex p-4">
+          Email atau password salah
+
+          <div class="ms-auto">
+            <button type="button"
+                    class="size-5 inline-flex shrink-0 items-center justify-center rounded-lg text-white opacity-50 hover:text-white hover:opacity-100 focus:opacity-100 focus:outline-none"
+                    aria-label="Close">
+              <span class="sr-only">Close</span>
+              <svg class="size-4 shrink-0"
+                   xmlns="http://www.w3.org/2000/svg"
+                   width="24"
+                   height="24"
+                   viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Toast -->
+  @endif
+
 </div>
