@@ -35,7 +35,7 @@ use Livewire\Volt\Volt;
  */
 
 Route::middleware(['auth'])->group(function () {
-    //     // Route::get('/', Roots::class)->name('roots-dashboard');
+    // Route::get('/', Roots::class)->name('roots-dashboard');
     // Route::get('/', Home::class)->name('roots-dashboard');
     Route::get('/logout', [Login::class, 'logout'])->name('logout');
     Volt::route('/home-single', 'home.single-layanan')->name('home-single');
@@ -43,80 +43,84 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('/home', 'home.idle')->name('home-idle');
     Volt::route('/', 'home.idle');
     Volt::route('/survey-pasien', 'survey.pasien')->name('survey-pasien');
-    //     Route::get('/lihat', RootsAdmin::class)->name('lihat');
+    // Route::get('/lihat', RootsAdmin::class)->name('lihat');
 
-    //     Route::middleware('role:super-admin')->group(function () {
-    //         Route::group(['prefix' => 'setting'], function () {
-    //             Route::get('/', AppSetting::class)->name('root-setting-app');
-    //         });
-    //         Route::group(['prefix' => 'user'], function () {
-    //             Route::get('/', User::class)->name('root-super-admin-user');
-    //             Route::get('/manage/{id}', UserManage::class)->name('root-super-admin-user-manage');
-    //         });
-    //         Route::group(['prefix' => 'permission'], function () {
-    //             Route::get('/', Permission::class)->name('root-super-admin-permission');
-    //             Route::get('/edit/{id}', PermissionEdit::class)->name('root-super-admin-permission-edit');
-    //         });
-    //         Route::group(['prefix' => 'role'], function () {
-    //             Route::get('/', Role::class)->name('root-super-admin-role');
-    //             Route::get('/edit/{id}', RoleEdit::class)->name('root-super-admin-role-edit');
-    //             Route::get('/manage/{id}', RoleManage::class)->name('root-super-admin-role-manage');
+    // Route::middleware('role:super-admin')->group(function () {
+    //     Route::group(['prefix' => 'setting'], function () {
+    //         Route::get('/', AppSetting::class)->name('root-setting-app');
+    //     });
+    //     Route::group(['prefix' => 'user'], function () {
+    //         Route::get('/', User::class)->name('root-super-admin-user');
+    //         Route::get('/manage/{id}', UserManage::class)->name('root-super-admin-user-manage');
+    //     });
+    //     Route::group(['prefix' => 'permission'], function () {
+    //         Route::get('/', Permission::class)->name('root-super-admin-permission');
+    //         Route::get('/edit/{id}', PermissionEdit::class)->name('root-super-admin-permission-edit');
+    //     });
+    //     Route::group(['prefix' => 'role'], function () {
+    //         Route::get('/', Role::class)->name('root-super-admin-role');
+    //         Route::get('/edit/{id}', RoleEdit::class)->name('root-super-admin-role-edit');
+    //         Route::get('/manage/{id}', RoleManage::class)->name('root-super-admin-role-manage');
+    //     });
+    // });
+
+    // Route::middleware('role:hr|super-admin')->group(function () {
+    //     Route::group(['prefix' => 'karyawan'], function () {
+    //         Route::get('/', Karyawan::class)->name('root-karyawan');
+    //         Route::get('/edit/{id}', KaryawanEdit::class)->name('root-karyawan-edit');
+    //     });
+    //     Route::group(['prefix' => 'karyawan-profile'], function () {
+    //         Route::get('/', KaryawanProfile::class)->name('root-karyawan-profile');
+    //         Route::get('/edit/{id}', KaryawanProfileEdit::class)->name('root-karyawan-profile-edit');
+    //     });
+    //     Route::group(['prefix' => 'unit'], function () {
+    //         Route::get('/', Unit::class)->name('root-unit');
+    //         Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
+    //         Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
+    //         Route::group(['prefix' => 'multi-layanan'], function () {
+    //             Route::get('/{id}', MultiLayanan::class)->name('root-multi-layanan');
     //         });
     //     });
+    // });
 
-    //     Route::middleware('role:hr|super-admin')->group(function () {
-    //         Route::group(['prefix' => 'karyawan'], function () {
-    //             Route::get('/', Karyawan::class)->name('root-karyawan');
-    //             Route::get('/edit/{id}', KaryawanEdit::class)->name('root-karyawan-edit');
-    //         });
-    //         Route::group(['prefix' => 'karyawan-profile'], function () {
-    //             Route::get('/', KaryawanProfile::class)->name('root-karyawan-profile');
-    //             Route::get('/edit/{id}', KaryawanProfileEdit::class)->name('root-karyawan-profile-edit');
-    //         });
-    //         Route::group(['prefix' => 'unit'], function () {
-    //             Route::get('/', Unit::class)->name('root-unit');
-    //             Route::get('/edit/{id}', UnitEdit::class)->name('root-unit-edit');
-    //             Route::get('/profil/{id}', UnitProfil::class)->name('root-unit-profil');
-    //             Route::group(['prefix' => 'multi-layanan'], function () {
-    //                 Route::get('/{id}', MultiLayanan::class)->name('root-multi-layanan');
-    //             });
-    //         });
+    // Route::middleware('role:admin|super-admin')->group(function () {
+    //     Route::group(['prefix' => 'penjamin'], function () {
+    //         Route::get('/', Penjamin::class)->name('root-penjamin');
+    //         Route::get('/edit/{id}', PenjaminEdit::class)->name('root-penjamin-edit');
     //     });
-
-    //     Route::middleware('role:admin|super-admin')->group(function () {
-    //         Route::group(['prefix' => 'penjamin'], function () {
-    //             Route::get('/', Penjamin::class)->name('root-penjamin');
-    //             Route::get('/edit/{id}', PenjaminEdit::class)->name('root-penjamin-edit');
-    //         });
-    //         Route::group(['prefix' => 'layanan'], function () {
-    //             Route::get('/', Layanan::class)->name('root-layanan');
-    //             Route::get('/edit/{id}', LayananEdit::class)->name('root-layanan-edit');
-    //         });
-    //         Route::group(['prefix' => 'respon'], function () {
-    //             Route::get('/', Respon::class)->name('root-respon');
-    //             Route::get('/edit/{id}', ResponEdit::class)->name('root-respon-edit');
-    //         });
-    //         Route::group(['prefix' => 'penjamin-layanan'], function () {
-    //             Route::get('/', PenjaminLayanan::class)->name('root-penjamin-layanan');
-    //             Route::get('/edit/{id}', PenjaminLayananEdit::class)->name('root-penjamin-layanan-edit');
-    //         });
-    //         Route::group(['prefix' => 'layanan-respon'], function () {
-    //             Route::get('/', LayananRespon::class)->name('root-layanan-respon');
-    //             Route::get('/edit/{id}', LayananResponEdit::class)->name('root-layanan-respon-edit');
-    //         });
+    //     Route::group(['prefix' => 'layanan'], function () {
+    //         Route::get('/', Layanan::class)->name('root-layanan');
+    //         Route::get('/edit/{id}', LayananEdit::class)->name('root-layanan-edit');
     //     });
+    //     Route::group(['prefix' => 'respon'], function () {
+    //         Route::get('/', Respon::class)->name('root-respon');
+    //         Route::get('/edit/{id}', ResponEdit::class)->name('root-respon-edit');
+    //     });
+    //     Route::group(['prefix' => 'penjamin-layanan'], function () {
+    //         Route::get('/', PenjaminLayanan::class)->name('root-penjamin-layanan');
+    //         Route::get('/edit/{id}', PenjaminLayananEdit::class)->name('root-penjamin-layanan-edit');
+    //     });
+    //     Route::group(['prefix' => 'layanan-respon'], function () {
+    //         Route::get('/', LayananRespon::class)->name('root-layanan-respon');
+    //         Route::get('/edit/{id}', LayananResponEdit::class)->name('root-layanan-respon-edit');
+    //     });
+    // });
 
     Route::middleware('role:employee|super-admin|monitor')->group(function () {
-        Volt::route('/survey-masuk', 'employee.survey-masuk')->name('survey-masuk');
+        Volt::route('/office', 'office.index')->name('office');
+        Route::group(['prefix' => 'office'], function () {
+            Volt::route('/grafik', 'office.grafik.index')->name('office-grafik');
+            Volt::route('/tabel', 'office.tabel.index')->name('office-tabel');
+        });
         // Volt::route('/profile-petugas', 'employee.profile-petugas')->name('profile-petugas');
 
-        //         Route::get('/petugas', SurveyPetugas::class)->name('root-survey-petugas');
-        //         Route::get('/locker-studio', LockerStudio::class)->name('root-survey-locker-studio');
-        //         Route::get('/laporan', Laporan::class)->name('root-laporan');
-        //         Route::get('/self', UserSetting::class)->name('root-self');
-        //         // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
-        //         Route::get('/survey', HomeSurvey::class)->name('isi-survey-pelayanan');
-        //         Route::get('/multi-survey', HomeSurveyMulti::class)->name('isi-survey-pelayanan-multi');
+        // Route::get('/petugas', SurveyPetugas::class)->name('root-survey-petugas');
+        // Route::get('/locker-studio', LockerStudio::class)->name('root-survey-locker-studio');
+        // Route::get('/laporan', Laporan::class)->name('root-laporan');
+        // Route::get('/self', UserSetting::class)->name('root-self');
+        // // Route::get('/survey', SurveyPetugasPelayanan::class)->name('isi-survey-pelayanan');
+        // Route::get('/survey', HomeSurvey::class)->name('isi-survey-pelayanan');
+        // Route::get('/multi-survey', HomeSurveyMulti::class)->name('isi-survey-pelayanan-multi');
     });
 });
 

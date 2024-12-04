@@ -46,4 +46,4 @@ Alpine.plugin(moment);
 Alpine.plugin(timeout);
 
 // window.Alpine.start();
-// window.Livewire.start();
+window.Livewire.start();

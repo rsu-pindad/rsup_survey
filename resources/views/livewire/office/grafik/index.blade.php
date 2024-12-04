@@ -2,7 +2,7 @@
 
 use function Livewire\Volt\{state, layout, title, mount, computed, on};
 use App\Models\{Layanan, Penjamin, SurveyPelanggan, PenjaminLayanan, LayananRespon};
-use Asantibanez\LivewireCharts\Models\{PieChartModel, ColumnChartModel, RadarChartModel, LineChartModel};
+use Asantibanez\LivewireCharts\Models\{PieChartModel, ColumnChartModel, RadarChartModel};
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 // );
 
 layout('components.layouts.office');
-title('Halaman Survey Masuk');
+title('Halaman Grafik Survey Masuk');
 state([
     'karyawanId' => Auth::user()->parentKaryawanProfile()->value('id'),
     'namaLayanan' => null,
@@ -107,29 +107,12 @@ $responWaktu = computed(function () {
     return $radarChartModel;
 });
 
-// $responLine = computed(function () {
-//     $lineCharts = (new LineChartModel())->setTitle('Respon Survey : ' . $this->layanan->nama_layanan);
-//     foreach ($this->penjamin as $key => $value) {
-//         $lineCharts->addPoint(
-//             $value->parentPenjamin->nama_penjamin,
-//             SurveyPelanggan::where('penjamin_id', $value->parentPenjamin->id)
-//                 ->where('layanan_id', $this->layanan->id)
-//                 ->where('karyawan_id', $this->karyawanId)
-//                 ->whereBetween('survey_masuk', [$this->mulaiPeriode, $this->akhirPeriode])
-//                 ->count(),
-//             ['id' => $value->parentPenjamin->id],
-//         );
-//     }
-//     $lineCharts->setAnimated(true);
-//     return $lineCharts;
-// });
-
 // $periode = fn() => $this->mulaiPeriode;
 
 on([
     'filterData' => function ($min, $max) {
         // $this->mulaiPeriode = Carbon::parse($min)->format('Y-m-d');
-        $this->mulaiPeriode = $min;
+        $this->mulaiPeriode = Carbon::parse($min)->format('Y-m-d');
         $this->akhirPeriode = $max;
         $this->penjaminLayanan();
     },
@@ -165,6 +148,14 @@ on([
            class="w-full rounded-xl border-gray-300"
            placeholder="tanggal akhir">
   </div>
+
+  <div class="inline-flex grow items-start gap-x-2 rounded-xl bg-white px-4 py-2 shadow">
+    Data Survey diambil periode
+    <span class="font-semibold">{{ $this->mulaiPeriode }}</span>
+    sampai
+    <span class="font-semibold">{{ $this->akhirPeriode }}</span>
+  </div>
+
   <div class="h-full w-full rounded-xl border bg-white p-4 shadow">
     <livewire:livewire-pie-chart key="{{ $this->penjaminLayanan->reactiveKey() }}"
                                  :pie-chart-model="$this->penjaminLayanan" />
@@ -178,11 +169,6 @@ on([
     <livewire:livewire-radar-chart key="{{ $this->responWaktu->reactiveKey() }}"
                                    :radar-chart-model="$this->responWaktu" />
   </div>
-
-  {{-- <div class="h-full w-full rounded-xl border bg-white p-4 shadow">
-    <livewire:livewire-line-chart key="{{ $this->responLine->reactiveKey() }}"
-                                  :line-chart-model="$this->responLine" />
-  </div> --}}
 
 </section>
 
@@ -207,7 +193,6 @@ on([
         dateFormat: "Y-m-d",
         maxDate: "today",
         onClose: function(selectedDates, dateStr, instance) {
-          //   console.log(selectedDates);
           calendarMax.clear();
           calendarMax.set({
             minDate: dateStr
