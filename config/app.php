@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use Vetruvet\PhpRedis\PhpRedisServiceProvider;
 
 return [
     /*
@@ -49,7 +50,7 @@ return [
      * | your application so that it is used when running Artisan tasks.
      * |
      */
-    'url' => env('APP_URL', 'http://localhost'),
+    'url'       => env('APP_URL', 'http://localhost'),
     'asset_url' => env('ASSET_URL', '/'),
 
     /*
@@ -75,7 +76,7 @@ return [
      * | to any of the locales which will be supported by the application.
      * |
      */
-    'locale' => 'en',
+    'locale' => 'id',
 
     /*
      * |--------------------------------------------------------------------------
@@ -99,7 +100,7 @@ return [
      * | localized telephone numbers, street address information and more.
      * |
      */
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'id_ID',
 
     /*
      * |--------------------------------------------------------------------------
@@ -111,7 +112,7 @@ return [
      * | will not be safe. Please do this before deploying an application!
      * |
      */
-    'key' => env('APP_KEY'),
+    'key'    => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
 
     /*

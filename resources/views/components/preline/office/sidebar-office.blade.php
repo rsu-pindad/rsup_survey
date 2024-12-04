@@ -163,19 +163,19 @@
                       <li>
                         <a class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                            href="#">
-                          Link 1
+                          Grafik
                         </a>
                       </li>
                       <li>
                         <a class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                            href="#">
-                          Link 2
+                          Tabel
                         </a>
                       </li>
                       <li>
                         <a class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
                            href="#">
-                          Link 3
+                          Laporan
                         </a>
                       </li>
                     </ul>

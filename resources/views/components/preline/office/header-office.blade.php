@@ -35,7 +35,7 @@
 
     <div class="ms-auto flex w-full items-center justify-end gap-x-1 md:justify-between md:gap-x-3">
 
-      <div class="flex flex-row items-center justify-end gap-1">
+      <div class="flex flex-row items-center justify-end gap-1 grow">
 
         <button type="button"
                 class="size-[38px] relative inline-flex items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
@@ -75,18 +75,17 @@
             <div class="rounded-t-lg bg-gray-100 px-5 py-3">
               <p class="text-sm text-gray-500">Masuk Sebagai</p>
               <p class="text-sm font-medium text-gray-800">
-                {{ Str::upper(Auth::user()->parentKaryawanProfile()->nama_karyawanprofile) }}</p>
+                {{ Str::upper(Auth::id()) }}</p>
             </div>
             <div class="space-y-0.5 p-1.5">
               <a class="flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-                 href="#"
-                 wire:navigate="false">
+                 href="#">
                 <i data-lucide="user-pen"
                    class="size-4 shrink-0"></i>
                 Profil
               </a>
               <a class="flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none"
-                 href="{{ route('logout') }}">
+                 href="{{ route('logout') }}" wire:navigate="false">
                 <i data-lucide="log-out"
                    class="size-4 shrink-0"></i>
                 Keluar
