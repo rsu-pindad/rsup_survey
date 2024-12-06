@@ -25,7 +25,7 @@ state([
     'layanan' => null,
     'penjamin' => null,
     'layananRespon' => null,
-    'jamDinding' => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+    'jamDinding' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
     // 'mulaiPeriode' => Carbon::now()->subDays(84)->toDateTimeString(),
     // 'akhirPeriode' => Carbon::now()->endOfDay()->toDateTimeString(),
     'mulaiPeriode' => Carbon::now()->subDays(84)->format('Y-m-d'),
@@ -91,7 +91,8 @@ $responWaktu = computed(function () {
                     // ->where(DB::raw('DATE_FORMAT(survey_masuk, '%H:$i')'), '=', Carbon::now()->subDays(7)->toDateTimeString())
                     ->where(function ($subTime) use ($jam) {
                         if ($jam === 24) {
-                            $subTime->whereTime('survey_masuk', '>=', $jam . ':00')->whereTime('survey_masuk', '<', '01:00');
+                            // $subTime->whereTime('survey_masuk', '>=', $jam . ':00')->whereTime('survey_masuk', '<', '01:00');
+                            $subTime->whereTime('survey_masuk', '>=', $jam . ':00');
                         }
                         $subTime->whereTime('survey_masuk', '>=', $jam . ':00')->whereTime('survey_masuk', '<', $jam + 1 . ':00');
                     })
@@ -107,11 +108,8 @@ $responWaktu = computed(function () {
     return $radarChartModel;
 });
 
-// $periode = fn() => $this->mulaiPeriode;
-
 on([
     'filterData' => function ($min, $max) {
-        // $this->mulaiPeriode = Carbon::parse($min)->format('Y-m-d');
         $this->mulaiPeriode = Carbon::parse($min)->format('Y-m-d');
         $this->akhirPeriode = $max;
         $this->penjaminLayanan();

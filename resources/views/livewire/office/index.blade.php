@@ -21,6 +21,8 @@ $dataPenjamin = computed(function () {
         ->get();
 });
 
+$commingSoon = fn() => $this->js("alert('fitur segera hadir')");
+
 ?>
 
 <section class="item s-start mx-auto flex h-screen flex-row flex-wrap justify-center justify-self-stretch">
@@ -88,7 +90,7 @@ $dataPenjamin = computed(function () {
           </div>
 
           <a class="inline-flex items-center justify-between rounded-b-xl border-t border-gray-200 px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none md:px-5"
-             href="{{ route('office-grafik') }}">
+             href="{{ route('survey-masuk-grafik') }}">
             Lihat Grafik
             <svg class="size-4 shrink-0"
                  xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +146,8 @@ $dataPenjamin = computed(function () {
           </div>
 
           <a class="inline-flex items-center justify-between rounded-b-xl border-t border-gray-200 px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none md:px-5"
-             href="#">
+             href="#"
+             wire:click="commingSoon">
             View reports
             <svg class="size-4 shrink-0"
                  xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +220,8 @@ $dataPenjamin = computed(function () {
             </div>
 
             <a class="inline-flex items-center justify-between rounded-b-xl border-t border-gray-200 px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none md:px-5"
-               href="#">
+               href="#"
+               wire:click="commingSoon">
               View reports
               <svg class="size-4 shrink-0"
                    xmlns="http://www.w3.org/2000/svg"
