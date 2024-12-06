@@ -33,7 +33,7 @@
     <!-- Breadcrumb -->
     <ol class="ms-3 flex items-center whitespace-nowrap">
       <li class="flex items-center text-sm text-gray-800">
-        Application Layout
+        {{ Str::ucfirst(request()->route()->getName()) }}
         <svg class="size-2.5 mx-3 shrink-0 overflow-visible text-gray-400"
              width="16"
              height="16"
@@ -48,7 +48,7 @@
       </li>
       <li class="truncate text-sm font-semibold text-gray-800"
           aria-current="page">
-        Dashboard
+        Beranda
       </li>
     </ol>
     <!-- End Breadcrumb -->

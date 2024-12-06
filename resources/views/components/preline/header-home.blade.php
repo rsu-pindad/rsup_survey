@@ -26,7 +26,7 @@
                 aria-expanded="false"
                 aria-label="Dropdown">
           <img class="size-[38px] shrink-0 rounded-full"
-               src="https://via.placeholder.com/50"
+               src="{{ Avatar::create(auth()->user()->parentKaryawanProfile()->value('nama_karyawanprofile'))->toBase64() }}"
                alt="Avatar">
         </button>
 
