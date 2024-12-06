@@ -154,7 +154,7 @@
                       </li>
                       <li>
                         <a class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm text-gray-800 hover:bg-lime-100 focus:bg-lime-100 focus:outline-none"
-                           href="#">
+                           href="{{ route('survey-masuk-tabel') }}">
                           Tabel
                         </a>
                       </li>

@@ -17,7 +17,8 @@ import { directive } from '@wireui/alpinejs-hold-directive';
 import AsyncAlpine from 'async-alpine';
 import Quill from 'quill';
 import flatpickr from 'flatpickr';
-
+import './../../vendor/power-components/livewire-powergrid/dist/powergrid';
+import './../../vendor/power-components/livewire-powergrid/dist/tailwind.css';
 
 createIcons({
     icons: {
