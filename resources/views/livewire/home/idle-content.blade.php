@@ -11,12 +11,8 @@ boot(function () {
 ?>
 
 <div>
-
-  {{-- {{ Auth::user()->parentKaryawanProfile()->get() }} --}}
-
   <div class="grid grid-cols-3 gap-2">
     <div class="inline-flex grow justify-start">
-      {{-- <div class="shrink"> --}}
       <article class="text-balance">
         <h1
             class="text-nowrap text-4xl font-bold text-gray-800 sm:text-2xl md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight">
@@ -24,26 +20,23 @@ boot(function () {
         </h1>
         {!! $this->unit->unitProfil->unit_motto !!}
       </article>
-      {{-- </div> --}}
     </div>
-    <div class="none inline-flex shrink items-center justify-center">
+    <div class="inline-flex shrink items-center justify-center">
       <div class="group mx-0 my-4 block px-4">
-        <div>
-          <h4 class="text-center text-lg font-semibold">
-            Layanan
-          </h4>
-          <h3 class="text-center text-lg font-bold">
-            {{ $this->layanan->nama_layanan }}
-          </h3>
-          <h4 class="text-center text-lg font-semibold">
-            Waktu Survey
-          </h4>
-          <h2 id="waktuSurvey"
-              x-data
-              x-timeout:1000="$el.innerText=$moment().format('HH:mm:ss')"
-              class="text-center text-2xl font-bold">
-          </h2>
-        </div>
+        <h4 class="text-center text-lg font-semibold">
+          Layanan
+        </h4>
+        <h3 class="text-center text-lg font-bold">
+          {{ $this->layanan->nama_layanan }}
+        </h3>
+        <h4 class="text-center text-lg font-semibold">
+          Waktu Survey
+        </h4>
+        <h2 id="waktuSurvey"
+            x-data
+            x-timeout:1000="$el.innerText=$moment().format('HH:mm:ss')"
+            class="text-center text-2xl font-bold">
+        </h2>
       </div>
     </div>
     <div class="inline-flex grow items-center justify-end">
@@ -56,10 +49,11 @@ boot(function () {
         </div>
         <div class="realtive bottom-0 end-0 start-0 p-2">
           <x-wireui-button label="Mulai Survey"
-                           x-on:click="$openModal('penjaminModal')"
-                           class="w-full rounded-lg p-3 text-center font-semibold uppercase"
-                           green
                            right-icon="arrow-right"
+                           class="w-full p-3 text-center font-semibold uppercase"
+                           x-on:click="$openModal('penjaminModal')"
+                           rounded
+                           green
                            xl />
         </div>
         <!-- End Card -->

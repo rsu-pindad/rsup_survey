@@ -3,7 +3,7 @@
     'namaUnit' => '',
     'alamatUnit' => '',
 ])
-<nav class="@if (Route::currentRouteName() == 'survey-pasien') hidden sm:hidden md:hidden lg:block xl:block @endif shadow">
+<nav class="@if (Route::currentRouteName() === 'survey-pasien') hidden sm:hidden md:hidden lg:block xl:block @endif shadow">
   <div class="mx-auto max-w-3xl px-3 sm:px-5 lg:px-6">
     <div class="flex items-center justify-around py-4">
       <!-- Logo -->

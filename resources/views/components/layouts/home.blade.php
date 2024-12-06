@@ -16,7 +16,9 @@
 
   <body class="h-screen w-screen bg-gradient-to-r from-white from-90% to-slate-200 font-sans antialiased">
 
-    <x-preline.header-home />
+    @if (Route::currentRouteName() !== 'survey-pasien')
+      <x-preline.header-home />
+    @endif
     <x-wireui-dialog />
     <x-wireui-notifications />
 
@@ -27,7 +29,9 @@
     </main>
     <!-- ========== END MAIN CONTENT ========== -->
 
-    <x-preline.footer-home />
+    @if (Route::currentRouteName() !== 'survey-pasien')
+      <x-preline.footer-home />
+    @endif
 
     {{-- <x-wireui-modal />
     <x-wireui-dialog position="center" />

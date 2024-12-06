@@ -21,10 +21,9 @@ $selanjutnya = action(function () {
 <x-wireui-modal-card name="penjaminModal"
                      blur="xl"
                      width="fullscreen"
-                     align="center"
                      persistent>
   <x-slot:title>
-    <h1 class="mx-auto text-5xl uppercase">Pilih Penjamin</h1>
+    <h1 class="text-center text-5xl uppercase">Pilih Penjamin</h1>
   </x-slot:title>
   <form method="post">
     <div class="grid grid-cols-2 gap-x-8 gap-y-6">
@@ -33,11 +32,11 @@ $selanjutnya = action(function () {
                wire:key="{{ $p->parentPenjamin->id }}">
           <div class="self-center">
             <x-wireui-radio wire:model.blur="radioPenjamin"
+                            wire:key="{{ $p->parentPenjamin->id }}"
                             value="{{ Str::lower($p->parentPenjamin->nama_penjamin) }}"
                             with-validation-colors
                             positive
-                            xl
-                            wire:key="{{ $p->parentPenjamin->id }}">
+                            xl>
             </x-wireui-radio>
           </div>
           <div class="self-center">
@@ -54,7 +53,7 @@ $selanjutnya = action(function () {
       <x-wireui-button label="Kembali"
                        x-on:click="close"
                        icon="arrow-left"
-                       rounded-sm
+                       rounded
                        secondary
                        xl />
 
@@ -62,7 +61,7 @@ $selanjutnya = action(function () {
                        label="Pilih"
                        wire:click="selanjutnya"
                        right-icon="arrow-right"
-                       rounded-sm
+                       rounded
                        positive
                        xl />
     </x-slot>

@@ -1,14 +1,11 @@
 <?php
 
 use App\Livewire\Forms\AuthForm;
-use function Livewire\Volt\{state, layout, title, form, action, mount};
+use function Livewire\Volt\{state, layout, title, form, action};
 
 layout('components.layouts.guest');
-state(['credential']);
-mount(function () {
-    $this->credential = '';
-});
 title('Halaman Masuk');
+state(['credential' => null]);
 form(AuthForm::class);
 
 $masuk = function () {
@@ -25,16 +22,17 @@ $masuk = function () {
 };
 ?>
 
-<div class="px-4 py-8 text-center sm:px-6 lg:px-8">
+<section class="mx-auto px-6 py-8 text-center">
 
-  <h2 class="text-gray mt-1 text-3xl font-bold sm:mt-3 sm:text-5xl">
-    <span class="bg-gradient-to-tr from-green-600 to-yellow-400 bg-clip-text text-transparent">
+  <h2 class="text-5xl font-bold">
+    <span class="bg-gradient-to-tr from-green-600 to-yellow-400 bg-clip-text uppercase text-transparent">
       PT Pindad Medika Utama
     </span>
   </h2>
 
-  <form wire:submit="masuk">
-    <div class="mt-8 space-y-4">
+  <div class="mx-auto mb-auto mt-6 space-y-4">
+    <form wire:submit="masuk"
+          class="grid gap-y-6">
 
       <div class="group">
         <label for="hs-cover-with-gradient-form-email-1"
@@ -46,7 +44,7 @@ $masuk = function () {
                  class="border-gray/20 bg-gray/10 text-gray placeholder:text-gray focus:border-gray/30 focus:ring-gray/30 block w-full rounded-full py-3 pe-4 ps-11 text-lg sm:p-4 sm:ps-11"
                  placeholder="Masukan email">
           <div class="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-4">
-            <svg class="size-4 shrink-0 text-gray-400"
+            <svg class="size-6 shrink-0 text-gray-400"
                  xmlns="http://www.w3.org/2000/svg"
                  width="24"
                  height="24"
@@ -72,7 +70,7 @@ $masuk = function () {
         @enderror
       </div>
 
-      <div>
+      <div class="group">
         <label for="hs-cover-with-gradient-form-name-1"
                class="sr-only">Password</label>
         <div class="relative">
@@ -82,7 +80,7 @@ $masuk = function () {
                  class="border-gray/20 bg-gray/10 text-gray placeholder:text-gray focus:border-gray/30 focus:ring-gray/30 block w-full rounded-full py-3 pe-4 ps-11 text-lg sm:p-4 sm:ps-11"
                  placeholder="Masukan password">
           <div class="pointer-events-none absolute inset-y-0 start-0 z-20 flex items-center ps-4">
-            <svg class="size-4 shrink-0 text-gray-400"
+            <svg class="size-6 shrink-0 text-gray-400"
                  xmlns="http://www.w3.org/2000/svg"
                  width="24"
                  height="24"
@@ -147,8 +145,8 @@ $masuk = function () {
         </div>
       </div>
 
-    </div>
-  </form>
+    </form>
+  </div>
 
   @if ($this->credential === false)
     <!-- Toast -->
@@ -166,7 +164,7 @@ $masuk = function () {
                     class="size-5 inline-flex shrink-0 items-center justify-center rounded-lg text-white opacity-50 hover:text-white hover:opacity-100 focus:opacity-100 focus:outline-none"
                     aria-label="Close">
               <span class="sr-only">Close</span>
-              <svg class="size-4 shrink-0"
+              <svg class="size-6 shrink-0"
                    xmlns="http://www.w3.org/2000/svg"
                    width="24"
                    height="24"
@@ -187,4 +185,4 @@ $masuk = function () {
     <!-- End Toast -->
   @endif
 
-</div>
+</section>
