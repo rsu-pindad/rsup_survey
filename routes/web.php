@@ -107,10 +107,12 @@ Route::middleware(['auth'])->group(function () {
     // });
 
     Route::middleware('role:employee|super-admin|monitor')->group(function () {
-        Volt::route('/office', 'office.index')->name('office');
         Route::group(['prefix' => 'office'], function () {
-            Volt::route('/grafik', 'office.grafik.index')->name('office-grafik');
-            Volt::route('/tabel', 'office.tabel.index')->name('office-tabel');
+            Volt::route('/', 'office.index')->name('office');
+            Route::group(['prefix' => 'survey-masuk'], function () {
+                Volt::route('/grafik', 'office.survey-masuk.grafik.index')->name('survey-masuk-grafik');
+                Volt::route('/tabel', 'office.survey-masuk.tabel.index')->name('survey-masuk-tabel');
+            });
         });
         // Volt::route('/profile-petugas', 'employee.profile-petugas')->name('profile-petugas');
 
