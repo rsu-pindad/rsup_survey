@@ -19,6 +19,7 @@ import Quill from 'quill';
 import flatpickr from 'flatpickr';
 import './../../vendor/power-components/livewire-powergrid/dist/powergrid';
 import './../../vendor/power-components/livewire-powergrid/dist/tailwind.css';
+import "flatpickr/dist/flatpickr.min.css";
 
 createIcons({
     icons: {
