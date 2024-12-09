@@ -7,7 +7,6 @@ layout('components.layouts.home');
 title('Halaman Survey Pasien');
 state(['selectRespon' => null, 'hookNameRespon' => null, 'penjamin' => null]);
 state(['layanan' => Layanan::find(Auth::user()->parentKaryawanProfile()->value('layanan_id'))->nama_layanan])->locked();
-// form(SelectResponForm::class);
 mount(function (LayananRespon $layananRespon) {
     $this->penjamin = Penjamin::where('nama_penjamin', request()->query('penjamin'))->get();
     // $this->respon = $layananRespon

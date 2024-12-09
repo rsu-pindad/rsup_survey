@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('/home', 'home.idle')->name('home-idle');
     Volt::route('/', 'home.idle');
     Volt::route('/survey-pasien', 'survey.pasien')->name('survey-pasien');
+    Volt::route('/survey-pasien-multi', 'survey.pasien-multi')->name('survey-pasien-multi');
     // Route::get('/lihat', RootsAdmin::class)->name('lihat');
 
     // Route::middleware('role:super-admin')->group(function () {

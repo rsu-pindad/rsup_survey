@@ -17,7 +17,7 @@
 
   <body class="h-screen w-screen bg-gradient-to-r from-white from-90% to-slate-200 font-sans antialiased">
     @livewireScriptConfig
-    @if (Route::currentRouteName() !== 'survey-pasien')
+    @if (Route::currentRouteName() !== 'survey-pasien' && Route::currentRouteName() !== 'survey-pasien-multi')
       <x-preline.header-home />
     @endif
     <x-wireui-dialog />
@@ -30,7 +30,7 @@
     </main>
     <!-- ========== END MAIN CONTENT ========== -->
 
-    @if (Route::currentRouteName() !== 'survey-pasien')
+    @if (Route::currentRouteName() !== 'survey-pasien' && Route::currentRouteName() !== 'survey-pasien-multi')
       <x-preline.footer-home />
     @endif
 

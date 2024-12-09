@@ -2,7 +2,7 @@
 
 use App\Models\{Layanan, Unit};
 use function Livewire\Volt\{state, locked, boot};
-state(['isMultiLayanan', 'layanan', 'unit'])->locked();
+state(['layanan', 'unit']);
 boot(function () {
     // $this->isMultiLayanan = Layanan::find(Auth::user()->parentKaryawanProfile()->value('layanan_id'))->value('multi_layanan');
     $this->layanan = Layanan::find(Auth::user()->parentKaryawanProfile()->value('layanan_id'));
@@ -13,9 +13,9 @@ boot(function () {
 <div>
   <div class="grid grid-cols-3 gap-2">
     <div class="inline-flex grow justify-start">
-      <article class="text-balance">
+      <article class="text-pretty">
         <h1
-            class="text-nowrap text-4xl font-bold text-gray-800 sm:text-2xl md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight">
+            class="text-wrap text-4xl font-bold text-gray-800 sm:text-2xl md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight">
           {{ $this->unit->nama_unit }}
         </h1>
         {!! $this->unit->unitProfil->unit_motto !!}

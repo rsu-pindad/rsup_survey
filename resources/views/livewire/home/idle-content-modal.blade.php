@@ -1,20 +1,24 @@
 <?php
 
-use App\Models\PenjaminLayanan;
+use App\Models\{PenjaminLayanan, Layanan};
 use function Livewire\Volt\{state, mount, rules, action};
-state(['penjamin', 'radioPenjamin']);
+state(['penjamin' => null, 'radioPenjamin', 'isMulti' => false]);
 mount(function (PenjaminLayanan $penjaminLayanan) {
     $this->penjamin = $penjaminLayanan
         ->with('parentPenjamin')
         ->where('layanan_id', Auth::user()->parentKaryawanProfile()->value('layanan_id'))
         ->get();
+    $this->isMulti = Layanan::find(Auth::user()->parentKaryawanProfile()->value('layanan_id'))->multi_layanan;
 });
 rules(['radioPenjamin' => 'required'])->messages([
     'radioPenjamin.required' => 'Mohon pilih salah satu penjamin',
 ]);
 $selanjutnya = action(function () {
     $this->validate();
-    to_route('survey-pasien', ['penjamin' => $this->radioPenjamin]);
+    if ($this->isMulti) {
+        return to_route('survey-pasien-multi', ['penjamin' => $this->radioPenjamin]);
+    }
+    return to_route('survey-pasien', ['penjamin' => $this->radioPenjamin]);
 });
 ?>
 
@@ -31,9 +35,9 @@ $selanjutnya = action(function () {
         <label class="has-[:checked]:bg-lime-50 has-[:checked]:text-lime-900 has-[:checked]:ring-lime-300 flex flex-row items-stretch rounded-full border p-3"
                wire:key="{{ $p->parentPenjamin->id }}">
           <div class="self-center">
-            <x-wireui-radio wire:model.blur="radioPenjamin"
+            <x-wireui-radio id="{{ $p->id }}"
+                            wire:model.blur="radioPenjamin"
                             wire:key="{{ $p->parentPenjamin->id }}"
-                            id="{{ $p->id }}"
                             value="{{ Str::lower($p->parentPenjamin->nama_penjamin) }}"
                             with-validation-colors
                             positive

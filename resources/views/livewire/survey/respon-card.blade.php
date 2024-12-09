@@ -1,7 +1,7 @@
 <div>
   <!-- Icon -->
   <div
-       class="size-24 mx-auto flex animate-pulse items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-violet-600">
+       class="sm:size-12 md:size-24 mx-auto flex animate-pulse items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-violet-600">
 
     <svg xmlns="http://www.w3.org/2000/svg"
          width="24"
@@ -26,7 +26,7 @@
   <!-- End Icon -->
 
   <div class="mt-2 justify-center">
-    <h3 class="{{ $colorText }} font-serif text-3xl font-semibold uppercase sm:text-xl md:text-4xl">
+    <h3 class="{{ $colorText }} font-serif font-semibold uppercase sm:text-md md:text-4xl">
       {{ $namaRespon }}
     </h3>
   </div>
