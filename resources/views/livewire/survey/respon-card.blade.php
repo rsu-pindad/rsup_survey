@@ -26,7 +26,7 @@
   <!-- End Icon -->
 
   <div class="mt-2 justify-center">
-    <h3 class="{{ $colorText }} font-serif font-semibold uppercase sm:text-md md:text-4xl">
+    <h3 class="{{ $colorText }} font-serif font-semibold uppercase text-md sm:text-md md:text-4xl">
       {{ $namaRespon }}
     </h3>
   </div>

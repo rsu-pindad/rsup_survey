@@ -41,7 +41,10 @@ $respon = computed(function () {
     <div class="flex flex-nowrap gap-4 border-b-2 pt-2">
       <div class="group block justify-center">
         <h1 class="align-middle font-bold uppercase sm:text-xl md:text-2xl lg:text-4xl">
-          Survey Layanan {{ $this->namaLayanan }}
+          Survey Layanan @if ($this->radioLayanan !== null)
+            {{ Layanan::find($this->radioLayanan)->nama_layanan }}
+          @endif
+
         </h1>
         <h1 class="align-middle font-semibold uppercase sm:text-xl md:text-2xl lg:text-4xl">
           Penjamin {{ $this->penjamin->value('nama_penjamin') }}
