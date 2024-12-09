@@ -32,6 +32,7 @@ import flatpickr from 'flatpickr';
 import './../../vendor/power-components/livewire-powergrid/dist/powergrid';
 import './../../vendor/power-components/livewire-powergrid/dist/tailwind.css';
 import "flatpickr/dist/flatpickr.min.css";
+// import persist from '@alpinejs/persist';
 
 createIcons({
     icons: {
@@ -54,9 +55,10 @@ window.Livewire = Livewire;
 window.Alpine = Alpine;
 window.Quill = Quill;
 Alpine.directive('hold', directive)
+// Alpine.plugin(persist);
 Alpine.plugin(AsyncAlpine);
 Alpine.plugin(moment);
 Alpine.plugin(timeout);
 
 // window.Alpine.start();
-// window.Livewire.start();
+window.Livewire.start();

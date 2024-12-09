@@ -11,14 +11,16 @@
     <title>{{ $title ?? 'Page Title' }}</title>
     {{-- @livewireStyles --}}
     {{-- <wireui:scripts /> --}}
-    @wireUiScripts
-    @livewireScriptConfig
+    {{-- @livewireScriptConfig --}}
     {{-- @livewireScripts --}}
-    @livewireChartsScripts
+    @wireUiScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
 
   <body class="h-screen w-screen bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px]">
+
+    @livewireChartsScripts
+    @livewireScriptConfig
 
     <x-wireui-dialog />
     <x-wireui-notifications />

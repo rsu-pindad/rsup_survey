@@ -10,12 +10,23 @@
 
     <title>{{ $title ?? 'Page Title' }}</title>
     @livewireStyles
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
 
   <body>
     {{ $slot }}
-    @livewireScripts
+    {{-- @livewireScripts --}}
+    @livewireScriptConfig
+    <script type="module">
+      document.addEventListener("DOMContentLoaded", (e) => {
+        window.HSStaticMethods.autoInit();
+        e.preventDefault();
+      });
+      document.addEventListener("livewire:navigated", (e) => {
+        window.HSStaticMethods.autoInit();
+        e.preventDefault();
+      });
+    </script>
   </body>
 
 </html>

@@ -20,7 +20,8 @@
         <ul class="flex flex-col space-y-1">
           <li>
             <a class="@if (request()->route()->getName() === 'office') bg-lime-100 @endif flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm text-gray-800 hover:bg-lime-100 focus:bg-lime-100 focus:outline-none"
-               href="{{ route('office') }}">
+               href="{{ route('office') }}"
+               wire:navigate="false">
               <svg class="size-4 shrink-0"
                    xmlns="http://www.w3.org/2000/svg"
                    width="24"
@@ -258,6 +259,31 @@
               </ul>
             </div>
           </li> --}}
+          <li>
+            <a class="flex items-center gap-x-3.5 rounded-lg px-2.5 py-2 text-sm text-gray-800 hover:bg-lime-100 focus:bg-lime-100 focus:outline-none"
+               href="{{ route('home-idle') }}"
+               wire:navigate="false">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   width="24"
+                   height="24"
+                   viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2"
+                   stroke-linecap="round"
+                   stroke-linejoin="round"
+                   class="lucide lucide-notebook-pen size-4 shrink-0">
+                <path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4" />
+                <path d="M2 6h4" />
+                <path d="M2 10h4" />
+                <path d="M2 14h4" />
+                <path d="M2 18h4" />
+                <path
+                      d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+              </svg>
+              Halaman Survey
+            </a>
+          </li>
         </ul>
       </nav>
     </div>

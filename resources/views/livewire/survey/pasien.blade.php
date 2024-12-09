@@ -27,9 +27,7 @@ $respon = computed(function () {
 rules(['selectRespon' => 'required'])->messages([
     'selectRespon.required' => 'mohon pilih respon',
 ]);
-
 $kembali = action(fn() => to_route('home-idle'))->renderless();
-
 $nilai = action(function () {
     // $this->respon();
     // $this->validate();
@@ -103,14 +101,15 @@ on([
         {{-- wire:key="{{ $r->parentRespon->id }}"> --}}
         @foreach ($this->respon as $r)
           <label wire:loading.remove
-                 class="has-[:checked]:bg-lime-50 has-[:checked]:text-lime-900 has-[:checked]:ring-lime-200 md:w-56 md:h-64 has-[:checked]:outline-2 has-[:checked]:scale-90 has-[:checked]:rounded-2xl flex grow animate-[wiggle_1s_ease-in-out_infinite] flex-col justify-stretch rounded-lg border p-2 text-center md:p-2">
+                 class="has-[:checked]:bg-lime-50 has-[:checked]:text-lime-900 has-[:checked]:ring-lime-200 has-[:checked]:outline-2 has-[:checked]:scale-90 has-[:checked]:rounded-2xl flex grow animate-[wiggle_1s_ease-in-out_infinite] flex-col justify-stretch rounded-lg border p-2 text-center md:h-64 md:w-56 md:p-2">
             <livewire:survey.respon-card wire:key="{{ $r->parentRespon->id }}"
                                          :colorText="$r->parentRespon->tag_warna_respon"
                                          :namaRespon="$r->parentRespon->nama_respon"
                                          :iconRespon="$r->parentRespon->icon_respon" />
             {{-- <div class="mx-auto mt-auto flex-none"> --}}
             <div class="mx-auto mt-auto items-stretch">
-              <x-wireui-radio class="has-[:checked]:animate-ping"
+              <x-wireui-radio id="{{ $r->id }}"
+                              class="has-[:checked]:animate-ping"
                               wire:model="selectRespon"
                               value="{{ $r->parentRespon->id }}"
                               wire:key="{{ $r->parentRespon->id }}"
@@ -127,7 +126,7 @@ on([
     </form>
     <!-- End Grid -->
     {{-- <div class="flex flex-nowrap gap-4 pb-2"> --}}
-    <div class="flex flex-nowrap gap-4 fixed bottom-0 left-0 right-0 max-w-full py-2 px-6">
+    <div class="fixed bottom-0 left-0 right-0 flex max-w-full flex-nowrap gap-4 px-6 py-3">
       <div class="flex-none place-content-center">
         <x-wireui-button icon="arrow-left"
                          label="Kembali"
@@ -224,7 +223,8 @@ on([
         // setTimeout(notificationSurvey, 5000);
         $closeModal('modalPasien');
         await notificationSurvey(message, icons);
-        // await setTimeout(reloadPage, 5000);
+        setTimeout(reloadPage, 3000);
+        // location.href = '/';
       });
 
       function reloadPage() {
@@ -234,7 +234,7 @@ on([
       function notificationSurvey(desc, icons) {
         $wireui.notify({
           title: 'Survey',
-          description: JSON.stringify(desc.message),
+          description: JSON.stringify(desc.message) + `\n Halaman akan dimuat kembali`,
           icon: 'info',
           onClose: () => reloadPage(),
           onDismiss: () => reloadPage(),

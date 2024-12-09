@@ -10,12 +10,13 @@
 
     <title>{{ $title ?? 'Page Title' }}</title>
     {{-- @livewireStyles --}}
-    <wireui:scripts />
+    {{-- <wireui:scripts /> --}}
+    @wireUiScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
 
   <body class="h-screen w-screen bg-gradient-to-r from-white from-90% to-slate-200 font-sans antialiased">
-
+    @livewireScriptConfig
     @if (Route::currentRouteName() !== 'survey-pasien')
       <x-preline.header-home />
     @endif
@@ -49,7 +50,7 @@
     </script>
     @stack('customScripts')
     {{-- @livewireScripts --}}
-    @livewireScriptConfig
+    {{-- @livewireScriptConfig --}}
   </body>
 
 </html>

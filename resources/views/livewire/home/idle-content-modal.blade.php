@@ -33,6 +33,7 @@ $selanjutnya = action(function () {
           <div class="self-center">
             <x-wireui-radio wire:model.blur="radioPenjamin"
                             wire:key="{{ $p->parentPenjamin->id }}"
+                            id="{{ $p->id }}"
                             value="{{ Str::lower($p->parentPenjamin->nama_penjamin) }}"
                             with-validation-colors
                             positive

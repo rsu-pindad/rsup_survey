@@ -120,31 +120,35 @@ on([
 
 <section class="item s-start mx-auto flex h-screen flex-row flex-wrap justify-center gap-4 justify-self-stretch">
 
-  <div class="inline-flex grow items-center gap-x-4 rounded-xl bg-white px-4 py-2 align-middle shadow">
+  <div class="inline-grid grid-cols-2 items-center gap-x-4 rounded-xl bg-white px-4 py-2 align-middle shadow">
     <h1 class="font-sans text-lg font-semibold">Periode Grafik</h1>
-    <input id="periodeTanggalMulai"
-           type="text"
-           class="w-full rounded-xl border-gray-300"
-           placeholder="tanggal mulai">
-    <span class="text-md font-mono">
-      <svg xmlns="http://www.w3.org/2000/svg"
-           width="24"
-           height="24"
-           viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2"
-           stroke-linecap="round"
-           stroke-linejoin="round"
-           class="lucide lucide-arrow-right size-4">
-        <path d="M5 12h14" />
-        <path d="m12 5 7 7-7 7" />
-      </svg>
-    </span>
-    <input id="periodeTanggalAkhir"
-           type="text"
-           class="w-full rounded-xl border-gray-300"
-           placeholder="tanggal akhir">
+    <div class="inline-flex grow flex-row items-stretch gap-x-4">
+      <input id="periodeTanggalMulai"
+             type="text"
+             class="w-full rounded-xl border-gray-300"
+             placeholder="tanggal mulai">
+      <div class="self-center">
+        <span class="text-md font-mono">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="24"
+               height="24"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+               class="lucide lucide-arrow-right size-4">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </span>
+      </div>
+      <input id="periodeTanggalAkhir"
+             type="text"
+             class="w-full rounded-xl border-gray-300"
+             placeholder="tanggal akhir">
+    </div>
   </div>
 
   <div class="inline-flex grow items-start gap-x-2 rounded-xl bg-white px-4 py-2 shadow">
@@ -179,7 +183,7 @@ on([
         dateFormat: "Y-m-d",
         maxDate: "today",
         onClose: function(selectedDates, dateStr, instance) {
-          //   console.log(calendarMin.selectedDates[0]);
+          // console.log(calendarMin.selectedDates[0]);
           Livewire.dispatch('filterData', {
             max: dateStr,
             min: calendarMin.selectedDates[0],
