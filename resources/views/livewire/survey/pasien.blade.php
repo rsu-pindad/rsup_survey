@@ -92,7 +92,7 @@ on([
       </div>
     </div>
     <!-- Grid -->
-    <form class="flex snap-x flex-nowrap place-content-center gap-x-4 py-2">
+    <form class="flex flex-nowrap place-content-center gap-x-4 py-2">
       <!-- Icon Block -->
       {{-- <div class=""> --}}
       <div class="flex flex-row gap-x-4 gap-y-2 overflow-x-scroll"
