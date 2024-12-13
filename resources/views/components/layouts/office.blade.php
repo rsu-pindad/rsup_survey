@@ -14,7 +14,7 @@
     {{-- @livewireScriptConfig --}}
     {{-- @livewireScripts --}}
     
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
     @wireUiScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>

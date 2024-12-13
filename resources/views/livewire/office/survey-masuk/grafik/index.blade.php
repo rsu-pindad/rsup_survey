@@ -166,11 +166,11 @@ on([
     <livewire:livewire-column-chart key="{{ $this->responChart->reactiveKey() }}"
                                     :column-chart-model="$this->responChart" />
   </div>
-
+{{-- 
   <div class="h-full w-full rounded-xl border bg-white p-4 shadow">
     <livewire:livewire-radar-chart key="{{ $this->responWaktu->reactiveKey() }}"
                                    :radar-chart-model="$this->responWaktu" />
-  </div>
+  </div> --}}
 
 </section>
 
