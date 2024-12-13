@@ -4,7 +4,7 @@ namespace App\Livewire\Survey;
 
 use App\Livewire\Forms\Survey\SinglePasienForm;
 use App\Models\Respon;
-use Livewire\Attributes\On;
+use Livewire\Attributes\{On, Renderless};
 use Livewire\Component;
 
 class ResponQuestionModal extends Component
@@ -41,31 +41,32 @@ class ResponQuestionModal extends Component
         $this->form->penjaminData = $penjaminData;
         $this->form->responData   = Respon::find(intval($respon));
         $store                    = $this->form->store($skipQuestion);
-        if ($store) {
-            $msg = 'Terimakasih telah menilai layanan';
-            $ico = 'success';
+        if ($store === 0) {
+            $this->form->resetForm();
 
-            return $this->dispatch('nilai-layanan-final', message: $msg, icon: $ico);
+            return $this->dispatch('nilai-layanan-final', desc: 'Terimakasih telah menilai layanan', icons: 'success');
         }
-        $ico = 'error';
+        $this->form->resetForm();
 
-        return $this->dispatch('nilai-layanan-final', message: $store, icon: $ico);
+        return $this->dispatch('nilai-layanan-final', desc: $store, icons: 'error');
     }
 
     public function simpanSurvey()
     {
         $store = $this->form->store($this->hasQuestion);
         if ($store === 0) {
-            $msg = 'Terimakasih telah menilai layanan';
-            $ico = 'success';
-            // $this->resetSurvey();
             $this->form->resetForm();
 
-            return $this->dispatch('nilai-layanan-final', message: $msg, icon: $ico);
+            return $this->dispatch('nilai-layanan-final', desc: 'Terimakasih telah menilai layanan', icons: 'success');
         }
-        $ico = 'error';
         $this->form->resetForm();
 
-        return $this->dispatch('nilai-layanan-final', message: $store, icon: $ico);
+        return $this->dispatch('nilai-layanan-final', desc: $store, icons: 'error');
+    }
+
+    #[Renderless]
+    public function resetSurvey()
+    {
+        $this->form->resetForm();
     }
 }

@@ -218,11 +218,11 @@ on([
         $openModal('modalPasien');
       });
 
-      Livewire.on('nilai-layanan-final', async function(message, icons) {
+      Livewire.on('nilai-layanan-final', async function(data) {
         // setTimeout(notificationSurvey, 5000);
         $closeModal('modalPasien');
-        await notificationSurvey(message, icons);
-        setTimeout(reloadPage, 3000);
+        notificationSurvey(data);
+        // setTimeout(reloadPage, 3000);
         // location.href = '/';
       });
 
@@ -230,11 +230,13 @@ on([
         location.href = '/';
       }
 
-      function notificationSurvey(desc, icons) {
+      function notificationSurvey(data) {
+        console.log(data);
+        
         $wireui.notify({
           title: 'Survey',
-          description: JSON.stringify(desc.message) + `\n Halaman akan dimuat kembali`,
-          icon: 'info',
+          description: data.desc + `\n Halaman akan dimuat kembali`,
+          icon: data.icons,
           onClose: () => reloadPage(),
           onDismiss: () => reloadPage(),
           onTimeout: () => reloadPage()

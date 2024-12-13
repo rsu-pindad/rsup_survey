@@ -34,14 +34,14 @@
 
     <x-slot name="footer"
             class="flex justify-between gap-x-4">
-      <div class="shrink">
+      {{-- <div class="shrink">
         <x-wireui-button right-icon="arrow-path"
                          label="Reset Form"
                          secondary
-                         wire:click="resetSurvey()"
+                         wire:click="resetSurvey"
                          class="w-full"
                          rounded />
-      </div>
+      </div> --}}
       <div class="grow">
 
         <x-wireui-button positive
