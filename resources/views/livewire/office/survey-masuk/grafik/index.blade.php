@@ -56,8 +56,8 @@ $penjaminLayanan = computed(function () {
             '#' . substr(uniqid(), -6),
         );
     }
-    $pieCharts->withDataLabels()->setAnimated(true)->setDataLabelsEnabled(true)->asDonut();
-    return $pieCharts;
+    return $pieCharts->withDataLabels()->setAnimated(true)->setDataLabelsEnabled(true)->asDonut();
+    
 });
 
 $responChart = computed(function () {
@@ -74,8 +74,8 @@ $responChart = computed(function () {
             $value->parentRespon->tag_warna_respon,
         );
     }
-    $columnCharts->withDataLabels()->setAnimated(true)->setDataLabelsEnabled(true);
-    return $columnCharts;
+    return $columnCharts->withDataLabels()->setAnimated(true)->setDataLabelsEnabled(true);
+    
 });
 
 $responWaktu = computed(function () {
@@ -104,8 +104,8 @@ $responWaktu = computed(function () {
             );
         }
     }
-    $radarChartModel->withDataLabels()->setAnimated(true)->setDataLabelsEnabled(true);
-    return $radarChartModel;
+    return $radarChartModel->withDataLabels()->setAnimated(true);
+    
 });
 
 on([
@@ -166,11 +166,11 @@ on([
     <livewire:livewire-column-chart key="{{ $this->responChart->reactiveKey() }}"
                                     :column-chart-model="$this->responChart" />
   </div>
-{{-- 
+
   <div class="h-full w-full rounded-xl border bg-white p-4 shadow">
     <livewire:livewire-radar-chart key="{{ $this->responWaktu->reactiveKey() }}"
                                    :radar-chart-model="$this->responWaktu" />
-  </div> --}}
+  </div>
 
 </section>
 

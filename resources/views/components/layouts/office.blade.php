@@ -21,9 +21,6 @@
 
   <body class="h-screen w-screen bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px]">
 
-    @livewireScriptConfig
-    @livewireChartsScripts
-
     <x-wireui-dialog />
     <x-wireui-notifications />
 
@@ -50,6 +47,9 @@
     </div>
     <!-- End Content -->
     <!-- ========== END MAIN CONTENT ========== -->
+    
+    @livewireScriptConfig
+    @livewireChartsScripts
     <script type="module">
       document.addEventListener("DOMContentLoaded", (e) => {
         window.HSStaticMethods.autoInit();
