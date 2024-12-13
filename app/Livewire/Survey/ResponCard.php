@@ -22,6 +22,7 @@ class ResponCard extends Component
         $this->colorText  = $colorText;
         $this->namaRespon = $namaRespon;
         $this->iconRespon = $iconRespon;
+        // $this->iconRespon = 'face-smile';
     }
 
     public function placeholder()

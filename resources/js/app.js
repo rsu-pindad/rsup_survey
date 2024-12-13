@@ -46,7 +46,8 @@ createIcons({
         UserPen,
         LogOut,
         FileChartColumn
-    }
+    },
+    nameAttr: 'data-lucide'
 });
 
 window.flatpickr = flatpickr;
