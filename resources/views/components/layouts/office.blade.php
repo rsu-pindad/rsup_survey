@@ -13,6 +13,8 @@
     {{-- <wireui:scripts /> --}}
     {{-- @livewireScriptConfig --}}
     {{-- @livewireScripts --}}
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @wireUiScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
   </head>
@@ -48,7 +50,6 @@
     </div>
     <!-- End Content -->
     <!-- ========== END MAIN CONTENT ========== -->
-
     <script type="module">
       document.addEventListener("DOMContentLoaded", (e) => {
         window.HSStaticMethods.autoInit();
