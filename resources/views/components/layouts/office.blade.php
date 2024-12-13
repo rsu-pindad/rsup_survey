@@ -19,8 +19,8 @@
 
   <body class="h-screen w-screen bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px]">
 
-    @livewireChartsScripts
     @livewireScriptConfig
+    @livewireChartsScripts
 
     <x-wireui-dialog />
     <x-wireui-notifications />
