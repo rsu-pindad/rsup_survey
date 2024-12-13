@@ -11,6 +11,7 @@
       <x-wireui-input wire:model="form.namaPasien"
                       icon="user"
                       placeholder="Masukan nama"
+                      class="text-lg"
                       with-validation-colors
                       rounded
                       padding="p-4">
@@ -20,7 +21,10 @@
       </x-wireui-input>
 
       <x-wireui-maskable wire:model="form.nomorPasien"
+                         class="text-lg"
                          icon="phone"
+                         {{-- prefix="+62" --}}
+                         {{-- :mask="['+62##########', '+62###########']" --}}
                          :mask="['0##########', '0###########']"
                          placeholder="+62xxxxxxxxxx"
                          with-validation-colors
@@ -38,17 +42,18 @@
         <x-wireui-button right-icon="arrow-path"
                          label="Reset Form"
                          secondary
-                         wire:click="resetSurvey()"
+                         wire:click="resetSurvey"
+                         wire:loading.attr="disabled"
                          class="w-full"
                          rounded />
       </div>
       <div class="grow">
-
-        <x-wireui-button positive
-                         label="Simpan"
+        <x-wireui-button label="Simpan Form"
                          right-icon="paper-airplane"
                          wire:click="simpanSurvey"
+                         wire:loading.attr="disabled"
                          class="w-full"
+                         positive
                          rounded />
       </div>
     </x-slot>

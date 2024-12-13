@@ -32,7 +32,7 @@ $selanjutnya = action(function () {
   <form method="post">
     <div class="grid grid-cols-2 gap-x-8 gap-y-6">
       @forelse ($this->penjamin as $p)
-        <label class="has-[:checked]:bg-lime-50 has-[:checked]:text-lime-900 has-[:checked]:ring-lime-300 flex flex-row items-stretch rounded-full border p-3"
+        <label class="has-[:checked]:bg-lime-50 has-[:checked]:text-lime-900 has-[:checked]:ring-lime-300 flex flex-row items-stretch rounded-full border p-3 has-[:checked]:scale-95"
                wire:key="{{ $p->parentPenjamin->id }}">
           <div class="self-center">
             <x-wireui-radio id="{{ $p->id }}"

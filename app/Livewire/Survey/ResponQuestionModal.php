@@ -4,7 +4,7 @@ namespace App\Livewire\Survey;
 
 use App\Livewire\Forms\Survey\SinglePasienForm;
 use App\Models\Respon;
-use Livewire\Attributes\{On, Renderless};
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ResponQuestionModal extends Component
@@ -55,22 +55,17 @@ class ResponQuestionModal extends Component
     public function simpanSurvey()
     {
         $store = $this->form->store($this->hasQuestion);
-        if ($store) {
+        if ($store === 0) {
             $msg = 'Terimakasih telah menilai layanan';
             $ico = 'success';
             // $this->resetSurvey();
+            $this->form->resetForm();
 
             return $this->dispatch('nilai-layanan-final', message: $msg, icon: $ico);
         }
         $ico = 'error';
-        // $this->resetSurvey();
+        $this->form->resetForm();
 
         return $this->dispatch('nilai-layanan-final', message: $store, icon: $ico);
-    }
-
-    #[Renderless]
-    public function resetSurvey(): void
-    {
-        $this->form->reset();
     }
 }

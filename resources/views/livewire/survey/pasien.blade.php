@@ -46,7 +46,7 @@ on([
 on([
     'nilai-layanan-pending' => function ($preResponId) {
         if (Respon::find($preResponId)->has_question === true) {
-            $this->dispatch('opening-modal', responId: $preResponId, penjaminData: $this->penjamin->first()->nama_penjamin)->to(ResponQuestionModal::class);
+            $this->dispatch('opening-modal', responId: $preResponId, penjaminData: $this->penjamin->first()->id)->to(ResponQuestionModal::class);
             return $this->dispatch('open-modal-respon');
         }
         return $this->dispatch('respon-question-self');
@@ -55,14 +55,14 @@ on([
 
 on([
     'opening-modal-livewire' => function ($responId) {
-        $this->dispatch('opening-modal-noquestion', skipQuestion: true, responId: $responId, penjaminData: $this->penjamin->first()->nama_penjamin)->to(ResponQuestionModal::class);
+        $this->dispatch('opening-modal-noquestion', skipQuestion: true, responId: $responId, penjaminData: $this->penjamin->first()->id)->to(ResponQuestionModal::class);
         return $this->dispatch('open-modal-respon');
     },
 ]);
 
 on([
     'skip-question' => function ($skipQuestion, $respon) {
-        return $this->dispatch('skip-question-insert', skipQuestion: $skipQuestion, respon: $respon, penjaminData: $this->penjamin->first()->nama_penjamin)->to(ResponQuestionModal::class);
+        return $this->dispatch('skip-question-insert', skipQuestion: $skipQuestion, respon: $respon, penjaminData: $this->penjamin->first()->id)->to(ResponQuestionModal::class);
     },
 ]);
 
