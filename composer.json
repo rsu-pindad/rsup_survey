@@ -19,6 +19,7 @@
     "blade-ui-kit/blade-heroicons": "^2.5",
     "dasundev/livewire-dropzone": "^1.0",
     "guzzlehttp/guzzle": "^7.2",
+    "icehouse-ventures/laravel-chartjs": "^4.1",
     "intervention/image-laravel": "^1.2",
     "laravel/framework": "^10.0",
     "laravel/sanctum": "^3.3",

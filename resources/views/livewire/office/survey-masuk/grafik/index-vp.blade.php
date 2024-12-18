@@ -6,38 +6,24 @@ use Asantibanez\LivewireCharts\Models\{PieChartModel, ColumnChartModel, RadarCha
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-// $layananData = fn() => $this->layanan++;
-// $penjaminData = fn() => $this->penjamin++;
-
-// $surveyMasuk = computed(
-//     fn() => (new PieChartModel())
-//         ->setTitle('Survey Masuk Layanan : ' . $this->layanan->nama_layanan)
-//         // ->addSlice('Layanan', $this->layanan, '#f6ad55')
-//         ->addSlice('Penjamin', $this->penjamin, '#fc8181'),
-// );
-
 layout('components.layouts.office');
-title('Halaman Grafik Survey Masuk');
+title('Halaman Grafik Survey Masuk (VP)');
 state([
-    'karyawanId' => Auth::user()->parentKaryawanProfile()->value('id'),
-    'unitId' => Auth::user()->parentKaryawanProfile()->value('unit_id'),
+    'unitList' => null,
     'namaLayanan' => null,
     'namaPenjamin' => null,
     'isMultiLayanan' => false,
     'layanan' => null,
     'penjamin' => null,
-    'layananRespon' => null,
+    'layananRespon' => null,ww
     'jamDinding' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
-    // 'mulaiPeriode' => Carbon::now()->subDays(84)->toDateTimeString(),
-    // 'akhirPeriode' => Carbon::now()->endOfDay()->toDateTimeString(),
     'mulaiPeriode' => Carbon::now()->subDays(84)->format('Y-m-d'),
     'akhirPeriode' => Carbon::now()->endOfDay()->format('Y-m-d'),
     'colors' => ['#F72C5B', '#A7D477', '#FF748B', '#E4F1AC', '#B1F0F7', '#81BFDA', '#F5F0CD', '#FADA7A'],
 ]);
 
 mount(function () {
-    $this->isMultiLayanan = Unit::find($this->unitId)->multi_penilaian;
-    $this->layanan = Layanan::find(Auth::user()->parentKaryawanProfile()->value('layanan_id'));
+    $this->layanan = Layanan::all();
     $this->penjamin = PenjaminLayanan::with(['parentPenjamin'])
         ->where('layanan_id', $this->layanan->id)
         ->get();
@@ -47,14 +33,9 @@ mount(function () {
             ->get();
     } else {
         $this->layananRespon = LayananRespon::get()
-            // ->groupBy(function ($respon) {
-            //     return $respon->layanan_id;
-            // })
             ->groupBy('layanan_id')
             ->toBase();
-        // dd($this->layananRespon);
     }
-    // dd(Carbon::now()->format('Y-m-d H:i'));
 });
 
 $penjaminLayanan = computed(function () {
@@ -104,9 +85,9 @@ $responChart = computed(function () {
         }
     } else {
         foreach ($this->layananRespon as $key => $value) {
-          $columnCharts->setTitle('Respon Layanan : ' . $value);
-          foreach ($value as $key => $r) {
-            $columnCharts->addColumn(
+            $columnCharts->setTitle('Respon Layanan : ' . $value);
+            foreach ($value as $key => $r) {
+                $columnCharts->addColumn(
                     Respon::find($r->respon_id)->nama_respon . '(' . $r->layanan_id . ')',
                     SurveyPelanggan::where('nilai_skor', Respon::find($r->respon_id)->nama_respon)
                         ->where('karyawan_id', $this->karyawanId)

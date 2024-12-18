@@ -25,7 +25,6 @@ import {
 import {
     directive
 } from '@wireui/alpinejs-hold-directive';
-// import ApexCharts from 'apexcharts';
 import AsyncAlpine from '../../node_modules/async-alpine';
 import Quill from 'quill';
 import flatpickr from 'flatpickr';
@@ -33,6 +32,24 @@ import './../../vendor/power-components/livewire-powergrid/dist/powergrid';
 import './../../vendor/power-components/livewire-powergrid/dist/tailwind.css';
 import "flatpickr/dist/flatpickr.min.css";
 // import persist from '@alpinejs/persist';
+import Chart from 'chart.js/auto';
+// import {
+//     TimeScale,
+//     LineElement,
+//     PointElement,
+//     LinearScale,
+//     Title,
+//     Tooltip,
+//     Legend,
+//     Chart
+// } from 'chart.js';
+import 'chartjs-adapter-luxon';
+// import {
+// DateTime
+// } from "luxon";
+// Chart.register(TimeScale, LineElement, PointElement, LinearScale, Title, Tooltip, Legend);
+
+
 
 createIcons({
     icons: {
@@ -49,17 +66,18 @@ createIcons({
     },
     nameAttr: 'data-lucide'
 });
-
+// window.DateTime = DateTime;
 window.flatpickr = flatpickr;
 window.Livewire = Livewire;
-// window.ApexCharts = ApexCharts;
 window.Alpine = Alpine;
+window.Chart = Chart;
 window.Quill = Quill;
-Alpine.directive('hold', directive)
+Alpine.directive('hold', directive);
 // Alpine.plugin(persist);
 Alpine.plugin(AsyncAlpine);
 Alpine.plugin(moment);
 Alpine.plugin(timeout);
+// Chart.register(_adapters);
 
 // window.Alpine.start();
 window.Livewire.start();

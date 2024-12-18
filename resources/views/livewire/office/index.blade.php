@@ -90,7 +90,7 @@ $commingSoon = fn() => $this->js("alert('fitur segera hadir')");
           </div>
 
           <a class="inline-flex items-center justify-between rounded-b-xl border-t border-gray-200 px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none md:px-5"
-             href="{{ route('survey-masuk-grafik') }}">
+             href="{{ route('survey-masuk-grafik-single') }}">
             Lihat Grafik
             <svg class="size-4 shrink-0"
                  xmlns="http://www.w3.org/2000/svg"

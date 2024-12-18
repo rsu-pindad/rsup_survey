@@ -46,13 +46,11 @@ mount(function () {
             ->where('layanan_id', $this->layanan->id)
             ->get();
     } else {
-        $this->layananRespon = LayananRespon::get()
-            // ->groupBy(function ($respon) {
-            //     return $respon->layanan_id;
-            // })
-            ->groupBy('layanan_id')
-            ->toBase();
-        // dd($this->layananRespon);
+        $this->layananRespon = LayananRespon::all()
+            ->groupBy(function ($respon) {
+                return $respon->layanan_id;
+            })
+            ->all();
     }
     // dd(Carbon::now()->format('Y-m-d H:i'));
 });
@@ -88,9 +86,8 @@ $penjaminLayanan = computed(function () {
 });
 
 $responChart = computed(function () {
-    $columnCharts = new ColumnChartModel();
+    $columnCharts = (new ColumnChartModel())->setTitle('Respon Layanan : ' . $this->layanan->nama_layanan);
     if (!$this->isMultiLayanan) {
-        $columnCharts->setTitle('Respon Layanan : ' . $this->layanan->nama_layanan);
         foreach ($this->layananRespon as $key => $value) {
             $columnCharts->addColumn(
                 $value->parentRespon->nama_respon,
@@ -104,14 +101,12 @@ $responChart = computed(function () {
         }
     } else {
         foreach ($this->layananRespon as $key => $value) {
-          $columnCharts->setTitle('Respon Layanan : ' . $value);
-          foreach ($value as $key => $r) {
-            $columnCharts->addColumn(
-                    Respon::find($r->respon_id)->nama_respon . '(' . $r->layanan_id . ')',
+            foreach ($value as $key => $r) {
+                $columnCharts->addColumn(
+                    Respon::find($r->respon_id)->nama_respon,
                     SurveyPelanggan::where('nilai_skor', Respon::find($r->respon_id)->nama_respon)
                         ->where('karyawan_id', $this->karyawanId)
                         ->whereBetween('survey_masuk', [$this->mulaiPeriode, $this->akhirPeriode])
-                        // ->groupBy('layanan_id')
                         ->count(),
                     Respon::find($r->respon_id)->tag_warna_respon,
                 );
@@ -226,11 +221,12 @@ on([
                                  :pie-chart-model="$this->penjaminLayanan" />
   </div>
 
-  <div class="h-full w-full rounded-xl border bg-white p-4 shadow">
-    <livewire:livewire-column-chart key="{{ $this->responChart->reactiveKey() }}"
-                                    :column-chart-model="$this->responChart" />
-  </div>
   @if (!$this->isMultiLayanan)
+    <div class="h-full w-full rounded-xl border bg-white p-4 shadow">
+      <livewire:livewire-column-chart key="{{ $this->responChart->reactiveKey() }}"
+                                      :column-chart-model="$this->responChart" />
+    </div>
+
     <div class="h-full w-full rounded-xl border bg-white p-4 shadow">
       <livewire:livewire-radar-chart key="{{ $this->responWaktu->reactiveKey() }}"
                                      :radar-chart-model="$this->responWaktu" />
